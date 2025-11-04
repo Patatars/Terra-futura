@@ -15,9 +15,9 @@ Note that the design is by no means complete. Most notably
 Also, it is highly likely, that I overlooked something and there are some issues that need to be resolved. Feel free to do necessary changes and adjustments.
 
 I recommend to stick to the following timeline
-- 15. 11. create teams, understand game rules, understand the design (so we can have a meaningful discussion on the lecture).
-- 22. 11. the common part of the project is finished 
-- 29. 11. you are done
+- 15.11. create teams, understand game rules, understand the design (so we can have a meaningful discussion on the lecture).
+- 22.11. the common part of the project is finished 
+- 29.11. you are done
 
 ## Implementation remarks
 
