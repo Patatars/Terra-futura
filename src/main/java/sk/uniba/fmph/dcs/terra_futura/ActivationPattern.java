@@ -16,7 +16,7 @@ public final class ActivationPattern {
 
     public ActivationPattern(final InterfaceActivateGrid grid, final Collection<SimpleEntry<Integer, Integer>> pattern) {
         this.grid = grid;
-        this.pattern = new ArrayList<>(pattern);  // copy the pattern
+        this.pattern = new ArrayList<>(pattern);  // copy the patternn
         this.selected = false;
     }
 
