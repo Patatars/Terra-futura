@@ -50,10 +50,6 @@ public class ProcessAction {
         if (card == null) {
             return false;
         }
-        // Ensure the card is present in the grid before activation
-        if (!grid.getCards().contains(card)) {
-            return false;
-        }
         return transferService.executeTransaction(grid, inputs, outputs, pollution);
     }
 }
