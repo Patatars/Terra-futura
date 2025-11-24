@@ -9,7 +9,7 @@ public class GameObserver {
     }
 
     // Map of player ID (int) to their corresponding observer interface.
-    private Map<Integer, ObserverInterface> observers = new ConcurrentHashMap<>();
+    private final Map<Integer, ObserverInterface> observers = new ConcurrentHashMap<>();
 
     /**
      * Register an observer for a specific player.
@@ -37,7 +37,7 @@ public class GameObserver {
 
     /**
      * Notify all registered observers of their new game state.
-     * @param newState state that shoud be notified
+     * @param newState state that should be notified
      * This method iterates through all registered observers and forwards the
      * appropriate state string to each one based on their player ID. This ensures
      * "everybody sees what he has to" - each observer only receives updates for
