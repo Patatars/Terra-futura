@@ -9,7 +9,6 @@ import sk.uniba.fmph.dcs.terra_futura.game.Grid;
 import sk.uniba.fmph.dcs.terra_futura.game.GridPosition;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,13 +66,13 @@ public class ProcessActionTest {
     @Test
     public void testActivateCardSuccessfulTransaction() {
         // Setup: card1 has resources, card2 can accept them
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD, Resource.STONE));
+        card1.addResourcesToCard(List.of(Resource.GREEN, Resource.RED));
         card2.setCanAcceptResources(true);
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)));
-        List<Pair<Resource, GridPosition>> outputs = Arrays.asList(
-                Pair.of(Resource.WHEAT, new GridPosition(1, 1)));
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)));
+        List<Pair<Resource, GridPosition>> outputs = List.of(
+                Pair.of(Resource.YELLOW, new GridPosition(1, 1)));
         List<GridPosition> pollution = new ArrayList<>();
 
         boolean result = processAction.activateCard(card1, grid, inputs, outputs, pollution);
@@ -84,15 +83,15 @@ public class ProcessActionTest {
     @Test
     public void testActivateCardInsufficientResources() {
         // Setup: card1 doesn't have required resources
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD));
+        card1.addResourcesToCard(List.of(Resource.GREEN));
         card2.setCanAcceptResources(true);
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)),
-                Pair.of(Resource.STONE, new GridPosition(0, 0)) // card1 doesn't have STONE
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)),
+                Pair.of(Resource.RED, new GridPosition(0, 0)) // card1 doesn't have RED
         );
-        List<Pair<Resource, GridPosition>> outputs = Arrays.asList(
-                Pair.of(Resource.WHEAT, new GridPosition(1, 1)));
+        List<Pair<Resource, GridPosition>> outputs = List.of(
+                Pair.of(Resource.YELLOW, new GridPosition(1, 1)));
         List<GridPosition> pollution = new ArrayList<>();
 
         boolean result = processAction.activateCard(card1, grid, inputs, outputs, pollution);
@@ -103,13 +102,13 @@ public class ProcessActionTest {
     @Test
     public void testActivateCardCannotPlaceOutput() {
         // Setup: card1 has resources, but card2 cannot accept them
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD));
+        card1.addResourcesToCard(List.of(Resource.GREEN));
         card2.setCanAcceptResources(false);
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)));
-        List<Pair<Resource, GridPosition>> outputs = Arrays.asList(
-                Pair.of(Resource.WHEAT, new GridPosition(1, 1)));
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)));
+        List<Pair<Resource, GridPosition>> outputs = List.of(
+                Pair.of(Resource.YELLOW, new GridPosition(1, 1)));
         List<GridPosition> pollution = new ArrayList<>();
 
         boolean result = processAction.activateCard(card1, grid, inputs, outputs, pollution);
@@ -120,13 +119,13 @@ public class ProcessActionTest {
     @Test
     public void testActivateCardWithPollution() {
         // Setup: card1 has resources, card2 can accept pollution
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD));
+        card1.addResourcesToCard(List.of(Resource.GREEN));
         card2.setCanAcceptResources(true);
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)));
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)));
         List<Pair<Resource, GridPosition>> outputs = new ArrayList<>();
-        List<GridPosition> pollution = Arrays.asList(new GridPosition(1, 1));
+        List<GridPosition> pollution = List.of(new GridPosition(1, 1));
 
         boolean result = processAction.activateCard(card1, grid, inputs, outputs, pollution);
 
@@ -137,15 +136,15 @@ public class ProcessActionTest {
     @Test
     public void testActivateCardMultipleResourcesFromSameCard() {
         // Setup: card1 has multiple resources
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD, Resource.WOOD, Resource.STONE));
+        card1.addResourcesToCard(List.of(Resource.GREEN, Resource.GREEN, Resource.RED));
         card2.setCanAcceptResources(true);
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)),
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)),
-                Pair.of(Resource.STONE, new GridPosition(0, 0)));
-        List<Pair<Resource, GridPosition>> outputs = Arrays.asList(
-                Pair.of(Resource.WHEAT, new GridPosition(1, 1)));
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)),
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)),
+                Pair.of(Resource.RED, new GridPosition(0, 0)));
+        List<Pair<Resource, GridPosition>> outputs = List.of(
+                Pair.of(Resource.YELLOW, new GridPosition(1, 1)));
         List<GridPosition> pollution = new ArrayList<>();
 
         boolean result = processAction.activateCard(card1, grid, inputs, outputs, pollution);
@@ -157,14 +156,14 @@ public class ProcessActionTest {
     @Test
     public void testActivateCardMultipleOutputsToSameCard() {
         // Setup: card1 has resources, card2 can accept multiple
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD));
+        card1.addResourcesToCard(List.of(Resource.GREEN));
         card2.setCanAcceptResources(true);
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)));
-        List<Pair<Resource, GridPosition>> outputs = Arrays.asList(
-                Pair.of(Resource.WHEAT, new GridPosition(1, 1)),
-                Pair.of(Resource.STONE, new GridPosition(1, 1)),
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)));
+        List<Pair<Resource, GridPosition>> outputs = List.of(
+                Pair.of(Resource.YELLOW, new GridPosition(1, 1)),
+                Pair.of(Resource.RED, new GridPosition(1, 1)),
                 Pair.of(Resource.MONEY, new GridPosition(1, 1)));
         List<GridPosition> pollution = new ArrayList<>();
 
@@ -180,21 +179,21 @@ public class ProcessActionTest {
         FakeCard card3 = new FakeCard();
         grid.putCard(new GridPosition(2, 2), card3);
 
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD, Resource.STONE));
-        card2.addResourcesToCard(Arrays.asList(Resource.WHEAT));
+        card1.addResourcesToCard(List.of(Resource.GREEN, Resource.RED));
+        card2.addResourcesToCard(List.of(Resource.YELLOW));
         card3.setCanAcceptResources(true);
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)),
-                Pair.of(Resource.WHEAT, new GridPosition(1, 1)));
-        List<Pair<Resource, GridPosition>> outputs = Arrays.asList(
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)),
+                Pair.of(Resource.YELLOW, new GridPosition(1, 1)));
+        List<Pair<Resource, GridPosition>> outputs = List.of(
                 Pair.of(Resource.MONEY, new GridPosition(2, 2)));
         List<GridPosition> pollution = new ArrayList<>();
 
         boolean result = processAction.activateCard(card1, grid, inputs, outputs, pollution);
 
         assertTrue("Should handle inputs from multiple cards", result);
-        assertEquals("Card1 should have 1 resource (STONE) left", 1, card1.resources.size());
+        assertEquals("Card1 should have 1 resource (RED) left", 1, card1.resources.size());
         assertEquals("Card2 should have 0 resources left", 0, card2.resources.size());
     }
 
@@ -204,22 +203,22 @@ public class ProcessActionTest {
         FakeCard card3 = new FakeCard();
         grid.putCard(new GridPosition(2, 2), card3);
 
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD));
+        card1.addResourcesToCard(List.of(Resource.GREEN));
         card2.setCanAcceptResources(true);
         card3.setCanAcceptResources(true);
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)));
-        List<Pair<Resource, GridPosition>> outputs = Arrays.asList(
-                Pair.of(Resource.WHEAT, new GridPosition(1, 1)),
-                Pair.of(Resource.STONE, new GridPosition(2, 2)));
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)));
+        List<Pair<Resource, GridPosition>> outputs = List.of(
+                Pair.of(Resource.YELLOW, new GridPosition(1, 1)),
+                Pair.of(Resource.RED, new GridPosition(2, 2)));
         List<GridPosition> pollution = new ArrayList<>();
 
         boolean result = processAction.activateCard(card1, grid, inputs, outputs, pollution);
 
         assertTrue("Should handle outputs to multiple cards", result);
-        assertTrue("Card2 should receive resources", card2.getReceivedResources().contains(Resource.WHEAT));
-        assertTrue("Card3 should receive resources", card3.getReceivedResources().contains(Resource.STONE));
+        assertTrue("Card2 should receive resources", card2.getReceivedResources().contains(Resource.YELLOW));
+        assertTrue("Card3 should receive resources", card3.getReceivedResources().contains(Resource.RED));
     }
 
     @Test
@@ -228,13 +227,13 @@ public class ProcessActionTest {
         FakeCard card3 = new FakeCard();
         grid.putCard(new GridPosition(2, 2), card3);
 
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD));
+        card1.addResourcesToCard(List.of(Resource.GREEN));
         card2.setCanAcceptResources(true);
         card3.setCanAcceptResources(true);
 
         List<Pair<Resource, GridPosition>> inputs = new ArrayList<>();
         List<Pair<Resource, GridPosition>> outputs = new ArrayList<>();
-        List<GridPosition> pollution = Arrays.asList(
+        List<GridPosition> pollution = List.of(
                 new GridPosition(1, 1),
                 new GridPosition(2, 2));
 
@@ -248,20 +247,20 @@ public class ProcessActionTest {
     @Test
     public void testActivateCardCombinedOutputsAndPollutionOnSameCard() {
         // Setup: card2 receives both output and pollution
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD));
+        card1.addResourcesToCard(List.of(Resource.GREEN));
         card2.setCanAcceptResources(true);
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)));
-        List<Pair<Resource, GridPosition>> outputs = Arrays.asList(
-                Pair.of(Resource.WHEAT, new GridPosition(1, 1)));
-        List<GridPosition> pollution = Arrays.asList(new GridPosition(1, 1));
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)));
+        List<Pair<Resource, GridPosition>> outputs = List.of(
+                Pair.of(Resource.YELLOW, new GridPosition(1, 1)));
+        List<GridPosition> pollution = List.of(new GridPosition(1, 1));
 
         boolean result = processAction.activateCard(card1, grid, inputs, outputs, pollution);
 
         assertTrue("Should handle outputs and pollution on same card", result);
         List<Resource> received = card2.getReceivedResources();
-        assertTrue("Card2 should have WHEAT", received.contains(Resource.WHEAT));
+        assertTrue("Card2 should have YELLOW", received.contains(Resource.YELLOW));
         assertTrue("Card2 should have POLLUTION", received.contains(Resource.POLLUTION));
         assertEquals("Card2 should have exactly 2 items", 2, received.size());
     }
@@ -269,10 +268,10 @@ public class ProcessActionTest {
     @Test
     public void testActivateCardInvalidGridPosition() {
         // Try to get resources from position without a card
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD));
+        card1.addResourcesToCard(List.of(Resource.GREEN));
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(5, 5)) // No card here
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(5, 5)) // No card here
         );
         List<Pair<Resource, GridPosition>> outputs = new ArrayList<>();
         List<GridPosition> pollution = new ArrayList<>();
@@ -285,12 +284,12 @@ public class ProcessActionTest {
     @Test
     public void testActivateCardInvalidOutputPosition() {
         // Try to put resources to position without a card
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD));
+        card1.addResourcesToCard(List.of(Resource.GREEN));
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)));
-        List<Pair<Resource, GridPosition>> outputs = Arrays.asList(
-                Pair.of(Resource.WHEAT, new GridPosition(9, 9)) // No card here
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)));
+        List<Pair<Resource, GridPosition>> outputs = List.of(
+                Pair.of(Resource.YELLOW, new GridPosition(9, 9)) // No card here
         );
         List<GridPosition> pollution = new ArrayList<>();
 
@@ -304,7 +303,7 @@ public class ProcessActionTest {
         // Try to add pollution to position without a card
         List<Pair<Resource, GridPosition>> inputs = new ArrayList<>();
         List<Pair<Resource, GridPosition>> outputs = new ArrayList<>();
-        List<GridPosition> pollution = Arrays.asList(new GridPosition(7, 7));
+        List<GridPosition> pollution = List.of(new GridPosition(7, 7));
 
         boolean result = processAction.activateCard(card1, grid, inputs, outputs, pollution);
 
@@ -317,14 +316,14 @@ public class ProcessActionTest {
         FakeCard card3 = new FakeCard();
         grid.putCard(new GridPosition(2, 2), card3);
 
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD, Resource.STONE));
+        card1.addResourcesToCard(List.of(Resource.GREEN, Resource.RED));
         card2.setCanAcceptResources(true);
         card3.setCanAcceptResources(false); // This will cause failure
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)));
-        List<Pair<Resource, GridPosition>> outputs = Arrays.asList(
-                Pair.of(Resource.WHEAT, new GridPosition(1, 1)),
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)));
+        List<Pair<Resource, GridPosition>> outputs = List.of(
+                Pair.of(Resource.YELLOW, new GridPosition(1, 1)),
                 Pair.of(Resource.MONEY, new GridPosition(2, 2)) // This will fail
         );
         List<GridPosition> pollution = new ArrayList<>();
@@ -347,30 +346,30 @@ public class ProcessActionTest {
         grid.putCard(new GridPosition(2, 2), card3);
         grid.putCard(new GridPosition(3, 3), card4);
 
-        card1.addResourcesToCard(Arrays.asList(Resource.WOOD, Resource.WOOD, Resource.STONE));
-        card2.addResourcesToCard(Arrays.asList(Resource.WHEAT));
+        card1.addResourcesToCard(List.of(Resource.GREEN, Resource.GREEN, Resource.RED));
+        card2.addResourcesToCard(List.of(Resource.YELLOW));
         card3.setCanAcceptResources(true);
         card4.setCanAcceptResources(true);
 
-        List<Pair<Resource, GridPosition>> inputs = Arrays.asList(
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)),
-                Pair.of(Resource.WOOD, new GridPosition(0, 0)),
-                Pair.of(Resource.WHEAT, new GridPosition(1, 1)));
-        List<Pair<Resource, GridPosition>> outputs = Arrays.asList(
+        List<Pair<Resource, GridPosition>> inputs = List.of(
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)),
+                Pair.of(Resource.GREEN, new GridPosition(0, 0)),
+                Pair.of(Resource.YELLOW, new GridPosition(1, 1)));
+        List<Pair<Resource, GridPosition>> outputs = List.of(
                 Pair.of(Resource.MONEY, new GridPosition(2, 2)),
                 Pair.of(Resource.MONEY, new GridPosition(2, 2)),
-                Pair.of(Resource.STONE, new GridPosition(3, 3)));
-        List<GridPosition> pollution = Arrays.asList(
+                Pair.of(Resource.RED, new GridPosition(3, 3)));
+        List<GridPosition> pollution = List.of(
                 new GridPosition(2, 2),
                 new GridPosition(3, 3));
 
         boolean result = processAction.activateCard(card1, grid, inputs, outputs, pollution);
 
         assertTrue("Complex scenario should succeed", result);
-        assertEquals("Card1 should have 1 resource left (STONE)", 1, card1.resources.size());
+        assertEquals("Card1 should have 1 resource left (RED)", 1, card1.resources.size());
         assertEquals("Card2 should have 0 resources left", 0, card2.resources.size());
         assertEquals("Card3 should receive 3 items (2 MONEY + 1 POLLUTION)", 3, card3.getReceivedResources().size());
-        assertEquals("Card4 should receive 2 items (1 STONE + 1 POLLUTION)", 2, card4.getReceivedResources().size());
+        assertEquals("Card4 should receive 2 items (1 RED + 1 POLLUTION)", 2, card4.getReceivedResources().size());
     }
 
     @Test
@@ -388,9 +387,9 @@ public class ProcessActionTest {
     // Fake implementations for testing
 
     private static class FakeCard implements Card {
-        private List<Resource> resources = new ArrayList<>();
+        private final List<Resource> resources = new ArrayList<>();
 
-        private List<Resource> receivedResources = new ArrayList<>();
+        private final List<Resource> receivedResources = new ArrayList<>();
         private boolean canAcceptResources = true;
 
         public void addResourcesToCard(List<Resource> res) {
@@ -459,7 +458,7 @@ public class ProcessActionTest {
     }
 
     private static class FakeGrid implements Grid {
-        private java.util.Map<GridPosition, Card> cards = new java.util.HashMap<>();
+        private final java.util.Map<GridPosition, Card> cards = new java.util.HashMap<>();
 
         @Override
         public Optional<Card> getCard(GridPosition position) {
