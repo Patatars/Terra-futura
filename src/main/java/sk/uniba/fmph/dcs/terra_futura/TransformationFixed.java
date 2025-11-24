@@ -15,14 +15,14 @@ public final class TransformationFixed implements Effect {
     private final List<Resource> to;
     private final int pollution;
 
-    public TransformationFixed(final List<Resource> from,final List<Resource> to, final int pollution) {
+    public TransformationFixed(final List<Resource> from, final List<Resource> to, final int pollution) {
         this.from = Objects.requireNonNull(from, "Input resources cannot be null");
         this.to = Objects.requireNonNull(to, "Output resources cannot be null");
         this.pollution = pollution;
     }
 
     @Override
-    public boolean check(final List<Resource> input, final List<Resource> output, int availablePollution) {
+    public boolean check(final List<Resource> input, final List<Resource> output, final int availablePollution) {
         // Перевіряємо, чи доступне забруднення достатнє
         if (availablePollution < pollution) {
             return false;

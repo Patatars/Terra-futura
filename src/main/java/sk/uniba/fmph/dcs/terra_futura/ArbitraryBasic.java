@@ -7,8 +7,7 @@ import java.util.Objects;
 
 /**
  * Реалізація ефекту, що дає базову продукцію без вхідних витрат і без використання забруднення.
- * Це "довільна" базова активність картки.
- * Наприклад: [] -> [Green, Green] з витратою 0 забруднення.
+ * Це "довільна" базова активність картки
  */
 public final class ArbitraryBasic implements Effect {
 
@@ -24,7 +23,7 @@ public final class ArbitraryBasic implements Effect {
     }
 
     @Override
-    public boolean check(final List<Resource> input, final List<Resource> output,final int availablePollution) {
+    public boolean check(final List<Resource> input, final List<Resource> output, final int availablePollution) {
         // 1. Цей ефект не вимагає вхідних ресурсів.
         // Тому input має бути порожнім (або ми просто ігноруємо його).
         // Для консистентності перевіримо, що очікувані вхідні ресурси - порожні.

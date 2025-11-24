@@ -21,7 +21,7 @@ public final class EffectOr implements Effect {
     }
 
     @Override
-    public boolean check(final List<Resource> input, final List<Resource> output,final int pollution) {
+    public boolean check(final List<Resource> input, final List<Resource> output, final int pollution) {
         // Перевіряємо, чи хоча б один ефект може бути застосований
         return effects.stream().anyMatch(effect -> effect.check(input, output, pollution));
     }
