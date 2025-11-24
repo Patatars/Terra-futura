@@ -67,6 +67,12 @@ public class ResourceTransferService {
             GridPosition pos = entry.getKey();
             List<Resource> resourcesToAdd = entry.getValue();
 
+            // Skip validation if this card will also receive pollution
+            // It will be validated with combined resources in the pollution loop
+            if (pollution.contains(pos)) {
+                continue;
+            }
+
             if (!grid.getCard(pos).isPresent()) {
                 return false;
             }
