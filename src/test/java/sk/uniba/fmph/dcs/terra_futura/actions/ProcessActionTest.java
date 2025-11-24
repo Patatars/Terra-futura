@@ -384,6 +384,9 @@ public class ProcessActionTest {
 
     private static class FakeCard implements Card {
         private List<Resource> resources = new ArrayList<>();
+        public List<Resource> getResources() {
+            return resources;
+        }
         private List<Resource> receivedResources = new ArrayList<>();
         private boolean canAcceptResources = true;
 
