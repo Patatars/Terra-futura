@@ -1,17 +1,18 @@
 package sk.uniba.fmph.dcs.terra_futura;
 
-import org.junit.jupiter.api.Test;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-class EffectTest {
+public class EffectTest {
 
     //TransformationFixed
 
+
     @Test
-    void transformationFixed_validInput_shouldReturnTrue() {
+    public void transformationFixed_validInput_shouldReturnTrue() {
         // Given
         var from = List.of(Resource.GREEN, Resource.RED);
         var to = List.of(Resource.BULB, Resource.CAR);
@@ -27,7 +28,7 @@ class EffectTest {
     }
 
     @Test
-    void transformationFixed_wrongInput_shouldReturnFalse() {
+    public void transformationFixed_wrongInput_shouldReturnFalse() {
         var effect = new TransformationFixed(
                 List.of(Resource.GREEN),
                 List.of(Resource.BULB),
@@ -42,7 +43,7 @@ class EffectTest {
     }
 
     @Test
-    void transformationFixed_insufficientPollution_shouldReturnFalse() {
+    public void transformationFixed_insufficientPollution_shouldReturnFalse() {
         var effect = new TransformationFixed(
                 List.of(),
                 List.of(Resource.MONEY),
@@ -59,7 +60,7 @@ class EffectTest {
     //Тест для ArbitraryBasic
 
     @Test
-    void arbitraryBasic_validOutput_shouldReturnTrue() {
+    public void arbitraryBasic_validOutput_shouldReturnTrue() {
         var effect = new ArbitraryBasic(List.of(Resource.GREEN, Resource.GREEN));
 
         assertTrue(effect.check(
@@ -71,7 +72,7 @@ class EffectTest {
     }
 
     @Test
-    void arbitraryBasic_nonEmptyInput_shouldReturnFalse() {
+    public void arbitraryBasic_nonEmptyInput_shouldReturnFalse() {
         var effect = new ArbitraryBasic(List.of(Resource.BULB));
 
         assertFalse(effect.check(
@@ -82,7 +83,7 @@ class EffectTest {
     }
 
     @Test
-    void arbitraryBasic_wrongOutput_shouldReturnFalse() {
+    public void arbitraryBasic_wrongOutput_shouldReturnFalse() {
         var effect = new ArbitraryBasic(List.of(Resource.CAR));
 
         assertFalse(effect.check(
@@ -95,7 +96,7 @@ class EffectTest {
     //EffectOr
 
     @Test
-    void effectOr_oneValidEffect_shouldReturnTrue() {
+    public void effectOr_oneValidEffect_shouldReturnTrue() {
         var effect1 = new TransformationFixed(List.of(Resource.RED), List.of(Resource.BULB), 1);
         var effect2 = new ArbitraryBasic(List.of(Resource.MONEY));
         var orEffect = new EffectOr(List.of(effect1, effect2));
@@ -109,7 +110,7 @@ class EffectTest {
     }
 
     @Test
-    void effectOr_allInvalid_shouldReturnFalse() {
+    public void effectOr_allInvalid_shouldReturnFalse() {
         var effect1 = new TransformationFixed(List.of(Resource.GREEN), List.of(Resource.BULB), 1);
         var effect2 = new ArbitraryBasic(List.of(Resource.CAR));
         var orEffect = new EffectOr(List.of(effect1, effect2));
@@ -123,7 +124,7 @@ class EffectTest {
     }
 
     @Test
-    void effectOr_hasAssistance_ifAnySubEffectHasIt() {
+    public void effectOr_hasAssistance_ifAnySubEffectHasIt() {
         // Створимо фейковий ефект з Assistance (для тесту)
         Effect effectWithAssistance = new Effect() {
             @Override
@@ -149,7 +150,7 @@ class EffectTest {
     // Додатково: тест стану (state)
 
     @Test
-    void transformationFixed_state_returnsCorrectString() {
+    public void transformationFixed_state_returnsCorrectString() {
         var effect = new TransformationFixed(
                 List.of(Resource.GREEN),
                 List.of(Resource.BULB),
