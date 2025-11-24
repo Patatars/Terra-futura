@@ -21,7 +21,7 @@ public class ProcessAction {
      * Constructs a ProcessAction with the specified transfer service.
      *
      * @param transferService The service to handle resource transfers.
-     * @throws NullPointerException if transferService is null.
+     * @throws NullPointerException if transferService is null
      */
     public ProcessAction(final ResourceTransferService transferService) {
         this.transferService = Objects.requireNonNull(transferService, "transferService cannot be null");
@@ -50,10 +50,7 @@ public class ProcessAction {
         if (card == null) {
             return false;
         }
-        // Ensure the card is present in the grid before activation
-        if (!grid.getCards().contains(card)) {
-            return false;
-        }
+
         return transferService.executeTransaction(grid, inputs, outputs, pollution);
     }
 }
