@@ -50,6 +50,7 @@ public class ProcessAction {
         if (card == null) {
             return false;
         }
+
         return transferService.executeTransaction(grid, inputs, outputs, pollution);
     }
 }
