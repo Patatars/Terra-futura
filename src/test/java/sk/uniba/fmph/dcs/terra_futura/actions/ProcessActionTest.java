@@ -385,10 +385,19 @@ public class ProcessActionTest {
         assertTrue("activateCard should return true with empty lists", result);
     }
 
+    @Test(expected = NullPointerException.class)
+    public void testConstructorWithNullTransferService() {
+        // Should throw NullPointerException when transferService is null
+        new ProcessAction(null);
+    }
+
     // Fake implementations for testing
 
     private static class FakeCard implements Card {
         private List<Resource> resources = new ArrayList<>();
+        public List<Resource> getResources() {
+            return resources;
+        }
         private List<Resource> receivedResources = new ArrayList<>();
         private boolean canAcceptResources = true;
 

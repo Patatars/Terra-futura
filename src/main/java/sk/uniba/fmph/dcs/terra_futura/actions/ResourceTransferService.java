@@ -30,7 +30,7 @@ public class ResourceTransferService {
      */
     public boolean executeTransaction(final Grid grid, final List<Pair<Resource, GridPosition>> inputs,
             final List<Pair<Resource, GridPosition>> outputs, final List<GridPosition> pollution) {
-        if (grid == null) {
+        if (grid == null || inputs == null || outputs == null || pollution == null) {
             return false;
         }
 
