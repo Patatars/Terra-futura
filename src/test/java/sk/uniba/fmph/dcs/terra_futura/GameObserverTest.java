@@ -1,7 +1,7 @@
 package sk.uniba.fmph.dcs.terra_futura;
+import static org.junit.Assert.*;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -21,7 +21,7 @@ public class GameObserverTest {
      * Test 1: Each player receives the correct personal game state.
      */
     @Test
-    void testNotifyAll_SendsCorrectStateToEachPlayer() {
+    public void testNotifyAll_SendsCorrectStateToEachPlayer() {
         GameObserver gameObserver = new GameObserver();
 
         MockObserver p1 = new MockObserver();
@@ -44,7 +44,7 @@ public class GameObserverTest {
      * Test 2: Removing an observer prevents them from receiving updates.
      */
     @Test
-    void testRemoveObserver_PreventsReceivingNotifications() {
+    public void testRemoveObserver_PreventsReceivingNotifications() {
         GameObserver gameObserver = new GameObserver();
 
         MockObserver p1 = new MockObserver();
@@ -65,7 +65,7 @@ public class GameObserverTest {
      * (e.g., a player not affected this turn)
      */
     @Test
-    void testNotifyAll_ObserverWithoutStateDoesNotGetNotified() {
+    public void testNotifyAll_ObserverWithoutStateDoesNotGetNotified() {
         GameObserver gameObserver = new GameObserver();
 
         MockObserver p1 = new MockObserver();
@@ -80,7 +80,7 @@ public class GameObserverTest {
         gameObserver.notifyAll(newState);
 
         assertEquals("Only player 1 gets an update", p1.lastReceived);
-        assertNull(p2.lastReceived, "Player 2 should not receive anything");
+        assertNull(p2.lastReceived);
     }
 
     /**
@@ -88,7 +88,7 @@ public class GameObserverTest {
      * correctly replaces the old observer.
      */
     @Test
-    void testAddObserver_ReplacesExistingObserver() {
+    public void testAddObserver_ReplacesExistingObserver() {
         GameObserver gameObserver = new GameObserver();
 
         MockObserver oldObserver = new MockObserver();
@@ -102,7 +102,7 @@ public class GameObserverTest {
 
         gameObserver.notifyAll(newState);
 
-        assertNull(oldObserver.lastReceived, "Old observer must NOT receive updates");
+        assertNull(oldObserver.lastReceived);
         assertEquals("Updated player view", newObserver.lastReceived);
     }
 
@@ -111,7 +111,7 @@ public class GameObserverTest {
      * update observers repeatedly with new turn states.
      */
     @Test
-    void testNotifyAll_MultipleGameTurns() {
+    public void testNotifyAll_MultipleGameTurns() {
         GameObserver gameObserver = new GameObserver();
 
         MockObserver p1 = new MockObserver();
