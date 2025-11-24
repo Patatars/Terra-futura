@@ -1,5 +1,7 @@
 package sk.uniba.fmph.dcs.terra_futura;
 
+import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -7,20 +9,20 @@ import java.util.Objects;
  * Реалізація ефекту, що виконує фіксоване перетворення ресурсів.
  * Наприклад: [Green, Red] -> [Bulb, Car] з витратою 1 забруднення.
  */
-public class TransformationFixed implements Effect {
+public final class TransformationFixed implements Effect {
 
     private final List<Resource> from;
     private final List<Resource> to;
     private final int pollution;
 
-    public TransformationFixed(List<Resource> from, List<Resource> to, int pollution) {
+    public TransformationFixed(List<Resource> from, List<Resource> to, final int pollution) {
         this.from = Objects.requireNonNull(from, "Input resources cannot be null");
         this.to = Objects.requireNonNull(to, "Output resources cannot be null");
         this.pollution = pollution;
     }
 
     @Override
-    public boolean check(List<Resource> input, List<Resource> output, int availablePollution) {
+    public boolean check(final List<Resource> input, final List<Resource> output, int availablePollution) {
         // Перевіряємо, чи доступне забруднення достатнє
         if (availablePollution < pollution) {
             return false;

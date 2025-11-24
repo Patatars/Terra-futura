@@ -1,6 +1,7 @@
 package sk.uniba.fmph.dcs.terra_futura;
 
-import java.util.Collections;
+import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -9,7 +10,7 @@ import java.util.Objects;
  * Це "довільна" базова активність картки.
  * Наприклад: [] -> [Green, Green] з витратою 0 забруднення.
  */
-public class ArbitraryBasic implements Effect {
+public final class ArbitraryBasic implements Effect {
 
     private final List<Resource> to;
 

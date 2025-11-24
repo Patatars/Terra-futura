@@ -1,6 +1,8 @@
 package sk.uniba.fmph.dcs.terra_futura;
 
 import org.junit.jupiter.api.Test;
+import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
+
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,5 +1,7 @@
 package sk.uniba.fmph.dcs.terra_futura;
 
+import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
