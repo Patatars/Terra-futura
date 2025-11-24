@@ -4,8 +4,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class GameObserver {
 
+    public Map<Integer, ObserverInterface> getObservers() {
+        return observers;
+    }
+
     // Map of player ID (int) to their corresponding observer interface.
-    Map<Integer, ObserverInterface> observers = new ConcurrentHashMap<>();
+    private Map<Integer, ObserverInterface> observers = new ConcurrentHashMap<>();
 
     /**
      * Register an observer for a specific player.
@@ -17,7 +21,7 @@ public class GameObserver {
      * @param observer the observer to notify when this player's state changes;
      *                 must not be null
      */
-    public void addObserver(int playerId, ObserverInterface observer) {
+    public void addObserver(final int playerId, final ObserverInterface observer) {
         observers.put(playerId, observer);
     }
 
@@ -27,19 +31,19 @@ public class GameObserver {
      * @param playerId the unique identifier for the player whose observer
      *                 should be removed
      */
-    public void removeObserver(int playerId) {
+    public void removeObserver(final int playerId) {
         observers.remove(playerId);
     }
 
     /**
      * Notify all registered observers of their new game state.
-     *
+     * @param newState state that shoud be notified
      * This method iterates through all registered observers and forwards the
      * appropriate state string to each one based on their player ID. This ensures
      * "everybody sees what he has to" - each observer only receives updates for
      * their specific player.
      */
-    public void notifyAll(Map<Integer, String> newState) {
+    public void notifyAll(final Map<Integer, String> newState) {
         for (Map.Entry<Integer, ObserverInterface> entry : observers.entrySet()) {
             int playerId = entry.getKey();
             ObserverInterface observer = entry.getValue();
