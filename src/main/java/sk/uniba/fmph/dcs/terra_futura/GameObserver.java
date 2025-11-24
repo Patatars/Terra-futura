@@ -2,14 +2,19 @@ package sk.uniba.fmph.dcs.terra_futura;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class GameObserver {
-
-    public Map<Integer, ObserverInterface> getObservers() {
-        return observers;
-    }
+public final class GameObserver {
 
     // Map of player ID (int) to their corresponding observer interface.
     private final Map<Integer, ObserverInterface> observers = new ConcurrentHashMap<>();
+
+    /**
+     * Get the map of all registered observers.
+     *
+     * @return a map of player IDs to their corresponding observer interfaces
+     */
+    public Map<Integer, ObserverInterface> getObservers() {
+        return observers;
+    }
 
     /**
      * Register an observer for a specific player.
