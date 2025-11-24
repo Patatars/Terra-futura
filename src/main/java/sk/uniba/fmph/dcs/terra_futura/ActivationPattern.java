@@ -7,16 +7,15 @@ import java.util.Collection;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-
-
 public final class ActivationPattern {
     private ArrayList<SimpleEntry<Integer, Integer>> pattern;
     private boolean selected;
     private InterfaceActivateGrid grid;
 
-    public ActivationPattern(final InterfaceActivateGrid grid, final Collection<SimpleEntry<Integer, Integer>> pattern) {
+    public ActivationPattern(final InterfaceActivateGrid grid,
+            final Collection<SimpleEntry<Integer, Integer>> pattern) {
         this.grid = grid;
-        this.pattern = new ArrayList<>(pattern);  // copy the pattern
+        this.pattern = new ArrayList<>(pattern); // copy the pattern
         this.selected = false;
     }
 
@@ -28,15 +27,13 @@ public final class ActivationPattern {
         this.selected = true;
     }
 
-
     public boolean isSelected() {
         return this.selected;
     }
 
-
     public String state() {
         JSONArray patternList = new JSONArray();
-        for (SimpleEntry<Integer, Integer> entry: pattern) {
+        for (SimpleEntry<Integer, Integer> entry : pattern) {
             JSONObject pair = new JSONObject();
             pair.put("x", entry.getKey());
             pair.put("y", entry.getValue());
