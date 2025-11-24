@@ -3,6 +3,8 @@ package sk.uniba.fmph.dcs.terra_futura;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 
 import java.util.List;
+import java.util.Arrays;
+import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -14,12 +16,12 @@ public class EffectTest {
     @Test
     public void transformationFixed_validInput_shouldReturnTrue() {
         // Given
-        var from = List.of(Resource.GREEN, Resource.RED);
-        var to = List.of(Resource.BULB, Resource.CAR);
-        var effect = new TransformationFixed(from, to, 1);
+        List<Resource> from = Arrays.asList(Resource.GREEN, Resource.RED);
+        List<Resource> to = Arrays.asList(Resource.BULB, Resource.CAR);
+        Effect effect = new TransformationFixed(from, to, 1);
 
-        var input = List.of(Resource.GREEN, Resource.RED);
-        var output = List.of(Resource.BULB, Resource.CAR);
+        List<Resource> input = Arrays.asList(Resource.GREEN, Resource.RED);
+        List<Resource> output = Arrays.asList(Resource.BULB, Resource.CAR);
         int pollution = 1;
 
         // When & Then
@@ -29,98 +31,99 @@ public class EffectTest {
 
     @Test
     public void transformationFixed_wrongInput_shouldReturnFalse() {
-        var effect = new TransformationFixed(
-                List.of(Resource.GREEN),
-                List.of(Resource.BULB),
-                0
-        );
+        List<Resource> from = Arrays.asList(Resource.GREEN);
+        List<Resource> to = Arrays.asList(Resource.BULB);
+        Effect effect = new TransformationFixed(from, to, 0);
 
-        assertFalse(effect.check(
-                List.of(Resource.RED), // неправильний вхід
-                List.of(Resource.BULB),
-                0
-        ));
+        List<Resource> input = Arrays.asList(Resource.RED);
+        List<Resource> output = Arrays.asList(Resource.BULB);
+        int pollution = 0;
+
+        assertFalse(effect.check(input, output, pollution));
     }
 
     @Test
     public void transformationFixed_insufficientPollution_shouldReturnFalse() {
-        var effect = new TransformationFixed(
-                List.of(),
-                List.of(Resource.MONEY),
-                2
-        );
+        List<Resource> from = new ArrayList<>();
+        List<Resource> to = Arrays.asList(Resource.MONEY);
+        Effect effect = new TransformationFixed(from, to, 2);
 
-        assertFalse(effect.check(
-                List.of(),
-                List.of(Resource.MONEY),
-                1 // недостатньо забруднення
-        ));
+        List<Resource> input = new ArrayList<>();
+        List<Resource> output = Arrays.asList(Resource.MONEY);
+        int pollution = 1;
+
+        assertFalse(effect.check(input, output, pollution));
     }
 
     //Тест для ArbitraryBasic
 
     @Test
     public void arbitraryBasic_validOutput_shouldReturnTrue() {
-        var effect = new ArbitraryBasic(List.of(Resource.GREEN, Resource.GREEN));
+        List<Resource> to = Arrays.asList(Resource.GREEN, Resource.GREEN);
+        Effect effect = new ArbitraryBasic(to);
 
-        assertTrue(effect.check(
-                List.of(),                     // немає вхідних ресурсів
-                List.of(Resource.GREEN, Resource.GREEN),
-                0                              // не використовує забруднення
-        ));
+        List<Resource> input = new ArrayList<>();
+        List<Resource> output = Arrays.asList(Resource.GREEN, Resource.GREEN);
+        int pollution = 0;
+
+        assertTrue(effect.check(input, output, pollution));
         assertFalse(effect.hasAssistance());
     }
 
     @Test
     public void arbitraryBasic_nonEmptyInput_shouldReturnFalse() {
-        var effect = new ArbitraryBasic(List.of(Resource.BULB));
+        List<Resource> to = Arrays.asList(Resource.BULB);
+        Effect effect = new ArbitraryBasic(to);
 
-        assertFalse(effect.check(
-                List.of(Resource.GREEN), // не повинно бути входу
-                List.of(Resource.BULB),
-                0
-        ));
+        List<Resource> input = Arrays.asList(Resource.GREEN);
+        List<Resource> output = Arrays.asList(Resource.BULB);
+        int pollution = 0;
+
+        assertFalse(effect.check(input, output, pollution));
     }
 
     @Test
     public void arbitraryBasic_wrongOutput_shouldReturnFalse() {
-        var effect = new ArbitraryBasic(List.of(Resource.CAR));
+        List<Resource> to = Arrays.asList(Resource.CAR);
+        Effect effect = new ArbitraryBasic(to);
 
-        assertFalse(effect.check(
-                List.of(),
-                List.of(Resource.GEAR), // інший вихід
-                0
-        ));
+        List<Resource> input = new ArrayList<>();
+        List<Resource> output = Arrays.asList(Resource.GEAR);
+        int pollution = 0;
+
+        assertFalse(effect.check(input, output, pollution));
     }
 
     //EffectOr
 
     @Test
     public void effectOr_oneValidEffect_shouldReturnTrue() {
-        var effect1 = new TransformationFixed(List.of(Resource.RED), List.of(Resource.BULB), 1);
-        var effect2 = new ArbitraryBasic(List.of(Resource.MONEY));
-        var orEffect = new EffectOr(List.of(effect1, effect2));
+        List<Resource> from1 = Arrays.asList(Resource.RED);
+        List<Resource> to1 = Arrays.asList(Resource.BULB);
+        Effect effect1 = new TransformationFixed(from1, to1, 1);
+        Effect effect2 = new ArbitraryBasic(Arrays.asList(Resource.MONEY));
+        Effect orEffect = new EffectOr(Arrays.asList(effect1, effect2));
 
-        // Спробуємо активувати другий ефект (ArbitraryBasic)
-        assertTrue(orEffect.check(
-                List.of(),
-                List.of(Resource.MONEY),
-                0
-        ));
+        List<Resource> input = new ArrayList<>();
+        List<Resource> output = Arrays.asList(Resource.MONEY);
+        int pollution = 0;
+
+        assertTrue(orEffect.check(input, output, pollution));
     }
 
     @Test
     public void effectOr_allInvalid_shouldReturnFalse() {
-        var effect1 = new TransformationFixed(List.of(Resource.GREEN), List.of(Resource.BULB), 1);
-        var effect2 = new ArbitraryBasic(List.of(Resource.CAR));
-        var orEffect = new EffectOr(List.of(effect1, effect2));
+        List<Resource> from1 = Arrays.asList(Resource.GREEN);
+        List<Resource> to1 = Arrays.asList(Resource.BULB);
+        Effect effect1 = new TransformationFixed(from1, to1, 1);
+        Effect effect2 = new ArbitraryBasic(Arrays.asList(Resource.CAR));
+        Effect orEffect = new EffectOr(Arrays.asList(effect1, effect2));
 
-        // Ні один ефект не підходить
-        assertFalse(orEffect.check(
-                List.of(Resource.YELLOW), // ні до чого не підходить
-                List.of(Resource.GEAR),
-                0
-        ));
+        List<Resource> input = Arrays.asList(Resource.YELLOW);
+        List<Resource> output = Arrays.asList(Resource.GEAR);
+        int pollution = 0;
+
+        assertFalse(orEffect.check(input, output, pollution));
     }
 
     @Test
@@ -141,8 +144,8 @@ public class EffectTest {
             }
         };
 
-        var normalEffect = new ArbitraryBasic(List.of(Resource.GREEN));
-        var orEffect = new EffectOr(List.of(normalEffect, effectWithAssistance));
+        Effect normalEffect = new ArbitraryBasic(Arrays.asList(Resource.GREEN));
+        Effect orEffect = new EffectOr(Arrays.asList(normalEffect, effectWithAssistance));
 
         assertTrue(orEffect.hasAssistance());
     }
@@ -151,11 +154,9 @@ public class EffectTest {
 
     @Test
     public void transformationFixed_state_returnsCorrectString() {
-        var effect = new TransformationFixed(
-                List.of(Resource.GREEN),
-                List.of(Resource.BULB),
-                1
-        );
+        List<Resource> from = Arrays.asList(Resource.GREEN);
+        List<Resource> to = Arrays.asList(Resource.BULB);
+        Effect effect = new TransformationFixed(from, to, 1);
         String state = effect.state();
         assertTrue(state.contains("TransformationFixed"));
         assertTrue(state.contains("GREEN"));
