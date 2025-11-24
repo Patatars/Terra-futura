@@ -21,7 +21,7 @@ public class ProcessAction {
      * Constructs a ProcessAction with the specified transfer service.
      *
      * @param transferService The service to handle resource transfers.
-     * @throws NullPointerException if transferService is null
+     * @throws NullPointerException if transferService is null.
      */
     public ProcessAction(final ResourceTransferService transferService) {
         this.transferService = Objects.requireNonNull(transferService, "transferService cannot be null");
