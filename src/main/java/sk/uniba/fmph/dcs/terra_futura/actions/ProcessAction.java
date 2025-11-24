@@ -7,6 +7,7 @@ import sk.uniba.fmph.dcs.terra_futura.game.Card;
 import sk.uniba.fmph.dcs.terra_futura.game.Grid;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a standard process action where a card is activated within the
@@ -20,9 +21,10 @@ public class ProcessAction {
      * Constructs a ProcessAction with the specified transfer service.
      *
      * @param transferService The service to handle resource transfers.
+     * @throws NullPointerException if transferService is null.
      */
     public ProcessAction(final ResourceTransferService transferService) {
-        this.transferService = transferService;
+        this.transferService = Objects.requireNonNull(transferService, "transferService cannot be null");
     }
 
     /**

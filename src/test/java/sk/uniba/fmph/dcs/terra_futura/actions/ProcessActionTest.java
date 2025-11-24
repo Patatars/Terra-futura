@@ -37,6 +37,11 @@ public class ProcessActionTest {
         grid.putCard(new GridPosition(1, 1), card2);
     }
 
+    @Test(expected = NullPointerException.class)
+    public void testConstructorWithNullTransferService() {
+        new ProcessAction(null);
+    }
+
     @Test
     public void testActivateCardWithNullCard() {
         List<Pair<Resource, GridPosition>> inputs = new ArrayList<>();
