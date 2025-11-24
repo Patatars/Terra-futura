@@ -28,8 +28,8 @@ public class ResourceTransferService {
      * @return true if the transaction was successful, false otherwise (e.g.,
      *         insufficient resources or capacity).
      */
-    public boolean executeTransaction(Grid grid, List<Pair<Resource, GridPosition>> inputs,
-            List<Pair<Resource, GridPosition>> outputs, List<GridPosition> pollution) {
+    public boolean executeTransaction(final Grid grid, final List<Pair<Resource, GridPosition>> inputs,
+            final List<Pair<Resource, GridPosition>> outputs, final List<GridPosition> pollution) {
         if (grid == null) {
             return false;
         }
