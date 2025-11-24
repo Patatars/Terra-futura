@@ -8,8 +8,10 @@ import sk.uniba.fmph.dcs.terra_futura.game.Grid;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Service responsible for transferring resources between cards and handling
@@ -63,9 +65,18 @@ public class ResourceTransferService {
             outputsByCard.computeIfAbsent(output.getValue(), k -> new ArrayList<>()).add(output.getKey());
         }
 
+        // Convert pollution list to set for O(1) lookup performance
+        Set<GridPosition> pollutionSet = new HashSet<>(pollution);
+
         for (Map.Entry<GridPosition, List<Resource>> entry : outputsByCard.entrySet()) {
             GridPosition pos = entry.getKey();
             List<Resource> resourcesToAdd = entry.getValue();
+
+            // Skip validation if this card will also receive pollution
+            // It will be validated with combined resources in the pollution loop
+            if (pollutionSet.contains(pos)) {
+                continue;
+            }
 
             if (!grid.getCard(pos).isPresent()) {
                 return false;
