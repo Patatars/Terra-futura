@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 /**
  * Композитний ефект, який успішно виконується, якщо хоча б один з його під-ефектів успішно виконується.
  */
-public class EffectOr implements Effect {
+public final class EffectOr implements Effect {
 
     private final List<Effect> effects;
 
@@ -21,7 +21,7 @@ public class EffectOr implements Effect {
     }
 
     @Override
-    public boolean check(List<Resource> input, List<Resource> output, int pollution) {
+    public boolean check(final List<Resource> input, final List<Resource> output,final int pollution) {
         // Перевіряємо, чи хоча б один ефект може бути застосований
         return effects.stream().anyMatch(effect -> effect.check(input, output, pollution));
     }

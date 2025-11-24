@@ -19,12 +19,12 @@ public final class ArbitraryBasic implements Effect {
      *
      * @param to Список ресурсів, які ефект продукує.
      */
-    public ArbitraryBasic(List<Resource> to) {
+    public ArbitraryBasic(final List<Resource> to) {
         this.to = Objects.requireNonNull(to, "Output resources cannot be null");
     }
 
     @Override
-    public boolean check(List<Resource> input, List<Resource> output, int availablePollution) {
+    public boolean check(final List<Resource> input, final List<Resource> output,final int availablePollution) {
         // 1. Цей ефект не вимагає вхідних ресурсів.
         // Тому input має бути порожнім (або ми просто ігноруємо його).
         // Для консистентності перевіримо, що очікувані вхідні ресурси - порожні.
