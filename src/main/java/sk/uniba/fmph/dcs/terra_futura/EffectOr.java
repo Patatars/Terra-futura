@@ -13,7 +13,7 @@ public final class EffectOr implements Effect {
 
     private final List<Effect> effects;
 
-    public EffectOr(List<Effect> effects) {
+    public EffectOr(final List<Effect> effects) {
         this.effects = Objects.requireNonNull(effects, "Effects list cannot be null");
         if (effects.isEmpty()) {
             throw new IllegalArgumentException("EffectOr must contain at least one effect");
