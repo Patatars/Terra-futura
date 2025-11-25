@@ -1,10 +1,11 @@
 package sk.uniba.fmph.dcs.terra_futura.actions;
 
 import org.apache.commons.lang3.tuple.Pair;
+import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
-import sk.uniba.fmph.dcs.terra_futura.game.Card;
-import sk.uniba.fmph.dcs.terra_futura.game.Grid;
-import sk.uniba.fmph.dcs.terra_futura.game.GridPosition;
+import sk.uniba.fmph.dcs.terra_futura.grid.Grid;
+import sk.uniba.fmph.dcs.terra_futura.grid.GridPosition;
+
 
 import java.util.*;
 
