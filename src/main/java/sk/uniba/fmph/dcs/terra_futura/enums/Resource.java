@@ -18,7 +18,7 @@ public enum Resource {
 
     private final Points points;
 
-    Resource(Points points) {
+    Resource(final Points points) {
         this.points = points;
     }
 }

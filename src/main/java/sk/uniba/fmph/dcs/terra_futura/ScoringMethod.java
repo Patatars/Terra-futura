@@ -14,21 +14,19 @@ public class ScoringMethod implements ScoringMethodInterface {
     // Points awarded per combination/unit
     private final Points pointsPerCombination;
 
-    // Cached calculation result; empty until calculation runs
-    private Optional<Points> calculatedTotal = Optional.empty();
+    // Cached calculation result; null until calculation runs
+    private Points calculatedTotal;
 
-    public ScoringMethod(List<Resource> resources, Points pointsPerCombination) {
+    public ScoringMethod(final List<Resource> resources, final Points pointsPerCombination) {
         this.resources = resources;
         this.pointsPerCombination = pointsPerCombination;
     }
 
     /**
      * Calculate and store the total score for the current resources.
-     *
      * Algorithm: sum all resource point values from the list. Each resource
      * in the list has its own point value (e.g., GREEN=1, CAR=6, POLLUTION=-1).
      * The pointsPerCombination is added as bonus points for having the complete set.
-     *
      * Edge cases handled:
      * - If {@code resources} is empty, the sum is 0 plus the bonus points.
      * - The method does not modify the original resources list.
@@ -40,23 +38,21 @@ public class ScoringMethod implements ScoringMethodInterface {
                 .mapToInt(resource -> resource.getPoints().value())
                 .sum();
 
-        // Add the bonus points for having this combination
-        Points total = new Points(totalFromResources + pointsPerCombination.value());
-
-        // Store the computed value so callers can query it later.
-        calculatedTotal = Optional.of(total);
+        // Add the bonus points for having this combination and store the result
+        calculatedTotal = new Points(totalFromResources + pointsPerCombination.value());
     }
 
     @Override
     public String state() {
-        return calculatedTotal
-                .map(points -> "Selected scoring method: total points = " + points.value())
-                .orElse("Scoring method not yet selected.");
+        if (calculatedTotal != null) {
+            return "Selected scoring method: total points = " + calculatedTotal.value();
+        }
+        return "Scoring method not yet selected.";
     }
 
     // Expose the calculated total (if present) to callers.
     public Optional<Points> getCalculatedTotal() {
-        return calculatedTotal;
+        return Optional.ofNullable(calculatedTotal);
     }
 }
 
