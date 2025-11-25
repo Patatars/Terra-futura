@@ -23,6 +23,8 @@ public interface Effect {
 
     /**
      * Indicates whether this effect provides an Assistance reward.
+     *
+     * @return true if the effect has Assistance, false otherwise.
      */
     boolean hasAssistance();
 
