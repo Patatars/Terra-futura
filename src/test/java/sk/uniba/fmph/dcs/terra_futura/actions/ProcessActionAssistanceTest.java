@@ -182,7 +182,6 @@ public class ProcessActionAssistanceTest {
         assertTrue(card.activated);
     }
 
-
     @Test
     public void testNeighborsActivated() {
         FakeCard neighbor1 = new FakeCard();

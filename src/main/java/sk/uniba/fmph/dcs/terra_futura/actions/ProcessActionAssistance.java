@@ -35,6 +35,7 @@ public class ProcessActionAssistance {
      * @param pollution       Pollution generated
      * @return true if activation succeeded
      */
+
     public boolean activateCard(
             Card card,
             Grid grid,
