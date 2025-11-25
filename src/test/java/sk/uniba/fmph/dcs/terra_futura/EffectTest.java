@@ -1,5 +1,9 @@
 package sk.uniba.fmph.dcs.terra_futura;
 
+import sk.uniba.fmph.dcs.terra_futura.effect.ArbitraryBasic;
+import sk.uniba.fmph.dcs.terra_futura.effect.Effect;
+import sk.uniba.fmph.dcs.terra_futura.effect.EffectOr;
+import sk.uniba.fmph.dcs.terra_futura.effect.TransformationFixed;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 
 import java.util.List;

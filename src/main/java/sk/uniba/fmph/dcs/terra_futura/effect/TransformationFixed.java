@@ -1,4 +1,4 @@
-package sk.uniba.fmph.dcs.terra_futura;
+package sk.uniba.fmph.dcs.terra_futura.effect;
 
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 
