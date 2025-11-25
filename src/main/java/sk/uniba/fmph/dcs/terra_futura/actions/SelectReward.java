@@ -7,17 +7,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Manages the reward selection process when assistance is involved.
+ * Tracks which player can select from available reward resources.
+ */
 public class SelectReward {
 
     private Optional<Integer> player;
     private List<Resource> selection;
 
+    /**
+     * Constructs a new SelectReward with no player and empty selection.
+     */
     public SelectReward() {
         this.player = Optional.empty();
         this.selection = new ArrayList<>();
     }
 
-    public boolean setReward(int player, Card card, List<Resource> reward) {
+    /**
+     * Sets the reward context for a player.
+     *
+     * @param player The player ID who can select rewards.
+     * @param card   The card associated with the reward (may be unused).
+     * @param reward The list of available reward resources.
+     * @return true if the reward was set successfully, false if reward is null.
+     */
+    public boolean setReward(final int player, final Card card, final List<Resource> reward) {
         if (reward == null) {
             return false;
         }
@@ -26,16 +41,32 @@ public class SelectReward {
         return true;
     }
 
-    public boolean canSelectReward(Resource source) {
+    /**
+     * Checks if a resource is available for selection.
+     *
+     * @param source The resource to check.
+     * @return true if the resource is available, false otherwise.
+     */
+    public boolean canSelectReward(final Resource source) {
         return selection.contains(source);
     }
 
-    public void selectReward(Resource resource) {
+    /**
+     * Selects and removes a resource from the available options.
+     *
+     * @param resource The resource to select.
+     */
+    public void selectReward(final Resource resource) {
         if (canSelectReward(resource)) {
             selection.remove(resource);
         }
     }
 
+    /**
+     * Returns the current state as a string for debugging.
+     *
+     * @return String representation of player and selection.
+     */
     public String state() {
         if (player.isEmpty()) {
             return "Player: None, Selection: []";
