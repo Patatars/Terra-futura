@@ -42,6 +42,14 @@ public class ScoringMethodImpl implements ScoringMethod {
         calculatedTotal = Optional.of(new Points(totalFromResources + pointsPerCombination.value()));
     }
 
+    /**
+     * Returns the current state of the scoring method as a string.
+     * If the scoring has been calculated, returns the total points.
+     * Otherwise, returns a message indicating the method is not yet selected.
+     * This method can be safely overridden by subclasses to provide
+     * custom state representations.
+     * @return the current state as a string
+     */
     @Override
     public String state() {
         if (calculatedTotal.isPresent()) {
@@ -50,7 +58,14 @@ public class ScoringMethodImpl implements ScoringMethod {
         return "Scoring method not yet selected.";
     }
 
-    // Expose the calculated total (if present) to callers.
+    /**
+     * Expose the calculated total (if present) to callers.
+     * This method can be safely overridden by subclasses if needed,
+     * for example to provide additional validation or transformation
+     * of the calculated result.
+     * @return an Optional containing the calculated total points if
+     *         calculation has been performed, or empty Optional otherwise
+     */
     public Optional<Points> getCalculatedTotal() {
         return calculatedTotal;
     }
