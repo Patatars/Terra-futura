@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Реалізація ефекту, що виконує фіксоване перетворення ресурсів.
- * Наприклад: [Green, Red] -> [Bulb, Car] з витратою 1 забруднення.
+ * Fixed transformation effect: exact input → exact output, optionally consuming pollution.
  */
 public final class TransformationFixed implements Effect {
 
@@ -23,24 +22,21 @@ public final class TransformationFixed implements Effect {
 
     @Override
     public boolean check(final List<Resource> input, final List<Resource> output, final int availablePollution) {
-        // Перевіряємо, чи доступне забруднення достатнє
+
         if (availablePollution < pollution) {
             return false;
         }
 
-        // Перевіряємо, чи вхідні ресурси точно відповідають очікуваним
+
         if (!input.equals(from)) {
             return false;
         }
 
-        // Перевіряємо, чи вихідні ресурси точно відповідають очікуваним
         return output.equals(to);
     }
 
     @Override
     public boolean hasAssistance() {
-        // За замовчуванням, фіксоване перетворення не має Assistance.
-        // Можна додати поле `hasAssistance` у конструктор, якщо потрібно.
         return false;
     }
 

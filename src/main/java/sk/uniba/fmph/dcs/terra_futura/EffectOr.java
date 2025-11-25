@@ -5,9 +5,9 @@ import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
 /**
- * Композитний ефект, який успішно виконується, якщо хоча б один з його під-ефектів успішно виконується.
+ * Composite effect that succeeds if at least one of its sub-effects succeeds.
+ * Used to model cards with multiple activation options.
  */
 public final class EffectOr implements Effect {
 
@@ -22,13 +22,11 @@ public final class EffectOr implements Effect {
 
     @Override
     public boolean check(final List<Resource> input, final List<Resource> output, final int pollution) {
-        // Перевіряємо, чи хоча б один ефект може бути застосований
         return effects.stream().anyMatch(effect -> effect.check(input, output, pollution));
     }
 
     @Override
     public boolean hasAssistance() {
-        // Якщо хоча б один ефект має Assistance, то і цей ефект має Assistance
         return effects.stream().anyMatch(Effect::hasAssistance);
     }
 

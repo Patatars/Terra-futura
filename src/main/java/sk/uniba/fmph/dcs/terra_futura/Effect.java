@@ -5,32 +5,31 @@ import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import java.util.List;
 
 /**
- * Інтерфейс для ефектів карток.
- * Використовується для перевірки можливості отримання ресурсів з заданим забрудненням.
+ * Represents a card effect that can be checked for applicability
+ * given input resources, desired output, and available pollution.
  */
 public interface Effect {
 
     /**
-     * Перевіряє, чи можна досягти вихідних ресурсів з вхідних ресурсів та заданого рівня забруднення.
+     * Checks whether this effect can produce the given output resources
+     * from the provided input resources using the available pollution.
      *
-     * @param input   Список вхідних ресурсів.
-     * @param output  Список вихідних ресурсів, які потрібно отримати.
-     * @param pollution Рівень забруднення, доступний для використання.
-     * @return true, якщо ефект може бути застосований; false — ні.
+     * @param input     the list of input resources
+     * @param output    the desired list of output resources
+     * @param pollution the amount of pollution available for use
+     * @return true if the effect can be applied, false otherwise
      */
     boolean check(List<Resource> input, List<Resource> output, int pollution);
 
     /**
-     * Перевіряє, чи цей ефект має функцію "Assistance" (допомога).
-     *
-     * @return true, якщо ефект має Assistance; false — ні.
+     * Indicates whether this effect provides an Assistance reward
      */
     boolean hasAssistance();
 
     /**
-     * Повертає стан ефекту у вигляді рядка (для логування/відображення).
+     * Returns a string representation of the effect's current state.
      *
-     * @return Рядок, що описує стан ефекту.
+     * @return a descriptive string of the effect
      */
     String state();
 }

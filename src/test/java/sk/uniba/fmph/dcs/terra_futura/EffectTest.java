@@ -11,8 +11,6 @@ import static org.junit.Assert.*;
 public class EffectTest {
 
     //TransformationFixed
-
-
     @Test
     public void transformationFixed_validInput_shouldReturnTrue() {
         // Given
@@ -55,7 +53,7 @@ public class EffectTest {
         assertFalse(effect.check(input, output, pollution));
     }
 
-    //Тест для ArbitraryBasic
+    //ArbitraryBasic
 
     @Test
     public void arbitraryBasic_validOutput_shouldReturnTrue() {
@@ -150,7 +148,7 @@ public class EffectTest {
         assertTrue(orEffect.hasAssistance());
     }
 
-    // Додатково: тест стану (state)
+    // state
 
     @Test
     public void transformationFixed_state_returnsCorrectString() {
