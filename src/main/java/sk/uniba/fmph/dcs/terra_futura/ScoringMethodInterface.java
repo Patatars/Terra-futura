@@ -11,6 +11,7 @@ public interface ScoringMethodInterface {
      * Returns the current state as a string.
      * Example: "Scoring method not yet selected."
      *          "Selected scoring method: total points = 25"
+     * @return the current state of the scoring method
      */
     String state();
 }
