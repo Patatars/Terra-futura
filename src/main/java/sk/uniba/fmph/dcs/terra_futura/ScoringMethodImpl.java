@@ -15,7 +15,7 @@ public class ScoringMethodImpl implements ScoringMethod {
     private final Points pointsPerCombination;
 
     // Cached calculation result; null until calculation runs
-    private Optional<Points> calculatedTotal;
+    private Optional<Points> calculatedTotal = Optional.empty();
 
     public ScoringMethodImpl(final List<Resource> resources, final Points pointsPerCombination) {
         this.resources = resources;
