@@ -2,6 +2,9 @@ package sk.uniba.fmph.dcs.terra_futura;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import sk.uniba.fmph.dcs.terra_futura.game.GameObserver;
+import sk.uniba.fmph.dcs.terra_futura.game.ObserverInterface;
+
 import java.util.Map;
 import java.util.HashMap;
 
