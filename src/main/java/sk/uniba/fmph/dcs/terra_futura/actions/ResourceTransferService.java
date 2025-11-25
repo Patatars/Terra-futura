@@ -1,10 +1,10 @@
 package sk.uniba.fmph.dcs.terra_futura.actions;
 
 import org.apache.commons.lang3.tuple.Pair;
-import sk.uniba.fmph.dcs.terra_futura.game.GridPosition;
+import sk.uniba.fmph.dcs.terra_futura.grid.GridPosition;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
-import sk.uniba.fmph.dcs.terra_futura.game.Card;
-import sk.uniba.fmph.dcs.terra_futura.game.Grid;
+import sk.uniba.fmph.dcs.terra_futura.card.Card;
+import sk.uniba.fmph.dcs.terra_futura.grid.Grid;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ public class ResourceTransferService {
             GridPosition pos = entry.getKey();
             List<Resource> requiredResources = entry.getValue();
 
-            if (!grid.getCard(pos).isPresent()) {
+            if (grid.getCard(pos).isEmpty()) {
                 return false;
             }
             Card sourceCard = grid.getCard(pos).get();
@@ -78,7 +78,7 @@ public class ResourceTransferService {
                 continue;
             }
 
-            if (!grid.getCard(pos).isPresent()) {
+            if (grid.getCard(pos).isEmpty()) {
                 return false;
             }
             Card targetCard = grid.getCard(pos).get();
@@ -98,7 +98,7 @@ public class ResourceTransferService {
             GridPosition pos = entry.getKey();
             List<Resource> pollutionResources = entry.getValue();
 
-            if (!grid.getCard(pos).isPresent()) {
+            if (grid.getCard(pos).isEmpty()) {
                 return false;
             }
             Card targetCard = grid.getCard(pos).get();

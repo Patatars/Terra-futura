@@ -1,4 +1,4 @@
-package sk.uniba.fmph.dcs.terra_futura;
+package sk.uniba.fmph.dcs.terra_futura.game;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,7 +18,6 @@ public final class GameObserver {
 
     /**
      * Register an observer for a specific player.
-     *
      * If an observer already exists for the given player ID, it will be
      * replaced with the new observer.
      *

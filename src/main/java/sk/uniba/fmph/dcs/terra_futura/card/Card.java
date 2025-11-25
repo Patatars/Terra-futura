@@ -1,4 +1,4 @@
-package sk.uniba.fmph.dcs.terra_futura.game;
+package sk.uniba.fmph.dcs.terra_futura.card;
 
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import java.util.List;

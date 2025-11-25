@@ -4,6 +4,8 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.junit.Before;
 import org.junit.Test;
+import sk.uniba.fmph.dcs.terra_futura.grid.ActivationPattern;
+import sk.uniba.fmph.dcs.terra_futura.grid.InterfaceActivateGrid;
 
 import java.util.ArrayList;
 import java.util.AbstractMap.SimpleEntry;
@@ -28,19 +30,18 @@ public class ActivationPatternTest {
 
     private ActivateGridFake grid;
     private ActivationPattern activationPattern;
-    private ArrayList<SimpleEntry<Integer, Integer>> patternEntries;
 
     @Before
     public void setUp() {
         grid = new ActivateGridFake();
-        patternEntries = new ArrayList<>();
-        patternEntries.add(new SimpleEntry<Integer, Integer>(0, 0));
-        patternEntries.add(new SimpleEntry<Integer, Integer>(0, 0));
-        patternEntries.add(new SimpleEntry<Integer, Integer>(-1, 1));
+        ArrayList<SimpleEntry<Integer, Integer>> patternEntries = new ArrayList<>();
+        patternEntries.add(new SimpleEntry<>(0, 0));
+        patternEntries.add(new SimpleEntry<>(0, 0));
+        patternEntries.add(new SimpleEntry<>(-1, 1));
         activationPattern = new ActivationPattern(grid, patternEntries);
     }
 
-    private void checkStateString(String expectedList, boolean expectedActivated) {
+    private void checkStateString(boolean expectedActivated) {
         System.out.println("Nas JSON:\n");
         System.out.println(activationPattern.state());
         System.out.println("Nas JSON:\n");
@@ -52,15 +53,15 @@ public class ActivationPatternTest {
             s.append(String.format("(%s,%s)", pair.getInt("x"), pair.getInt("y")));
         }
 
-        assertEquals(expectedList, s.toString());
+        assertEquals("(0,0)(0,0)(-1,1)", s.toString());
         assertEquals(expectedActivated, obj.getBoolean("selected"));
     }
 
     @Test
     public void testDataForwarding() {
-        checkStateString("(0,0)(0,0)(-1,1)", false);
+        checkStateString(false);
         activationPattern.select();
-        checkStateString("(0,0)(0,0)(-1,1)", true);
+        checkStateString(true);
         assertEquals(3, grid.activations.size());
         assertEquals(Integer.valueOf(0), grid.activations.get(0).getKey());
         assertEquals(Integer.valueOf(0), grid.activations.get(0).getValue());
