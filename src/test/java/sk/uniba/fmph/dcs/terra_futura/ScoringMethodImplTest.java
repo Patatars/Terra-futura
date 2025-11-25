@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class ScoringMethodTest {
+public class ScoringMethodImplTest {
 
     /**
      * Situation 1: Player collects a simple set of basic resources.
@@ -23,8 +23,8 @@ public class ScoringMethodTest {
                 Resource.RED,
                 Resource.YELLOW
         );
-        ScoringMethod method =
-                new ScoringMethod(resources, new Points(5));
+        ScoringMethodImpl method =
+                new ScoringMethodImpl(resources, new Points(5));
 
         method.selectThisMethodAndCalculate();
 
@@ -44,8 +44,8 @@ public class ScoringMethodTest {
                 Resource.CAR,
                 Resource.GEAR
         );
-        ScoringMethod method =
-                new ScoringMethod(resources, new Points(3));
+        ScoringMethodImpl method =
+                new ScoringMethodImpl(resources, new Points(3));
 
         method.selectThisMethodAndCalculate();
 
@@ -67,8 +67,8 @@ public class ScoringMethodTest {
                 Resource.POLLUTION,
                 Resource.POLLUTION
         );
-        ScoringMethod method =
-                new ScoringMethod(resources, new Points(2));
+        ScoringMethodImpl method =
+                new ScoringMethodImpl(resources, new Points(2));
 
         method.selectThisMethodAndCalculate();
 
@@ -85,8 +85,8 @@ public class ScoringMethodTest {
     @Test
     public void testEmptyResourcesStillGetsBonus() {
         List<Resource> resources = List.of();
-        ScoringMethod method =
-                new ScoringMethod(resources, new Points(4));
+        ScoringMethodImpl method =
+                new ScoringMethodImpl(resources, new Points(4));
 
         method.selectThisMethodAndCalculate();
 
@@ -101,8 +101,8 @@ public class ScoringMethodTest {
      */
     @Test
     public void testStateMessages() {
-        ScoringMethod method =
-                new ScoringMethod(List.of(Resource.GREEN), new Points(1));
+        ScoringMethodImpl method =
+                new ScoringMethodImpl(List.of(Resource.GREEN), new Points(1));
 
         // Before calculation
         assertEquals("Scoring method not yet selected.", method.state());
@@ -133,8 +133,8 @@ public class ScoringMethodTest {
                 Resource.POLLUTION
         );
 
-        ScoringMethod method =
-                new ScoringMethod(resources, new Points(5));
+        ScoringMethodImpl method =
+                new ScoringMethodImpl(resources, new Points(5));
 
         method.selectThisMethodAndCalculate();
 

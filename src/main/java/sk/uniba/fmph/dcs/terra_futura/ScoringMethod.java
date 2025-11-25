@@ -1,73 +1,18 @@
 package sk.uniba.fmph.dcs.terra_futura;
 
-import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
-import sk.uniba.fmph.dcs.terra_futura.score.Points;
-
-import java.util.List;
-import java.util.Optional;
-
-public class ScoringMethod implements ScoringMethodInterface {
-
-    // The resources to be scored. Each resource contributes its quantity
-    private final List<Resource> resources;
-
-    // Points awarded per combination/unit
-    private final Points pointsPerCombination;
-
-    // Cached calculation result; null until calculation runs
-    private Points calculatedTotal;
-
-    public ScoringMethod(final List<Resource> resources, final Points pointsPerCombination) {
-        this.resources = resources;
-        this.pointsPerCombination = pointsPerCombination;
-    }
+public interface ScoringMethod {
 
     /**
-     * Calculate and store the total score for the current resources.
-     * Algorithm: sum all resource point values from the list. Each resource
-     * in the list has its own point value (e.g., GREEN=1, CAR=6, POLLUTION=-1).
-     * The pointsPerCombination is added as bonus points for having the complete set.
-     * Edge cases handled:
-     * - If {@code resources} is empty, the sum is 0 plus the bonus points.
-     * - The method does not modify the original resources list.
+     * The player selects this scoring method and the scoring is calculated.
      */
-    @Override
-    public void selectThisMethodAndCalculate() {
-        // Sum point values of all resources in the list
-        int totalFromResources = resources.stream()
-                .mapToInt(resource -> resource.getPoints().value())
-                .sum();
-
-        // Add the bonus points for having this combination and store the result
-        calculatedTotal = new Points(totalFromResources + pointsPerCombination.value());
-    }
+    void selectThisMethodAndCalculate();
 
     /**
-     * Returns the current state of the scoring method as a string.
-     * If the scoring has been calculated, returns the total points.
-     * Otherwise, returns a message indicating the method is not yet selected.
-     * This method can be safely overridden by subclasses to provide
-     * custom state representations.
-     * @return the current state as a string
+     * Returns the current state as a string.
+     * Example: "Scoring method not yet selected."
+     *          "Selected scoring method: total points = 25"
+     * @return the current state of the scoring method
      */
-    @Override
-    public String state() {
-        if (calculatedTotal != null) {
-            return "Selected scoring method: total points = " + calculatedTotal.value();
-        }
-        return "Scoring method not yet selected.";
-    }
-
-    /**
-     * Expose the calculated total (if present) to callers.
-     * This method can be safely overridden by subclasses if needed,
-     * for example to provide additional validation or transformation
-     * of the calculated result.
-     * @return an Optional containing the calculated total points if
-     *         calculation has been performed, or empty Optional otherwise
-     */
-    public Optional<Points> getCalculatedTotal() {
-        return Optional.ofNullable(calculatedTotal);
-    }
+    String state();
 }
 
