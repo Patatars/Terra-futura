@@ -6,16 +6,21 @@ import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import sk.uniba.fmph.dcs.terra_futura.grid.Grid;
 import sk.uniba.fmph.dcs.terra_futura.grid.GridPosition;
 
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Handles assistance action where a player uses a card effect from another player.
  */
 public class ProcessActionAssistance {
+    private static final int GRID_SIZE = 3;
+
     private final ResourceTransferService transferService;
 
-    public ProcessActionAssistance(ResourceTransferService transferService) {
+    public ProcessActionAssistance(final ResourceTransferService transferService) {
         this.transferService = transferService;
     }
 
@@ -35,21 +40,20 @@ public class ProcessActionAssistance {
      * @param pollution       Pollution generated
      * @return true if activation succeeded
      */
-
     public boolean activateCard(
-            Card card,
-            Grid grid,
-            int assistingPlayer,
-            Card assistingCard,
-            List<Pair<Resource, GridPosition>> inputs,
-            List<Pair<Resource, GridPosition>> outputs,
-            List<GridPosition> pollution
+            final Card card,
+            final Grid grid,
+            final int assistingPlayer,
+            final Card assistingCard,
+            final List<Pair<Resource, GridPosition>> inputs,
+            final List<Pair<Resource, GridPosition>> outputs,
+            final List<GridPosition> pollution
     ) {
         if (card == null || grid == null) {
             return false;
         }
 
-        GridPosition cardPosition = findCardPosition(grid, card);
+        final GridPosition cardPosition = findCardPosition(grid, card);
         if (cardPosition == null) {
             return false;
         }
@@ -66,24 +70,23 @@ public class ProcessActionAssistance {
         }
 
         // Activate neighbors in the same row/column
-        List<GridPosition> neighborPositions = getNeighborPositions(grid, cardPosition);
-        Set<Card> alreadyActivatedCards = new HashSet<>();
+        final List<GridPosition> neighborPositions = getNeighborPositions(grid, cardPosition);
+        final Set<Card> alreadyActivatedCards = new HashSet<>();
 
-        for (GridPosition pos : neighborPositions) {
+        for (final GridPosition pos : neighborPositions) {
             if (grid.canBeActivated(pos)) {
-                Optional<Card> neighborCardOpt = grid.getCard(pos);
+                final Optional<Card> neighborCardOpt = grid.getCard(pos);
                 if (neighborCardOpt.isPresent()) {
-                    Card neighborCard = neighborCardOpt.get();
+                    final Card neighborCard = neighborCardOpt.get();
                     if (alreadyActivatedCards.add(neighborCard)) {
                         grid.setActivated(pos);
-
                     }
                 }
             }
         }
 
         // Execute resource transfer using the service
-        boolean success = transferService.executeTransaction(grid, inputs, outputs, pollution);
+        final boolean success = transferService.executeTransaction(grid, inputs, outputs, pollution);
 
         if (success) {
             grid.setActivated(cardPosition);
@@ -99,12 +102,11 @@ public class ProcessActionAssistance {
      * @param card The card to find
      * @return GridPosition or null if not found
      */
-    private GridPosition findCardPosition(Grid grid, Card card) {
-        // Since GridPosition is now a record, we need to iterate through all possible positions
-        for (int x = 0; x < 3; x++) {
-            for (int y = 0; y < 3; y++) {
-                GridPosition pos = new GridPosition(x, y);
-                Optional<Card> foundCard = grid.getCard(pos);
+    private GridPosition findCardPosition(final Grid grid, final Card card) {
+        for (int x = 0; x < GRID_SIZE; x++) {
+            for (int y = 0; y < GRID_SIZE; y++) {
+                final GridPosition pos = new GridPosition(x, y);
+                final Optional<Card> foundCard = grid.getCard(pos);
                 if (foundCard.isPresent() && foundCard.get().equals(card)) {
                     return pos;
                 }
@@ -116,18 +118,18 @@ public class ProcessActionAssistance {
     /**
      * Gets all neighbor positions in the same row or column.
      *
-     * @param grid        The game grid
-     * @param cardPos     The card position
+     * @param grid    The game grid
+     * @param cardPos The card position
      * @return List of neighbor positions
      */
-    private List<GridPosition> getNeighborPositions(Grid grid, GridPosition cardPos) {
-        List<GridPosition> neighbors = new ArrayList<>();
-        int targetX = cardPos.x();
-        int targetY = cardPos.y();
+    private List<GridPosition> getNeighborPositions(final Grid grid, final GridPosition cardPos) {
+        final List<GridPosition> neighbors = new ArrayList<>();
+        final int targetX = cardPos.x();
+        final int targetY = cardPos.y();
 
-        for (int x = 0; x < 3; x++) {
-            for (int y = 0; y < 3; y++) {
-                GridPosition pos = new GridPosition(x, y);
+        for (int x = 0; x < GRID_SIZE; x++) {
+            for (int y = 0; y < GRID_SIZE; y++) {
+                final GridPosition pos = new GridPosition(x, y);
 
                 // Skip the card itself
                 if (pos.equals(cardPos)) {

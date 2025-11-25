@@ -304,7 +304,7 @@ public class ProcessActionAssistanceTest {
         boolean hasAssistance = false;
         boolean activated = false;
 
-        private final List<Resource> resources = new ArrayList<>();
+
 
         void setHasAssistance(boolean v) {
             hasAssistance = v;
