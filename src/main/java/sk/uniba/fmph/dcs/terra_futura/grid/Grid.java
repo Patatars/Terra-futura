@@ -1,4 +1,6 @@
-package sk.uniba.fmph.dcs.terra_futura.game;
+package sk.uniba.fmph.dcs.terra_futura.grid;
+
+import sk.uniba.fmph.dcs.terra_futura.card.Card;
 
 import java.util.List;
 import java.util.Optional;

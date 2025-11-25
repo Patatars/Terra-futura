@@ -4,13 +4,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
 import org.junit.Test;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
-import sk.uniba.fmph.dcs.terra_futura.game.Card;
-import sk.uniba.fmph.dcs.terra_futura.game.Grid;
-import sk.uniba.fmph.dcs.terra_futura.game.GridPosition;
+import sk.uniba.fmph.dcs.terra_futura.card.Card;
+import sk.uniba.fmph.dcs.terra_futura.grid.Grid;
+import sk.uniba.fmph.dcs.terra_futura.grid.GridPosition;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -458,7 +456,7 @@ public class ProcessActionTest {
     }
 
     private static class FakeGrid implements Grid {
-        private final java.util.Map<GridPosition, Card> cards = new java.util.HashMap<>();
+        private final Map<GridPosition, Card> cards = new HashMap<>();
 
         @Override
         public Optional<Card> getCard(GridPosition position) {
