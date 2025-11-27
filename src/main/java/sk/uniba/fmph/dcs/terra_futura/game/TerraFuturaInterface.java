@@ -87,5 +87,4 @@ public interface TerraFuturaInterface {
      */
     boolean selectScoring(int playerId, int card);
 
-
 }
