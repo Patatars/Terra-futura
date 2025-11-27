@@ -10,7 +10,7 @@ import java.util.Optional;
  * Provides methods for querying, placing, and activating cards at specific positions,
  * as well as managing activation patterns and turn-based state.
  */
-public interface Grid{
+public interface Grid {
     /**
      * Returns the card at the specified grid position, if any.
      *
