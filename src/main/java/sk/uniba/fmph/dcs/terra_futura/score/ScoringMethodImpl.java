@@ -1,7 +1,6 @@
-package sk.uniba.fmph.dcs.terra_futura;
+package sk.uniba.fmph.dcs.terra_futura.score;
 
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
-import sk.uniba.fmph.dcs.terra_futura.score.Points;
 
 import java.util.List;
 import java.util.Optional;
