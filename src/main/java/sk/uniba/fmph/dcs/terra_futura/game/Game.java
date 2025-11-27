@@ -10,12 +10,23 @@ import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import sk.uniba.fmph.dcs.terra_futura.grid.Grid;
 import sk.uniba.fmph.dcs.terra_futura.grid.GridPosition;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Game class manages game state and player turns.
  */
-public class Game implements TerraFuturaInterface {
+public final class Game implements TerraFuturaInterface {
+    private static final int LAST_REGULAR_TURN = 9;
+    private static final int FINAL_ACTIVATION_TURN = 10;
+
     private GameState state;
     private final Map<Integer, Grid> grids;
     private final Pile pile;
@@ -34,6 +45,11 @@ public class Game implements TerraFuturaInterface {
 
     /**
      * Creates a new game with given players and starting player.
+     *
+     * @param players array of player IDs
+     * @param grids map of player IDs to their grids
+     * @param pile the card pile
+     * @param startingPlayer ID of starting player
      */
     public Game(final int[] players, final Map<Integer, Grid> grids,
                 final Pile pile, final int startingPlayer) {
@@ -101,7 +117,7 @@ public class Game implements TerraFuturaInterface {
             return;
         }
         finalActivationPhaseStarted = true;
-        turnNumber = Math.max(turnNumber, 10);
+        turnNumber = Math.max(turnNumber, FINAL_ACTIVATION_TURN);
         state = GameState.SELECT_ACTIVATION_PATTERN;
         if (!pendingActivationPatternPlayers.contains(currentPlayerOnTurn)) {
             Integer fallback = firstPendingPlayer(pendingActivationPatternPlayers);
@@ -223,7 +239,7 @@ public class Game implements TerraFuturaInterface {
         Card card = maybeCard.orElseThrow(() ->
                 new IllegalStateException("No card present at position " + cardPosition));
         grid.setActivated(cardPosition);
-        if (card.hasAssistance() && turnNumber <= 9) {
+        if (card.hasAssistance() && turnNumber <= LAST_REGULAR_TURN) {
             markRewardPending(playerId);
             state = GameState.SELECT_REWARD;
         } else {
@@ -254,9 +270,9 @@ public class Game implements TerraFuturaInterface {
             return false;
         }
         endPlayerGridTurn(playerId);
-        if (turnNumber <= 9) {
+        if (turnNumber <= LAST_REGULAR_TURN) {
             advanceToNextPlayer();
-            if (turnNumber <= 9) {
+            if (turnNumber <= LAST_REGULAR_TURN) {
                 state = GameState.TAKE_CARD_NO_CARD_DISCARDED;
             } else {
                 startFinalActivationPhase();
