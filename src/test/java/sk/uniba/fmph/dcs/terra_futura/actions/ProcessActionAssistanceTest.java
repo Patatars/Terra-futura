@@ -155,7 +155,6 @@ public class ProcessActionAssistanceTest {
     @Test
     public void testActivationFailsWithInvalidGridPositionInInputs() {
         transfer.shouldFail = false;
-
         List<Pair<Resource, GridPosition>> badInputs = List.of(
                 Pair.of(Resource.GREEN, new GridPosition(999, 999)) // Нет такой позиции
         );
