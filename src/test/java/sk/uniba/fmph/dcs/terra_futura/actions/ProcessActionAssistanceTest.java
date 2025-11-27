@@ -137,7 +137,6 @@ public class ProcessActionAssistanceTest {
         assertTrue(card.activated);
     }
 
-
     @Test
     public void testActivationWithPollution() {
         transfer.shouldFail = false;
