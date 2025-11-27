@@ -2,8 +2,8 @@ package sk.uniba.fmph.dcs.terra_futura.game;
 
 import org.apache.commons.lang3.tuple.Pair;
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
-import sk.uniba.fmph.dcs.terra_futura.card.CardSource;
-import sk.uniba.fmph.dcs.terra_futura.deck.Deck;
+import sk.uniba.fmph.dcs.terra_futura.deck.CardSource;
+import sk.uniba.fmph.dcs.terra_futura.enums.Deck;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import sk.uniba.fmph.dcs.terra_futura.grid.GridPosition;
 
@@ -88,5 +88,6 @@ public interface TerraFuturaInterface {
      * @return {@code true} if the selection and scoring action was valid.
      */
     boolean  selectScoring(int playerId, int card);
+
 
 }
