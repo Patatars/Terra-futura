@@ -2,7 +2,16 @@ package sk.uniba.fmph.dcs.terra_futura.grid;
 
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.Collection;
+import java.util.AbstractMap;
+
 
 public class GridImpl implements Grid, InterfaceActivateGrid {
 
@@ -74,7 +83,12 @@ public class GridImpl implements Grid, InterfaceActivateGrid {
 
 
 
-    // Returns a simple string representation of the grid
+    /**
+     * Returns a string representation of the grid state.
+     * Includes information about placed cards, activated positions, and activation pattern.
+     *
+     * @return a string representation of the grid
+     */
     public String state() {
         StringBuilder sb = new StringBuilder();
         sb.append("Grid{cards=\n");
