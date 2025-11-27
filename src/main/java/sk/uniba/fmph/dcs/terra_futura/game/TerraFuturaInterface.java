@@ -2,8 +2,6 @@ package sk.uniba.fmph.dcs.terra_futura.game;
 
 import org.apache.commons.lang3.tuple.Pair;
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
-import sk.uniba.fmph.dcs.terra_futura.deck.CardSource;
-import sk.uniba.fmph.dcs.terra_futura.enums.Deck;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import sk.uniba.fmph.dcs.terra_futura.grid.GridPosition;
 
@@ -21,21 +19,21 @@ public interface TerraFuturaInterface {
      * destination on their game grid.
      *
      * @param playerId The ID of the player performing the action.
-     * @param card The source from which the card is taken (e.g., Draw Deck, Market).
+     * @param cardSource The source from which the card is taken (e.g., Draw Deck, Market).
      * @param destination The target coordinates on the player's grid where the card is placed.
      * @return {@code true} if the action was executed successfully (e.g., the destination is valid), otherwise {@code false}.
      */
-    boolean takeCard(int playerId, CardSource card, GridPosition destination);
+    boolean takeCard(int playerId, String cardSource, GridPosition destination);
 
     /**
      * Forces the top card of the specified deck to be discarded. This action may be
      * triggered by a rule or a specific card effect.
      *
      * @param playerId The ID of the player initiating the discard action.
-     * @param deck The specific deck (e.g., main deck, waste deck) from which the top card is discarded.
+     * @param deckType The specific deck (e.g., main deck, waste deck) from which the top card is discarded.
      * @return {@code true} if the deck was not empty and the card was successfully discarded, otherwise {@code false}.
      */
-    boolean discardLastCardFromDeck(int playerId, Deck deck);
+    boolean discardLastCardFromDeck(int playerId, String deckType);
 
     /**
      * Activates the effect of a card previously placed on the board, detailing all
@@ -77,7 +75,7 @@ public interface TerraFuturaInterface {
      * @param card Identifier (e.g., card ID or position index) for the card whose pattern is being selected.
      * @return {@code true} if the selected pattern is valid for the current game state.
      */
-    boolean  selectActivationPattern(int playerId, int card);
+    boolean selectActivationPattern(int playerId, int card);
 
     /**
      * Allows a player to select a card for scoring points, usually during a dedicated scoring phase
@@ -87,7 +85,6 @@ public interface TerraFuturaInterface {
      * @param card Identifier (e.g., card ID or position index) for the card that is being scored.
      * @return {@code true} if the selection and scoring action was valid.
      */
-    boolean  selectScoring(int playerId, int card);
-
+    boolean selectScoring(int playerId, int card);
 
 }
