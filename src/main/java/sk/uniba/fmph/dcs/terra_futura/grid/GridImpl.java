@@ -16,13 +16,13 @@ public class GridImpl implements Grid, InterfaceActivateGrid {
     private List<GridPosition> activationPattern = new ArrayList<>();
 
 
-    public Optional<Card> getCard(GridPosition coordinate) {
+    public Optional<Card> getCard(final GridPosition coordinate) {
         return Optional.ofNullable(cards.get(coordinate));
     }
 
 
     // Can a card be placed at the given coordinate?
-    public boolean canPutCard(GridPosition coordinate) {
+    public boolean canPutCard(final GridPosition coordinate) {
         return !cards.containsKey(coordinate);
     }
 
@@ -41,7 +41,7 @@ public class GridImpl implements Grid, InterfaceActivateGrid {
      * 1) There is a card on the coordinate
      * 2) It was not activated before in this turn
      */
-    public boolean canBeActivated(GridPosition coordinate) {
+    public boolean canBeActivated(final GridPosition coordinate) {
         // Check if card exists at position
         if (getCard(coordinate).isEmpty()) {
             return false;
