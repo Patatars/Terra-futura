@@ -3,6 +3,7 @@ package sk.uniba.fmph.dcs.terra_futura;
 import org.junit.Test;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import sk.uniba.fmph.dcs.terra_futura.score.Points;
+import sk.uniba.fmph.dcs.terra_futura.score.ScoringMethodImpl;
 
 import java.util.List;
 
