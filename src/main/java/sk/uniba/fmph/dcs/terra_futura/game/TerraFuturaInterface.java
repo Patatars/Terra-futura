@@ -2,6 +2,7 @@ package sk.uniba.fmph.dcs.terra_futura.game;
 
 import org.apache.commons.lang3.tuple.Pair;
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
+import sk.uniba.fmph.dcs.terra_futura.deck.CardSource;
 import sk.uniba.fmph.dcs.terra_futura.enums.Deck;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import sk.uniba.fmph.dcs.terra_futura.grid.GridPosition;
@@ -41,14 +42,14 @@ public interface TerraFuturaInterface {
      * resource consumption, production, and environmental changes (pollution).
      *
      * @param playerId The ID of the player activating the card.
-     * @param GridCoordinate The card object, usually identified by its location on the grid, that is being activated.
+     * @param gridCoordinate The card object, usually identified by its location on the grid, that is being activated.
      * @param inputs A list of resource/position pairs indicating which resources are consumed and their location on the grid.
      * @param outputs A list of resource/position pairs indicating which resources are produced and their destination on the grid.
      * @param pollution A list of grid positions where pollution or negative tokens are placed.
      * @param otherPlayerId Optional target player ID for interactive effects (if the card affects another player).
      * @param otherCard Optional target grid position for interactive effects involving another card.
      */
-    void activateCard(int playerId, Card GridCoordinate, List<Pair<Resource, GridPosition>> inputs,
+    void activateCard(int playerId, Card gridCoordinate, List<Pair<Resource, GridPosition>> inputs,
                       List<Pair<Resource, GridPosition>> outputs, List<GridPosition> pollution,
                       Optional<Integer> otherPlayerId, Optional<GridPosition> otherCard);
 
