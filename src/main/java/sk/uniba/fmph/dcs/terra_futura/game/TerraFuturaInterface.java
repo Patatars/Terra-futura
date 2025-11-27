@@ -1,4 +1,3 @@
-
 package sk.uniba.fmph.dcs.terra_futura.game;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -89,4 +88,5 @@ public interface TerraFuturaInterface {
      * @return {@code true} if the selection and scoring action was valid.
      */
     boolean  selectScoring(int playerId, int card);
+
 }
