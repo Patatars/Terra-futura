@@ -1,4 +1,4 @@
-package sk.uniba.fmph.dcs.terra_futura;
+package sk.uniba.fmph.dcs.terra_futura.score;
 
 public interface ScoringMethod {
 
