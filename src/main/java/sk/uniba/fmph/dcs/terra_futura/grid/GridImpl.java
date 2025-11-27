@@ -29,7 +29,7 @@ public class GridImpl implements Grid, InterfaceActivateGrid {
 
 
     // Places a card if the position is free.
-    public void putCard(GridPosition coordinate, Card card) {
+    public void putCard(final GridPosition coordinate, final Card card) {
         if (!canPutCard(coordinate)) {
             throw new IllegalStateException("Cannot put card at " + coordinate + ": occupied.");
         }
@@ -53,7 +53,7 @@ public class GridImpl implements Grid, InterfaceActivateGrid {
 
 
     // Marks a card as activated for this turn
-    public void setActivated(GridPosition coordinate) {
+    public void setActivated(final GridPosition coordinate) {
         if (!canBeActivated(coordinate)) {
             throw new IllegalStateException("Card cannot be activated at " + coordinate);
         }
@@ -61,7 +61,7 @@ public class GridImpl implements Grid, InterfaceActivateGrid {
     }
 
 
-    public void setActivationPattern(List<GridPosition> pattern) {
+    public void setActivationPattern(final List<GridPosition> pattern) {
         this.activationPattern = new ArrayList<>(pattern);
     }
 
@@ -92,7 +92,7 @@ public class GridImpl implements Grid, InterfaceActivateGrid {
     }
 
     @Override
-    public void setActivationPattern(Collection<AbstractMap.SimpleEntry<Integer, Integer>> pattern) {
+    public void setActivationPattern(final Collection<AbstractMap.SimpleEntry<Integer, Integer>> pattern) {
 
     }
 }
