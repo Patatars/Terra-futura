@@ -8,8 +8,8 @@ import java.util.Optional;
  * Pile of visible cards.
  */
 public interface Pile {
-    Optional<Card> getCard(int index)
-    void takeCard(int cardIndex);
+    Optional<Card> getCard(int index);
+    void takeCardP(int cardIndex);
     void removeLastCard();
     String state();
 }
