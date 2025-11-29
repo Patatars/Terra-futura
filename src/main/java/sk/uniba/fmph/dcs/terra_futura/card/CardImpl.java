@@ -1,10 +1,11 @@
 package sk.uniba.fmph.dcs.terra_futura.card;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import sk.uniba.fmph.dcs.terra_futura.effect.Effect;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class CardImpl implements Card {
 
@@ -13,13 +14,15 @@ private final int pollutionSpaceL;
 private final Effect upperEffect;
 private final Effect lowerEffect;
 
-public CardImpl(List<Resource> resources, int pollutionSpaceL, Effect upperEffect, Effect lowerEffect) {
+public CardImpl(final List<Resource> resources, final int pollutionSpaceL,
+                final Effect upperEffect, final Effect lowerEffect) {
         this.upperEffect = upperEffect;
         this.lowerEffect = lowerEffect;
         this.resources = resources;
         this.pollutionSpaceL = pollutionSpaceL;
     }
-private int countOfResource(List<Resource>  resources, Resource resourceType) {
+
+private int countOfResource(final List<Resource>  resources, final Resource resourceType) {
     int count = 0;
     for (Resource res : resources) {
         if (res == resourceType) {
@@ -29,7 +32,7 @@ private int countOfResource(List<Resource>  resources, Resource resourceType) {
     return count;
 }
 
-private List<Resource> kindsOfResources(List<Resource> resources) {
+private List<Resource> kindsOfResources(final List<Resource> resources) {
     List<Resource> kinds = new ArrayList<>();
     for (Resource res : resources) {
         if (!kinds.contains(res)) {
@@ -51,7 +54,7 @@ private List<Resource> kindsOfResources(List<Resource> resources) {
      * @return true if the operation is allowed, false otherwise.
      */
 
-public boolean canGetResources(List<Resource> resources) {
+public boolean canGetResources(final List<Resource> resources) {
     if (resources.isEmpty()) {
         return false;
     }
@@ -77,7 +80,7 @@ public boolean canGetResources(List<Resource> resources) {
      * @return true if the card is not full of pollution, false otherwise.
      */
 
-public boolean canPutResources(List<Resource> resources) {
+public boolean canPutResources(final List<Resource> resources) {
     if (countOfResource(this.resources, Resource.POLLUTION) >= this.pollutionSpaceL) {
         return false;
     }
@@ -91,7 +94,7 @@ public boolean canPutResources(List<Resource> resources) {
      * @throws IllegalArgumentException if the resources cannot be taken (e.g., card is blocked or resources are missing).
      */
 
-public void getResources(List<Resource> resources) {
+public void getResources(final List<Resource> resources) {
     if (!canGetResources(resources)) {
         throw new IllegalArgumentException("Cannot get resources from this card.");
     }
@@ -107,7 +110,7 @@ public void getResources(List<Resource> resources) {
      * @throws IllegalArgumentException if the card is blocked by pollution.
      */
 
-public void putResources(List<Resource> resources) {
+public void putResources(final List<Resource> resources) {
     if(!canPutResources(resources)) {
         throw new IllegalArgumentException("Cannot put resources on this card.");
     }
@@ -125,7 +128,8 @@ public void putResources(List<Resource> resources) {
      */
 
     @Override
-    public boolean check(List<Resource> input, List<Resource> output, int pollution) {
+    public boolean check(final List<Resource> input,final List<Resource> output,
+                         final int pollution) {
     if(upperEffect == null){
         return false;
     }
@@ -146,7 +150,8 @@ public void putResources(List<Resource> resources) {
      */
 
     @Override
-    public boolean checkLower(List<Resource> input, List<Resource> output, int pollution) {
+    public boolean checkLower(final List<Resource> input, final List<Resource> output,
+                              final int pollution) {
     if(lowerEffect == null) {
         return false;
     }
