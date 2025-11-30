@@ -52,7 +52,6 @@ public class PileImpl implements Pile {
      * The taken card is replaced by a new card from the hidden deck (if available).
      *
      * @param cardIndex the index of the card to take (0-based)
-     * @return the taken card
      * @throws IllegalArgumentException if the index is invalid
      */
     @Override

@@ -6,6 +6,7 @@ import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -83,9 +84,9 @@ public class PileTest {
         }
 
         Pile pile = new PileImpl(cards);
-
-        Card taken = pile.takeCard(1);
-        assertEquals("Card1", taken.state());
+        Optional<Card> taken = pile.getCard(1);
+        pile.takeCard(1);
+        assertEquals("Card1", taken.get().state());
 
         String state = pile.state();
 
@@ -127,8 +128,9 @@ public class PileTest {
         Pile pile = new PileImpl(cards);
 
 
-        Card taken = pile.takeCard(0);
-        assertEquals("Card0", taken.state());
+        Optional<Card> taken = pile.getCard(0);
+        pile.takeCard(0);
+        assertEquals("Card0", taken.get().state());
 
         String state = pile.state();
         assertTrue(state.contains("0: Card1"));

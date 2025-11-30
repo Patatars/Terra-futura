@@ -4,12 +4,20 @@ import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.AbstractMap;
+import java.util.Collection;
+import java.util.Optional;
+
 
 /**
- * Implementation of Grid
+ * Implementation of Grid.
  */
-public class GridImpl implements Grid{
+public class GridImpl implements Grid {
     private final Map<GridPosition, Card> cards = new HashMap<>();
     private final Set<GridPosition> activatedThisTurn = new HashSet<>();
     private Collection<AbstractMap.SimpleEntry<Integer, Integer>> activationPattern = new ArrayList<>();
@@ -22,7 +30,7 @@ public class GridImpl implements Grid{
      * @return optional card
      */
     @Override
-    public Optional<Card> getCard(GridPosition coordinate) {
+    public Optional<Card> getCard(final GridPosition coordinate) {
         if (!cards.containsKey(coordinate)) {
             return Optional.empty();
         }
@@ -36,7 +44,7 @@ public class GridImpl implements Grid{
      * @return true when position is free
      */
     @Override
-    public boolean canPutCard(GridPosition coordinate) {
+    public boolean canPutCard(final GridPosition coordinate) {
         return !cards.containsKey(coordinate);
     }
 
@@ -48,8 +56,10 @@ public class GridImpl implements Grid{
      * @throws IllegalArgumentException when position is occupied
      */
     @Override
-    public void putCard(GridPosition coordinate, Card card) {
-        if (!canPutCard(coordinate)) throw new IllegalArgumentException("Invalid position");
+    public void putCard(final GridPosition coordinate, final Card card) {
+        if (!canPutCard(coordinate)) {
+            throw new IllegalArgumentException("Invalid position");
+        }
         cards.put(coordinate, card);
     }
 
@@ -61,7 +71,7 @@ public class GridImpl implements Grid{
      * @throws IllegalStateException when activation pattern is not defined
      */
     @Override
-    public boolean canBeActivated(GridPosition coordinate) {
+    public boolean canBeActivated(final GridPosition coordinate) {
         if (!cards.containsKey(coordinate)) {
             return false;
         }
@@ -81,7 +91,7 @@ public class GridImpl implements Grid{
      * @throws IllegalArgumentException when activation is not allowed
      */
     @Override
-    public void setActivated(GridPosition coordinate) {
+    public void setActivated(final GridPosition coordinate) {
         if (!canBeActivated(coordinate)) {
             throw new IllegalArgumentException("Cannot activate card at position: " + coordinate);
         }
@@ -136,6 +146,10 @@ public class GridImpl implements Grid{
         return result.toString();
     }
 
+    /**
+     * Set activation pattern.
+     * @param pattern Collection of coordinates.
+     */
     public void setActivationPattern(Collection<AbstractMap.SimpleEntry<Integer, Integer>> pattern) {
         this.activationPattern = pattern;
     }
