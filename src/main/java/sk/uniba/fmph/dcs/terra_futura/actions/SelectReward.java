@@ -65,7 +65,8 @@ public class SelectReward {
     }
 
     /**
-     * Clear SelectReward State
+     * Clear SelectReward State.
+     *
      */
     public void clear() {
         this.player = Optional.empty();
