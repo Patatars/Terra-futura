@@ -3,9 +3,10 @@ package sk.uniba.fmph.dcs.terra_futura.actions;
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
+
 
 /**
  * Manages the reward selection process when assistance is involved.
@@ -33,7 +34,8 @@ public class SelectReward {
      * @return true if the reward was set successfully, false if reward is null.
      */
     public boolean setReward(final int player, final Card card, final List<Resource> reward) {
-        if (reward == null) {
+        if (reward == null || reward.isEmpty()) {
+            clear();
             return false;
         }
         this.player = Optional.of(player);
@@ -48,7 +50,7 @@ public class SelectReward {
      * @return true if the resource is available, false otherwise.
      */
     public boolean canSelectReward(final Resource source) {
-        return selection.contains(source);
+        return player.isPresent() && selection.contains(source);
     }
 
     /**
@@ -63,14 +65,20 @@ public class SelectReward {
     }
 
     /**
+     * Clear SelectReward State.
+     *
+     */
+    public void clear() {
+        this.player = Optional.empty();
+        this.selection.clear();
+    }
+
+    /**
      * Returns the current state as a string for debugging.
      *
      * @return String representation of player and selection.
      */
     public String state() {
-        if (player.isEmpty()) {
-            return "Player: None, Selection: []";
-        }
-        return "Player: " + player.get() + ", Selection: " + selection.toString();
+        return player.map(integer -> "Player: " + integer + ", Selection: " + selection.toString()).orElse("Player: None, Selection: []");
     }
 }
