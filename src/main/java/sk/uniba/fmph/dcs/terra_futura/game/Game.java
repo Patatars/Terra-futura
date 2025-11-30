@@ -101,7 +101,7 @@ public final class Game implements TerraFuturaInterface {
         return playerId != currentPlayerOnTurn;
     }
 
-    private void ensureGridExists(final int playerId){
+    private void ensureGridExists(final int playerId) {
         if (!grids.containsKey(playerId)) {
             throw new IllegalArgumentException("Player " + playerId + " does not exist");
         }
@@ -203,9 +203,8 @@ public final class Game implements TerraFuturaInterface {
     public void activateCard(final int playerId, final GridPosition cardPosition,
             final List<Pair<Resource, GridPosition>> inputs,
             final List<Pair<Resource, GridPosition>> outputs,
-            final List<GridPosition> pollution,
-                             Optional<Integer> otherPlayer,
-                             Optional<Card> otherCard) {
+            final List<GridPosition> pollution, final Optional<Integer> otherPlayer,
+                             final Optional<Card> otherCard) {
         if (state != GameState.ACTIVATE_CARD) {
             throw new IllegalStateException("activateCard allowed only in ACTIVATE_CARD state");
         }
@@ -226,7 +225,7 @@ public final class Game implements TerraFuturaInterface {
         if (otherCard.isPresent() && otherPlayer.isPresent() && card.hasAssistance() && turnNumber <= LAST_REGULAR_TURN) {
             ProcessActionAssistance process = new  ProcessActionAssistance();
             activationSuccess = process.activateCard(card, grid, otherPlayer.get(), otherCard.get(), inputs, outputs, pollution);
-            if (activationSuccess){
+            if (activationSuccess) {
                 grid.setActivated(cardPosition);
                 List<Resource> rewards = inputs.stream().map(Pair::getLeft).distinct().toList();
                 if (selectReward.setReward(otherPlayer.get(), otherCard.get(), rewards)) {
@@ -238,13 +237,13 @@ public final class Game implements TerraFuturaInterface {
         } else {
             ProcessAction process = new  ProcessAction();
             activationSuccess = process.activateCard(card, grid, inputs, outputs, pollution);
-            if (activationSuccess){
+            if (activationSuccess) {
                 grid.setActivated(cardPosition);
                 state = GameState.ACTIVATE_CARD;
             }
         }
 
-        if (!activationSuccess){
+        if (!activationSuccess) {
             throw new IllegalStateException("Card cannot be activated at position " + cardPosition);
         }
     }
@@ -254,7 +253,7 @@ public final class Game implements TerraFuturaInterface {
         if (state != GameState.SELECT_REWARD) {
             throw new IllegalStateException("selectReward allowed only in SELECT_REWARD state");
         }
-        if (!selectReward.canSelectReward(resource)){
+        if (!selectReward.canSelectReward(resource)) {
             throw new IllegalStateException("Select reward can only be selected in SELECT_REWARD");
         }
         selectReward.selectReward(resource);
@@ -282,7 +281,8 @@ public final class Game implements TerraFuturaInterface {
             } else {
                 state = GameState.TAKE_CARD_NO_CARD_DISCARDED;
             }
-        } return true;
+        }
+        return true;
     }
 
     @Override

@@ -3,7 +3,10 @@ package sk.uniba.fmph.dcs.terra_futura.actions;
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 
-import java.util.*;
+import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
+
 
 /**
  * Manages the reward selection process when assistance is involved.
@@ -61,6 +64,9 @@ public class SelectReward {
         }
     }
 
+    /**
+     * Clear SelectReward State
+     */
     public void clear() {
         this.player = Optional.empty();
         this.selection.clear();
