@@ -72,7 +72,7 @@ class GridImplTest {
         assertFalse(grid.canPutCard(pos1));
     }
 
-    // ---------- putCard ----------
+    // putCard
     @Test
     void putCard_inEmptyCell_succeeds() {
         grid.putCard(pos1, cardA);
@@ -85,7 +85,7 @@ class GridImplTest {
         assertThrows(IllegalStateException.class, () -> grid.putCard(pos1, cardB));
     }
 
-    // ---------- setActivationPattern (List version) ----------
+    // setActivationPattern
     @Test
     void setActivationPattern_allowsActivationOfListedPositions() {
         grid.putCard(pos1, cardA);
@@ -107,7 +107,7 @@ class GridImplTest {
         assertFalse(grid.canBeActivated(pos1));
     }
 
-    // ---------- setActivated ----------
+    //setActivated
     @Test
     void setActivated_onValidPosition_succeeds() {
         grid.putCard(pos1, cardA);
@@ -124,7 +124,7 @@ class GridImplTest {
         assertThrows(IllegalStateException.class, () -> grid.setActivated(pos1));
     }
 
-    // ---------- setActivationPattern(Collection<SimpleEntry<Integer,Integer>>) ----------
+    //setActivationPattern(Collection<SimpleEntry<Integer,Integer>>)
     @Test
     void setActivationPattern_integerCoordinates_convertedToPositions() {
         grid.putCard(pos1, cardA);
@@ -137,7 +137,7 @@ class GridImplTest {
         assertTrue(grid.canBeActivated(pos1));
     }
 
-    // ---------- endTurn ----------
+    //endTurn
     @Test
     void endTurn_clearsActivationData() {
         grid.putCard(pos1, cardA);
@@ -149,7 +149,7 @@ class GridImplTest {
         assertFalse(grid.canBeActivated(pos1));
     }
 
-    // ---------- state ----------
+    //state
     @Test
     void state_containsCardStates() {
         grid.putCard(pos1, cardA);
