@@ -111,7 +111,7 @@ public void getResources(final List<Resource> resources) {
      * @throws IllegalArgumentException if the card is blocked by pollution.
      */
 
-public void putResources(List<Resource> resources) {
+public void putResources(final List<Resource> resources) {
     if (!canPutResources(resources)) {
         throw new IllegalArgumentException("Cannot put resources on this card.");
     }
@@ -129,7 +129,7 @@ public void putResources(List<Resource> resources) {
      */
 
     @Override
-    public boolean check(List<Resource> input, List<Resource> output, int pollution) {
+    public boolean check(final List<Resource> input, final List<Resource> output, final int pollution) {
     if (upperEffect == null) {
         return false;
     }
@@ -150,7 +150,7 @@ public void putResources(List<Resource> resources) {
      */
 
     @Override
-    public boolean checkLower(List<Resource> input, List<Resource> output, int pollution) {
+    public boolean checkLower(final List<Resource> input, final List<Resource> output, final int pollution) {
     if (lowerEffect == null) {
         return false;
     }
