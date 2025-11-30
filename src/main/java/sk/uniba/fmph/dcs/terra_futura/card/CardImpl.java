@@ -13,7 +13,8 @@ private final int pollutionSpaceL;
 private final Effect upperEffect;
 private final Effect lowerEffect;
 
-public CardImpl(ArrayList<Resource> resources, int pollutionSpaceL, Effect upperEffect, Effect lowerEffect) {
+public CardImpl(final ArrayList<Resource> resources, final int pollutionSpaceL,
+                final Effect upperEffect,final Effect lowerEffect) {
         this.upperEffect = upperEffect;
         this.lowerEffect = lowerEffect;
         this.resources = resources;
@@ -97,7 +98,7 @@ public void getResources(final List<Resource> resources) {
     }
     ArrayList<Resource> willBeRemoved = new ArrayList<>();
     for (Resource res : this.resources) {
-        if(resources.contains(res) && countOfResource(willBeRemoved, res) < countOfResource(resources, res)) {
+        if (resources.contains(res) && countOfResource(willBeRemoved, res) < countOfResource(resources, res)) {
             willBeRemoved.add(this.resources.remove(this.resources.indexOf(res)));
         }
     }
