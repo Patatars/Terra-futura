@@ -314,8 +314,8 @@ public class ProcessActionAssistanceTest {
         }
 
         @Override
-        public boolean getResources(List<Resource> resources) {
-            return true;
+        public void getResources(List<Resource> resources) {
+            return;
         }
 
         @Override
