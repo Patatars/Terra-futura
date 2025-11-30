@@ -111,7 +111,7 @@ public void getResources(final List<Resource> resources) {
      */
 
 public void putResources(final List<Resource> resources) {
-    if(!canPutResources(resources)) {
+    if (!canPutResources(resources)) {
         throw new IllegalArgumentException("Cannot put resources on this card.");
     }
     this.resources.addAll(resources);
@@ -128,9 +128,9 @@ public void putResources(final List<Resource> resources) {
      */
 
     @Override
-    public boolean check(final List<Resource> input,final List<Resource> output,
+    public boolean check(final List<Resource> input, final List<Resource> output,
                          final int pollution) {
-    if(upperEffect == null){
+    if (upperEffect == null) {
         return false;
     }
     int pollutionCount = countOfResource(this.resources, Resource.POLLUTION);
@@ -152,7 +152,7 @@ public void putResources(final List<Resource> resources) {
     @Override
     public boolean checkLower(final List<Resource> input, final List<Resource> output,
                               final int pollution) {
-    if(lowerEffect == null) {
+    if (lowerEffect == null) {
         return false;
     }
         int pollutionCount = countOfResource(this.resources, Resource.POLLUTION);

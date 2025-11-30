@@ -59,9 +59,8 @@ public class CardImplTest {
 
     @Test
     public void testCanPutResources_CardFullOfPollution() {
-        resources.add(Resource.POLLUTION);
-        resources.add(Resource.POLLUTION);
-        resources.add(Resource.POLLUTION);
+
+        card.putResources(Arrays.asList(Resource.POLLUTION, Resource.POLLUTION, Resource.POLLUTION));
 
         Assert.assertFalse(card.canPutResources(Collections.singletonList(Resource.GREEN)));
     }
@@ -76,9 +75,8 @@ public class CardImplTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testPutResources_ThrowsExceptionWhenFull() {
-        resources.add(Resource.POLLUTION);
-        resources.add(Resource.POLLUTION);
-        resources.add(Resource.POLLUTION);
+
+        card.putResources(Arrays.asList(Resource.POLLUTION, Resource.POLLUTION, Resource.POLLUTION));
 
         List<Resource> toAdd = Collections.singletonList(Resource.GREEN);
         card.putResources(toAdd);
@@ -87,8 +85,8 @@ public class CardImplTest {
 
     @Test
     public void testCanGetResources_HappyPath() {
-        resources.add(Resource.GREEN);
-        resources.add(Resource.RED);
+
+        card.putResources(Arrays.asList(Resource.GREEN, Resource.RED));
 
         Assert.assertTrue(card.canGetResources(Collections.singletonList(Resource.GREEN)));
         Assert.assertTrue(card.canGetResources(Arrays.asList(Resource.GREEN, Resource.RED)));
@@ -113,27 +111,28 @@ public class CardImplTest {
 
     @Test
     public void testCanGetResources_CleaningPollution_AllowedEvenIfFull() {
-        resources.add(Resource.POLLUTION);
-        resources.add(Resource.POLLUTION);
-        resources.add(Resource.POLLUTION);
+        card.putResources(Arrays.asList(Resource.POLLUTION, Resource.POLLUTION, Resource.POLLUTION));
 
         Assert.assertTrue(card.canGetResources(Collections.singletonList(Resource.POLLUTION)));
     }
 
     @Test
     public void testGetResources_Success() {
-        resources.add(Resource.GREEN);
-        resources.add(Resource.RED);
-        resources.add(Resource.GREEN);
+
+        card.putResources(Arrays.asList(Resource.GREEN, Resource.RED, Resource.GREEN));
+
         List<Resource> toGet = Arrays.asList(Resource.GREEN, Resource.RED);
 
         card.getResources(toGet);
 
-        int greenCount = 0;
-        for(Resource r : resources) if(r == Resource.GREEN) greenCount++;
+        Assert.assertTrue("Should contain one remaining GREEN",
+                card.canGetResources(Collections.singletonList(Resource.GREEN)));
 
-        Assert.assertEquals(1, greenCount);
-        Assert.assertFalse(resources.contains(Resource.RED));
+        Assert.assertFalse("Should NOT contain RED anymore",
+                card.canGetResources(Collections.singletonList(Resource.RED)));
+
+        Assert.assertFalse("Should NOT contain two GREENs",
+                card.canGetResources(Arrays.asList(Resource.GREEN, Resource.GREEN)));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -146,7 +145,7 @@ public class CardImplTest {
     @Test
     public void testCheck_UpperEffectDelegation() {
 
-        resources.add(Resource.POLLUTION);
+        card.putResources(Collections.singletonList(Resource.POLLUTION));
 
         upperEffectStub.checkResult = true;
 
@@ -186,10 +185,13 @@ public class CardImplTest {
 
     @Test
     public void testState() {
-        resources.add(Resource.MONEY);
+
+        card.putResources(Collections.singletonList(Resource.MONEY));
+
         String state = card.state();
 
         Assert.assertTrue(state.contains("FakeState"));
+
         Assert.assertTrue(state.contains("MONEY"));
     }
 }
