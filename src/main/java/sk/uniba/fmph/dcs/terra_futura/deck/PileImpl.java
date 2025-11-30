@@ -12,7 +12,7 @@ import java.util.Optional;
  */
 public class PileImpl implements Pile {
 
-    private final int MAX_VISIBLE_CARDS = 4;
+    private static final int MAX_VISIBLE_CARDS = 4;
 
     private final List<Card> visibleCards;
     private final List<Card> hiddenCards;
