@@ -10,7 +10,7 @@ public class MoveCardImpl implements MoveCard {
 
     private final int index;
 
-    public MoveCardImpl(final int index){
+    public MoveCardImpl(final int index) {
         this.index = index;
     }
 
@@ -29,7 +29,7 @@ public class MoveCardImpl implements MoveCard {
      * @return true if the move was successful, false otherwise.
      */
 
-    public boolean moveCard(Pile pile, GridPosition gridCoordinate, Grid grid) {
+    public boolean moveCard(final Pile pile, final GridPosition gridCoordinate, final Grid grid) {
 
         if (pile.getCard(this.index).isEmpty()) {
             return false;

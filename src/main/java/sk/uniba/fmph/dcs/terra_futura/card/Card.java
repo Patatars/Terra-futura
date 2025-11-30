@@ -17,7 +17,6 @@ public interface Card {
      * Attempts to obtain the specified resources from this card.
      *
      * @param resources the list of resources to obtain
-     * @return true if the resources were successfully obtained, false otherwise
      * @implNote Implementations may remove the resources from the card if successful.
      */
     void getResources(List<Resource> resources);

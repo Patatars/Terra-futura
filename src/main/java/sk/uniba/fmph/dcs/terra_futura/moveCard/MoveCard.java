@@ -13,6 +13,6 @@ public interface MoveCard {
      * @param grid           The grid where the card is placed.
      * @return true if the move was successful, false otherwise (e.g., pile empty, grid blocked).
      */
-    boolean moveCard(final Pile pile, final GridPosition gridCoordinate, final Grid grid);
+    boolean moveCard(Pile pile, GridPosition gridCoordinate, Grid grid);
 }
 
