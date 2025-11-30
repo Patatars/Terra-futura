@@ -13,14 +13,13 @@ private final int pollutionSpaceL;
 private final Effect upperEffect;
 private final Effect lowerEffect;
 
-public CardImpl(final ArrayList<Resource> resources, final int pollutionSpaceL,
-                final Effect upperEffect, final Effect lowerEffect) {
+public CardImpl(ArrayList<Resource> resources, int pollutionSpaceL, Effect upperEffect, Effect lowerEffect) {
         this.upperEffect = upperEffect;
         this.lowerEffect = lowerEffect;
         this.resources = resources;
         this.pollutionSpaceL = pollutionSpaceL;
     }
-private int countOfResource(final List<Resource>  resources, final Resource resourceType) {
+private int countOfResource(List<Resource>  resources, Resource resourceType) {
     int count = 0;
     for (Resource res : resources) {
         if (res == resourceType) {
@@ -30,7 +29,7 @@ private int countOfResource(final List<Resource>  resources, final Resource reso
     return count;
 }
 
-private List<Resource> kindsOfResources(final List<Resource> resources) {
+private List<Resource> kindsOfResources(List<Resource> resources) {
     ArrayList<Resource> kinds = new ArrayList<>();
     for (Resource res : resources) {
         if (!kinds.contains(res)) {
@@ -40,19 +39,7 @@ private List<Resource> kindsOfResources(final List<Resource> resources) {
     return kinds;
 }
 
-    /**
-     * Checks if the specified resources can be removed from the card.
-     * <p>
-     * Special rules:
-     * 1. If the request is to remove POLLUTION (clean up), it is allowed even if the card is full/blocked.
-     * 2. If the card is full of pollution (>= pollutionSpaceL), no other resources can be taken.
-     * 3. Otherwise, the card must contain sufficient quantity of the requested resources.
-     *
-     * @param resources The list of resources the player wants to take.
-     * @return true if the operation is allowed, false otherwise.
-     */
-
-public boolean canGetResources(final List<Resource> resources) {
+public boolean canGetResources(List<Resource> resources) {
     if (resources.isEmpty()) {
         return false;
     }
@@ -70,67 +57,35 @@ public boolean canGetResources(final List<Resource> resources) {
     return true;
 }
 
-    /**
-     * Checks if resources can be placed onto the card.
-     * The card accepts resources only if it is not currently blocked by pollution.
-     *
-     * @param resources The list of resources to add (content is not checked, only card state).
-     * @return true if the card is not full of pollution, false otherwise.
-     */
-
-public boolean canPutResources(final List<Resource> resources) {
+public boolean canPutResources(List<Resource> resources) {
     if (countOfResource(this.resources, Resource.POLLUTION) >= this.pollutionSpaceL) {
         return false;
     }
     return true;
 }
 
-    /**
-     * Removes the specified resources from the card.
-     *
-     * @param resources The list of resources to remove.
-     * @throws IllegalArgumentException if the resources cannot be taken (e.g., card is blocked or resources are missing).
-     */
-
-public void getResources(final List<Resource> resources) {
+public void getResources(List<Resource> resources) {
     if (!canPutResources(resources)) {
         throw new IllegalArgumentException("Cannot get resources from this card.");
     }
     ArrayList<Resource> willBeRemoved = new ArrayList<>();
     for (Resource res : this.resources) {
-        if (resources.contains(res) && countOfResource(willBeRemoved, res) < countOfResource(resources, res)) {
+        if(resources.contains(res) && countOfResource(willBeRemoved, res) < countOfResource(resources, res)) {
             willBeRemoved.add(this.resources.remove(this.resources.indexOf(res)));
         }
     }
 }
 
-    /**
-     * Adds the specified resources to the card.
-     *
-     * @param resources The list of resources to add.
-     * @throws IllegalArgumentException if the card is blocked by pollution.
-     */
-
-public void putResources(final List<Resource> resources) {
-    if (!canPutResources(resources)) {
+public void putResources(List<Resource> resources) {
+    if(!canPutResources(resources)) {
         throw new IllegalArgumentException("Cannot put resources on this card.");
     }
     this.resources.addAll(resources);
 }
 
-    /**
-     * Verifies if the Upper Effect of the card can be activated.
-     * Calculates the available space for new pollution and delegates the check to the effect implementation.
-     *
-     * @param input     The input resources required for the action.
-     * @param output    The output resources produced by the action.
-     * @param pollution The pollution context (not used directly, calculated from internal state).
-     * @return true if the upper effect exists and the action is valid given the card's current state.
-     */
-
     @Override
-    public boolean check(final List<Resource> input, final List<Resource> output, final int pollution) {
-    if (upperEffect == null) {
+    public boolean check(List<Resource> input, List<Resource> output, int pollution) {
+    if(upperEffect == null){
         return false;
     }
     int pollutionCount = countOfResource(this.resources, Resource.POLLUTION);
@@ -139,19 +94,9 @@ public void putResources(final List<Resource> resources) {
     return upperEffect.check(input, output, availablePollution);
     }
 
-    /**
-     * Verifies if the Lower Effect of the card can be activated.
-     * Calculates the available space for new pollution and delegates the check to the effect implementation.
-     *
-     * @param input     The input resources required for the action.
-     * @param output    The output resources produced by the action.
-     * @param pollution The pollution context (not used directly, calculated from internal state).
-     * @return true if the lower effect exists and the action is valid given the card's current state.
-     */
-
     @Override
-    public boolean checkLower(final List<Resource> input, final List<Resource> output, final int pollution) {
-    if (lowerEffect == null) {
+    public boolean checkLower(List<Resource> input, List<Resource> output, int pollution) {
+    if(lowerEffect == null) {
         return false;
     }
         int pollutionCount = countOfResource(this.resources, Resource.POLLUTION);
@@ -160,22 +105,10 @@ public void putResources(final List<Resource> resources) {
     return lowerEffect.check(input, output, availablePollution);
     }
 
-    /**
-     * Always return false because of siplified rules.
-     * @return false always
-     */
-
     @Override
     public boolean hasAssistance() {
         return false;
     }
-
-    /**
-     * Returns a string representation of the card's current state, including its effects,
-     * held resources, and pollution limit.
-     *
-     * @return The state string.
-     */
 
     @Override
     public String state() {
