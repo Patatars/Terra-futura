@@ -459,32 +459,27 @@ public class ProcessActionTest {
         private final Map<GridPosition, Card> cards = new HashMap<>();
 
         @Override
-        public Optional<Card> getCard(GridPosition position) {
-            return Optional.ofNullable(cards.get(position));
+        public Optional<Card> getCard(GridPosition coordinate) {
+            return Optional.ofNullable(cards.get(coordinate));
         }
 
         @Override
-        public boolean canPutCard(GridPosition position) {
-            return !cards.containsKey(position);
+        public boolean canPutCard(GridPosition coordinate) {
+            return !cards.containsKey(coordinate);
         }
 
         @Override
-        public void putCard(GridPosition position, Card card) {
-            cards.put(position, card);
+        public void putCard(GridPosition coordinate, Card card) {
+            cards.put(coordinate, card);
         }
 
         @Override
-        public boolean canBeActivated(GridPosition position) {
-            return cards.containsKey(position);
+        public boolean canBeActivated(GridPosition coordinate) {
+            return cards.containsKey(coordinate);
         }
 
         @Override
-        public void setActivated(GridPosition position) {
-            // No-op for fake
-        }
-
-        @Override
-        public void setActivationPattern(List<GridPosition> pattern) {
+        public void setActivated(GridPosition coordinate) {
             // No-op for fake
         }
 
@@ -496,6 +491,11 @@ public class ProcessActionTest {
         @Override
         public String state() {
             return "{}";
+        }
+
+        @Override
+        public void setActivationPattern(Collection<AbstractMap.SimpleEntry<Integer, Integer>> pattern) {
+
         }
     }
 }
