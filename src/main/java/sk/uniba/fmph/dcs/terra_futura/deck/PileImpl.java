@@ -24,7 +24,7 @@ public class PileImpl implements Pile {
     }
 
     @Override
-    public void takeCardP(int cardIndex) {
+    public void takeCard(int cardIndex) {
      if(cardIndex>0 && cardIndex<=cards.size()){
           cards.remove(cardIndex);
      }

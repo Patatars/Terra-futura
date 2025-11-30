@@ -9,7 +9,7 @@ import java.util.Optional;
  */
 public interface Pile {
     Optional<Card> getCard(int index);
-    void takeCardP(int cardIndex);
+    void takeCard(int cardIndex);
     void removeLastCard();
     String state();
 }
