@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
-import sk.uniba.fmph.dcs.terra_futura.player.Player;
 
 import java.util.*;
 
@@ -175,8 +174,7 @@ public class GridImplTest {
         }
 
         @Override
-        public boolean getResources(List<Resource> resources) {
-            return false;
+        public void getResources(List<Resource> resources) {
         }
 
         @Override

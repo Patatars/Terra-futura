@@ -24,8 +24,7 @@ public class PileTest {
         }
 
         @Override
-        public boolean getResources(List<Resource> resources) {
-            return false;
+        public void getResources(List<Resource> resources) {
         }
 
         @Override
@@ -107,8 +106,7 @@ public class PileTest {
         Pile pile = new PileImpl(cards);
 
 
-        boolean result = pile.discardCard();
-        assertTrue(result);
+        pile.removeLastCard();
 
         String state = pile.state();
         assertTrue(state.contains("0: Card4"));
@@ -139,8 +137,7 @@ public class PileTest {
         assertTrue(state.contains("Hidden Cards Count: 0"));
 
 
-        boolean discarded = pile.discardCard();
-        assertTrue(discarded);
+        pile.removeLastCard();
 
         state = pile.state();
         assertTrue(state.contains("0: Card1"));

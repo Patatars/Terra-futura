@@ -192,11 +192,9 @@ public final class Game implements TerraFuturaInterface {
         if (state != GameState.TAKE_CARD_NO_CARD_DISCARDED) {
             return false;
         }
-        boolean discarded = pile.discardCard();
-        if (discarded) {
-            state = GameState.TAKE_CARD_CARD_DISCARDED;
-        }
-        return discarded;
+        pile.removeLastCard();
+        state = GameState.TAKE_CARD_CARD_DISCARDED;
+        return true;
     }
 
     @Override
