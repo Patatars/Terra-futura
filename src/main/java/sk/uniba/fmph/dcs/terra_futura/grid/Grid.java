@@ -2,7 +2,6 @@ package sk.uniba.fmph.dcs.terra_futura.grid;
 
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -10,7 +9,7 @@ import java.util.Optional;
  * Provides methods for querying, placing, and activating cards at specific positions,
  * as well as managing activation patterns and turn-based state.
  */
-public interface Grid extends InterfaceActivateGrid{
+public interface Grid extends InterfaceActivateGrid {
     /**
      * Returns the card at the specified grid coordinate, if any.
      *

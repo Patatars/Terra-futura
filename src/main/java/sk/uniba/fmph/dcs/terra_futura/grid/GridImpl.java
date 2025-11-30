@@ -150,7 +150,7 @@ public class GridImpl implements Grid {
      * Set activation pattern.
      * @param pattern Collection of coordinates.
      */
-    public void setActivationPattern(Collection<AbstractMap.SimpleEntry<Integer, Integer>> pattern) {
+    public void setActivationPattern(final Collection<AbstractMap.SimpleEntry<Integer, Integer>> pattern) {
         this.activationPattern = pattern;
     }
 }
