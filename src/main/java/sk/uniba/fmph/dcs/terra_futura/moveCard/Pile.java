@@ -1,4 +1,4 @@
-package sk.uniba.fmph.dcs.terra_futura.deck;
+package sk.uniba.fmph.dcs.terra_futura.moveCard;
 
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
 
