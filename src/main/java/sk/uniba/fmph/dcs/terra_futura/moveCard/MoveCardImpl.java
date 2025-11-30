@@ -32,7 +32,7 @@ public class MoveCardImpl implements MoveCard {
 
     @Override
     public boolean moveCard(Pile pile, GridPosition gridCoordinate, Grid grid) {
-        if (pile.getCard(this.index).isEmpty()); {
+        if (pile.getCard(this.index).isEmpty()) {
             return false;
         }
 
