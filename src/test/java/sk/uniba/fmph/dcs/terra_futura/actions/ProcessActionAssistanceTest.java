@@ -364,39 +364,36 @@ public class ProcessActionAssistanceTest {
         }
 
         @Override
-        public Optional<Card> getCard(GridPosition pos) {
-            return Optional.ofNullable(cards.get(pos));
+        public Optional<Card> getCard(GridPosition coordinate) {
+            return Optional.ofNullable(cards.get(coordinate));
         }
 
         @Override
-        public boolean canPutCard(GridPosition pos) {
-            return !cards.containsKey(pos);
+        public boolean canPutCard(GridPosition coordinate) {
+            return !cards.containsKey(coordinate);
         }
 
         @Override
-        public void putCard(GridPosition pos, Card card) {
-            cards.put(pos, card);
+        public void putCard(GridPosition coordinate, Card card) {
+            cards.put(coordinate, card);
             if (card instanceof FakeCard) {
                 this.cardReference = card;
-                this.cardRefPos = pos;
+                this.cardRefPos = coordinate;
             }
         }
 
         @Override
-        public boolean canBeActivated(GridPosition pos) {
-            return cards.containsKey(pos) && !forbidden.contains(pos);
+        public boolean canBeActivated(GridPosition coordinate) {
+            return cards.containsKey(coordinate) && !forbidden.contains(coordinate);
         }
 
         @Override
-        public void setActivated(GridPosition pos) {
-            Card c = cards.get(pos);
+        public void setActivated(GridPosition coordinate) {
+            Card c = cards.get(coordinate);
             if (c instanceof FakeCard f) {
                 f.activated = true;
             }
         }
-
-        @Override
-        public void setActivationPattern(List<GridPosition> pattern) { }
 
         @Override
         public void endTurn() { }
@@ -404,6 +401,11 @@ public class ProcessActionAssistanceTest {
         @Override
         public String state() {
             return "{}";
+        }
+
+        @Override
+        public void setActivationPattern(Collection<AbstractMap.SimpleEntry<Integer, Integer>> pattern) {
+
         }
     }
 
