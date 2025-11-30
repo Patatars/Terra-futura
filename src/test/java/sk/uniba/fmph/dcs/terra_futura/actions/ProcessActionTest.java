@@ -414,14 +414,13 @@ public class ProcessActionTest {
         }
 
         @Override
-        public boolean getResources(List<Resource> resources) {
+        public void getResources(List<Resource> resources) {
             if (!canGetResources(resources)) {
-                return false;
+                return;
             }
             for (Resource r : resources) {
                 this.resources.remove(r);
             }
-            return true;
         }
 
         @Override
