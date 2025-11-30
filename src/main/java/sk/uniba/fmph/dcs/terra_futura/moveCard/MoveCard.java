@@ -1,6 +1,6 @@
 package sk.uniba.fmph.dcs.terra_futura.moveCard;
 
-import sk.uniba.fmph.dcs.terra_futura.pile.Pile;
+import sk.uniba.fmph.dcs.terra_futura.deck.Pile;
 import sk.uniba.fmph.dcs.terra_futura.grid.GridPosition;
 import sk.uniba.fmph.dcs.terra_futura.grid.Grid;
 

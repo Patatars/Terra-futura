@@ -1,7 +1,7 @@
 package sk.uniba.fmph.dcs.terra_futura.moveCard;
 
 import sk.uniba.fmph.dcs.terra_futura.grid.GridPosition;
-import sk.uniba.fmph.dcs.terra_futura.pile.Pile;
+import sk.uniba.fmph.dcs.terra_futura.deck.Pile;
 import sk.uniba.fmph.dcs.terra_futura.grid.Grid;
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
 
@@ -29,9 +29,10 @@ public class MoveCardImpl implements MoveCard {
      * @return true if the move was successful, false otherwise.
      */
 
-    public boolean moveCard(final Pile pile, final GridPosition gridCoordinate, final Grid grid) {
 
-        if (pile.getCard(this.index).isEmpty()) {
+    @Override
+    public boolean moveCard(Pile pile, GridPosition gridCoordinate, Grid grid) {
+        if (pile.getCard(this.index).isEmpty()); {
             return false;
         }
 

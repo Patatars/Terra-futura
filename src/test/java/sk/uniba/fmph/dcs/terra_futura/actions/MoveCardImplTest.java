@@ -7,7 +7,7 @@ import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import sk.uniba.fmph.dcs.terra_futura.grid.Grid;
 import sk.uniba.fmph.dcs.terra_futura.grid.GridPosition;
-import sk.uniba.fmph.dcs.terra_futura.pile.Pile;
+import sk.uniba.fmph.dcs.terra_futura.deck.Pile;
 import sk.uniba.fmph.dcs.terra_futura.moveCard.MoveCard;
 import sk.uniba.fmph.dcs.terra_futura.moveCard.MoveCardImpl;
 
