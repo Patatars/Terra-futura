@@ -1,11 +1,10 @@
 package sk.uniba.fmph.dcs.terra_futura.card;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import sk.uniba.fmph.dcs.terra_futura.effect.Effect;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class CardImpl implements Card {
 
@@ -14,14 +13,13 @@ private final int pollutionSpaceL;
 private final Effect upperEffect;
 private final Effect lowerEffect;
 
-public CardImpl(final List<Resource> resources, final int pollutionSpaceL,
+public CardImpl(final ArrayList<Resource> resources, final int pollutionSpaceL,
                 final Effect upperEffect, final Effect lowerEffect) {
         this.upperEffect = upperEffect;
         this.lowerEffect = lowerEffect;
         this.resources = resources;
         this.pollutionSpaceL = pollutionSpaceL;
     }
-
 private int countOfResource(final List<Resource>  resources, final Resource resourceType) {
     int count = 0;
     for (Resource res : resources) {
@@ -33,7 +31,7 @@ private int countOfResource(final List<Resource>  resources, final Resource reso
 }
 
 private List<Resource> kindsOfResources(final List<Resource> resources) {
-    List<Resource> kinds = new ArrayList<>();
+    ArrayList<Resource> kinds = new ArrayList<>();
     for (Resource res : resources) {
         if (!kinds.contains(res)) {
             kinds.add(res);
@@ -95,11 +93,14 @@ public boolean canPutResources(final List<Resource> resources) {
      */
 
 public void getResources(final List<Resource> resources) {
-    if (!canGetResources(resources)) {
+    if (!canPutResources(resources)) {
         throw new IllegalArgumentException("Cannot get resources from this card.");
     }
-    for (Resource res : resources) {
-        this.resources.remove(res);
+    ArrayList<Resource> willBeRemoved = new ArrayList<>();
+    for (Resource res : this.resources) {
+        if (resources.contains(res) && countOfResource(willBeRemoved, res) < countOfResource(resources, res)) {
+            willBeRemoved.add(this.resources.remove(this.resources.indexOf(res)));
+        }
     }
 }
 
@@ -110,7 +111,7 @@ public void getResources(final List<Resource> resources) {
      * @throws IllegalArgumentException if the card is blocked by pollution.
      */
 
-public void putResources(final List<Resource> resources) {
+public void putResources(List<Resource> resources) {
     if (!canPutResources(resources)) {
         throw new IllegalArgumentException("Cannot put resources on this card.");
     }
@@ -128,8 +129,7 @@ public void putResources(final List<Resource> resources) {
      */
 
     @Override
-    public boolean check(final List<Resource> input, final List<Resource> output,
-                         final int pollution) {
+    public boolean check(List<Resource> input, List<Resource> output, int pollution) {
     if (upperEffect == null) {
         return false;
     }
@@ -150,8 +150,7 @@ public void putResources(final List<Resource> resources) {
      */
 
     @Override
-    public boolean checkLower(final List<Resource> input, final List<Resource> output,
-                              final int pollution) {
+    public boolean checkLower(List<Resource> input, List<Resource> output, int pollution) {
     if (lowerEffect == null) {
         return false;
     }
@@ -162,8 +161,8 @@ public void putResources(final List<Resource> resources) {
     }
 
     /**
-     * Always returns false because of the simplified rules.
-     * @return is always false
+     * Always return false because of siplified rules.
+     * @return false always
      */
 
     @Override
