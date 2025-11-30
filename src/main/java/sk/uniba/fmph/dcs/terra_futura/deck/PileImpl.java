@@ -66,22 +66,19 @@ public class PileImpl implements Pile {
     }
 
     /**
-     * Discards the last visible card (the oldest one).
+     * Removes the last visible card (the oldest one).
      * The discarded card is replaced by a new card from the hidden deck (if
      * available).
-     *
-     * @return true if a card was discarded, false if the visible pile was empty
      */
     @Override
-    public boolean discardCard() {
+    public void removeLastCard() {
         if (visibleCards.isEmpty()) {
-            return false;
+            return;
         }
         visibleCards.removeLast();
         if (!hiddenCards.isEmpty()) {
             visibleCards.addFirst(hiddenCards.removeFirst());
         }
-        return true;
     }
 
     /**
