@@ -56,15 +56,14 @@ public class PileImpl implements Pile {
      * @throws IllegalArgumentException if the index is invalid
      */
     @Override
-    public Card takeCard(final int cardIndex) {
+    public void takeCard(final int cardIndex) {
         if (cardIndex < 0 || cardIndex >= visibleCards.size()) {
             throw new IllegalArgumentException("Invalid card index: " + cardIndex);
         }
-        Card takenCard = visibleCards.remove(cardIndex);
+        visibleCards.remove(cardIndex);
         if (!hiddenCards.isEmpty()) {
             visibleCards.addFirst(hiddenCards.removeFirst());
         }
-        return takenCard;
     }
 
     /**
