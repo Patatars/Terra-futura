@@ -171,7 +171,7 @@ public final class Game implements TerraFuturaInterface {
         if (!grid.canPutCard(destination)) {
             return false;
         }
-        Card card = pile.takeCard(source.index());
+        Card card = pile.getCard(source.index()).orElse(null);
         if (card == null) {
             return false;
         }
