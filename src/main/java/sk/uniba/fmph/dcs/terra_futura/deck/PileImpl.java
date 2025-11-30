@@ -4,6 +4,7 @@ import sk.uniba.fmph.dcs.terra_futura.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementation of the Pile interface.
@@ -29,6 +30,19 @@ public class PileImpl implements Pile {
         while (visibleCards.size() < 4 && !hiddenCards.isEmpty()) {
             visibleCards.add(hiddenCards.removeFirst());
         }
+    }
+
+    /**
+     * Get card from visible deck
+     * @param index index of card
+     * @return Optional type of card
+     */
+    @Override
+    public Optional<Card> getCard(int index) {
+        if  (index >= visibleCards.size() || index < 0) {
+            return Optional.empty();
+        }
+        return Optional.of(visibleCards.get(index));
     }
 
     /**
