@@ -14,7 +14,7 @@ private final Effect upperEffect;
 private final Effect lowerEffect;
 
 public CardImpl(final ArrayList<Resource> resources, final int pollutionSpaceL,
-                final Effect upperEffect,final Effect lowerEffect) {
+                final Effect upperEffect, final Effect lowerEffect) {
         this.upperEffect = upperEffect;
         this.lowerEffect = lowerEffect;
         this.resources = resources;
