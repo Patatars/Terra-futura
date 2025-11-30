@@ -27,7 +27,7 @@ public class GridTest {
 
         @Override
         public void getResources(List<Resource> resources) {
-            // No-op for test
+            // No op for test
         }
 
         @Override
