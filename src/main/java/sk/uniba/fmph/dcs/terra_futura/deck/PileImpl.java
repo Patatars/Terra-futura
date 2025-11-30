@@ -12,6 +12,8 @@ import java.util.Optional;
  */
 public class PileImpl implements Pile {
 
+    private final int MAX_VISIBLE_CARDS = 4;
+
     private final List<Card> visibleCards;
     private final List<Card> hiddenCards;
 
@@ -20,25 +22,25 @@ public class PileImpl implements Pile {
      *
      * @param cards the list of cards to initialize the pile with
      */
-    public PileImpl(List<Card> cards) {
+    public PileImpl(final List<Card> cards) {
         this.hiddenCards = new ArrayList<>(cards);
         this.visibleCards = new ArrayList<>();
         replenishVisibleCards();
     }
 
     private void replenishVisibleCards() {
-        while (visibleCards.size() < 4 && !hiddenCards.isEmpty()) {
+        while (visibleCards.size() < MAX_VISIBLE_CARDS && !hiddenCards.isEmpty()) {
             visibleCards.add(hiddenCards.removeFirst());
         }
     }
 
     /**
-     * Get card from visible deck
+     * Get card from visible deck.
      * @param index index of card
      * @return Optional type of card
      */
     @Override
-    public Optional<Card> getCard(int index) {
+    public Optional<Card> getCard(final int index) {
         if  (index >= visibleCards.size() || index < 0) {
             return Optional.empty();
         }
@@ -54,7 +56,7 @@ public class PileImpl implements Pile {
      * @throws IllegalArgumentException if the index is invalid
      */
     @Override
-    public Card takeCard(int cardIndex) {
+    public Card takeCard(final int cardIndex) {
         if (cardIndex < 0 || cardIndex >= visibleCards.size()) {
             throw new IllegalArgumentException("Invalid card index: " + cardIndex);
         }
