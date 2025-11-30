@@ -41,8 +41,8 @@ public interface Card {
     /**
      * Checks if the card can process the given input and output resources with the specified pollution value.
      *
-     * @param input the list of input resources
-     * @param output the list of output resources
+     * @param input     the list of input resources
+     * @param output    the list of output resources
      * @param pollution the pollution value to check
      * @return true if the card can process the resources and pollution, false otherwise
      */
@@ -51,8 +51,8 @@ public interface Card {
     /**
      * Checks if the card can process the given input and output resources with a pollution value lower than specified.
      *
-     * @param input the list of input resources
-     * @param output the list of output resources
+     * @param input     the list of input resources
+     * @param output    the list of output resources
      * @param pollution the pollution threshold to check against
      * @return true if the card can process the resources with lower pollution, false otherwise
      */
