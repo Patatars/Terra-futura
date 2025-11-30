@@ -1,12 +1,14 @@
 package sk.uniba.fmph.dcs.terra_futura.game;
 
 import org.apache.commons.lang3.tuple.Pair;
+import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import sk.uniba.fmph.dcs.terra_futura.card.CardSource;
 import sk.uniba.fmph.dcs.terra_futura.enums.Deck;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import sk.uniba.fmph.dcs.terra_futura.grid.GridPosition;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Main interface for Terra Futura game.
@@ -43,12 +45,16 @@ public interface TerraFuturaInterface {
      * @param card grid position of card to activate
      * @param inputs input resources with positions
      * @param outputs output resources with positions
+     * @param otherPlayerId optional id of other player
+     * @param otherCard optional position of other card
      * @param pollution pollution positions
      */
     void activateCard(int playerId, GridPosition card,
                       List<Pair<Resource, GridPosition>> inputs,
                       List<Pair<Resource, GridPosition>> outputs,
-                      List<GridPosition> pollution);
+                      List<GridPosition> pollution,
+                      Optional<Integer> otherPlayerId,
+                      Optional<Card> otherCard);
 
     /**
      * Selects reward after card with Assistance was activated.
@@ -74,7 +80,7 @@ public interface TerraFuturaInterface {
      * @param card card index for pattern
      * @return true if successful, false otherwise
      */
-    boolean selectActivationPatter(int playerId, int card);
+    boolean selectActivationPattern(int playerId, int card);
 
     /**
      * Selects scoring method for final scoring phase.
