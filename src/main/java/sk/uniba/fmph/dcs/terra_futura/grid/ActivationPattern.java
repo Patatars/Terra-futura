@@ -45,3 +45,4 @@ public final class ActivationPattern {
         return result.toString();
     }
 }
+
