@@ -11,6 +11,7 @@ import java.util.Optional;
  * as well as managing activation patterns and turn-based state.
  */
 public interface Grid {
+
     /**
      * Returns the card at the specified grid position, if any.
      *

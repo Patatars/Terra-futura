@@ -126,7 +126,6 @@ public final class GridImpl implements Grid, InterfaceActivateGrid {
         sb.append("}");
         return sb.toString();
     }
-
     /**
      * Sets the activation pattern based on integer coordinate pairs.
      * This is an adapter method used by the activation interface to convert
