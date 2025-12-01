@@ -18,7 +18,7 @@ public class PileImpl implements Pile {
         this.hiddenCards = cards;
         this.visibleCards = new ArrayList<>();
 
-        if (hiddenCards.size() <= standartVisibleCards) {
+        if (hiddenCards.size() > standartVisibleCards) {
             for (int i = 0; i < standartVisibleCards; i++) {
                 visibleCards.add(hiddenCards.removeLast());
             }
@@ -53,6 +53,7 @@ public class PileImpl implements Pile {
         if (index >= 0 && index < visibleCards.size()) {
             if (hiddenCards.isEmpty()) {
                 visibleCards.remove(index);
+                return;
             }
             ArrayList<Card> willRemain = new ArrayList<>();
             for (int i = 0; i < visibleCards.size(); i++) {
@@ -78,6 +79,7 @@ public class PileImpl implements Pile {
 
             if (hiddenCards.isEmpty()) {
                 visibleCards.removeLast();
+                return;
             }
             ArrayList<Card> willRemain = new ArrayList<>();
             willRemain.addAll(visibleCards);
