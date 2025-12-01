@@ -11,9 +11,7 @@ import sk.uniba.fmph.dcs.terra_futura.deck.Pile;
 import sk.uniba.fmph.dcs.terra_futura.moveCard.MoveCard;
 import sk.uniba.fmph.dcs.terra_futura.moveCard.MoveCardImpl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class MoveCardImplTest {
 
@@ -106,7 +104,6 @@ public class MoveCardImplTest {
         @Override public String state() { return ""; }
     }
 
-    // Исправленный FakeGrid: добавлены ВСЕ методы интерфейса Grid
     private static class FakeGrid implements Grid {
         boolean canPut = true;
         Card lastPlacedCard = null;
@@ -139,11 +136,6 @@ public class MoveCardImplTest {
         }
 
         @Override
-        public void setActivationPattern(List<GridPosition> pattern) {
-            // Пусто
-        }
-
-        @Override
         public void endTurn() {
             // Пусто
         }
@@ -151,6 +143,11 @@ public class MoveCardImplTest {
         @Override
         public String state() {
             return "FakeGrid";
+        }
+
+        @Override
+        public void setActivationPattern(Collection<AbstractMap.SimpleEntry<Integer, Integer>> pattern) {
+
         }
     }
 }
