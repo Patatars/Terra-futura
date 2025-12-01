@@ -54,7 +54,6 @@ public interface Grid {
      * @throws IllegalArgumentException if the position cannot be activated
      */
     void setActivated(GridPosition position);
-
     /**
      * Sets the activation pattern for the grid.
      * The activation pattern determines which positions are eligible for activation.

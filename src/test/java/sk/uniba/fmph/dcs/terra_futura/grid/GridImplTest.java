@@ -64,6 +64,7 @@ public class GridImplTest {
     }
 
     // canPutCard
+
     @Test
     public void canPutCard_emptyCell_returnsTrue() {
         assertTrue(grid.canPutCard(pos1));
