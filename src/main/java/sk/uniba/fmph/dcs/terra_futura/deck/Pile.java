@@ -6,9 +6,7 @@ import java.util.Optional;
 public interface Pile {
 
     Optional<Card> getCard(int index);
-
-    void takeCard(int index);
-
+    void takeCard(int cardIndex);
     void removeLastCard();
 
     String state();
