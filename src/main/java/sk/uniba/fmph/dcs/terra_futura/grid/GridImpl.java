@@ -29,8 +29,8 @@ public class GridImpl implements Grid {
         if (pos == null) {
             return false;
         }
-        return pos.x() >= lowLimit && pos.x() <= highLimit &&
-                pos.y() >= lowLimit && pos.y() <= highLimit;
+        return pos.x() >= lowLimit && pos.x() <= highLimit
+                && pos.y() >= lowLimit && pos.y() <= highLimit;
     }
 
     /**
@@ -125,7 +125,7 @@ public class GridImpl implements Grid {
      */
 
     @Override
-    public void setActivationPattern(List<GridPosition> pattern) {
+    public void setActivationPattern(final List<GridPosition> pattern) {
         this.currentPattern = (pattern == null) ? new ArrayList<>() : new ArrayList<>(pattern);
     }
 
