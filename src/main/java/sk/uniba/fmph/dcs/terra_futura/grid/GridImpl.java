@@ -12,7 +12,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class GridImpl implements Grid, InterfaceActivateGrid{
+/**
+ * Default implementation of the game grid.
+ * Manages card placement and activation within a 5x5 logical coordinate system (x, y ∈ [-2, 2]).
+ */
+public final class GridImpl implements Grid, InterfaceActivateGrid { // ← final class
 
     private static final int MIN_COORD = -2;
     private static final int MAX_COORD = 2;
@@ -28,64 +32,55 @@ public class GridImpl implements Grid, InterfaceActivateGrid{
 
     /**
      * Checks if a position is within the valid grid bounds.
-     * @param pos position
+     *
+     * @param pos the grid position to validate
+     * @return true if the position is within [-2, 2] for both x and y, false otherwise
      */
-    private boolean isValidPosition(GridPosition pos) {
+    private boolean isValidPosition(final GridPosition pos) {
         int x = pos.x();
         int y = pos.y();
         return x >= MIN_COORD && x <= MAX_COORD && y >= MIN_COORD && y <= MAX_COORD;
     }
 
     @Override
-    public Optional<Card> getCard(GridPosition position) {
+    public Optional<Card> getCard(final GridPosition position) {
         return Optional.ofNullable(cards.get(position));
     }
 
     @Override
-    public boolean canPutCard(GridPosition position) {
+    public boolean canPutCard(final GridPosition position) {
         if (!isValidPosition(position)) {
             return false;
         }
         return !cards.containsKey(position);
     }
 
-    /**
-     * @param position the position to place the card
-     * @param card     the card to place
-     */
     @Override
-    public void putCard(GridPosition position, Card card) {
+    public void putCard(final GridPosition position, final Card card) {
         if (!canPutCard(position)) {
             throw new IllegalArgumentException("Cannot place card at " + position);
         }
         cards.put(position, card);
     }
 
-
     @Override
-    public boolean canBeActivated(GridPosition position) {
+    public boolean canBeActivated(final GridPosition position) {
         if (getCard(position).isEmpty()) {
             return false;
         }
         return activationPattern != null && activationPattern.contains(position);
     }
 
-    /**
-     * @param position the position of the card to activate
-     */
     @Override
-    public void setActivated(GridPosition position) {
+    public void setActivated(final GridPosition position) {
         if (!canBeActivated(position)) {
             throw new IllegalArgumentException("Cannot activate card at " + position);
         }
         activatedThisTurn.add(position);
     }
 
-    /**
-     * @param pattern a list of grid positions that define the activation pattern
-     */
     @Override
-    public void setActivationPattern(List<GridPosition> pattern) {
+    public void setActivationPattern(final List<GridPosition> pattern) {
         this.activationPattern = new ArrayList<>(pattern);
     }
 
@@ -93,9 +88,7 @@ public class GridImpl implements Grid, InterfaceActivateGrid{
     public void endTurn() {
         activatedThisTurn.clear();
         activationPattern.clear();
-
     }
-
 
     @Override
     public String state() {
@@ -109,12 +102,8 @@ public class GridImpl implements Grid, InterfaceActivateGrid{
         return sb.toString();
     }
 
-    /**
-     * Set activation pattern.
-     * @param pattern current pattern
-     */
     @Override
-    public void setActivationPattern(Collection<AbstractMap.SimpleEntry<Integer, Integer>> pattern) {
+    public void setActivationPattern(final Collection<AbstractMap.SimpleEntry<Integer, Integer>> pattern) {
         List<GridPosition> positions = new ArrayList<>();
         for (AbstractMap.SimpleEntry<Integer, Integer> coord : pattern) {
             positions.add(new GridPosition(coord.getKey(), coord.getValue()));
