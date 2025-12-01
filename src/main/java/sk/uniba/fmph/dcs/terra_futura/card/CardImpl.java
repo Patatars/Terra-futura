@@ -70,7 +70,13 @@ public boolean canGetResources(final List<Resource> resources) {
     return true;
 }
 
-    
+    /**
+     * Checks if resources can be placed onto the card.
+     * The card accepts resources only if it is not currently blocked by pollution.
+     *
+     * @param resources The list of resources to add (content is not checked, only card state).
+     * @return true if the card is not full of pollution, false otherwise.
+     */
 
 public boolean canPutResources(final List<Resource> resources) {
     if (countOfResource(this.resources, Resource.POLLUTION) >= this.pollutionSpaceL) {
@@ -79,7 +85,12 @@ public boolean canPutResources(final List<Resource> resources) {
     return true;
 }
 
-
+    /**
+     * Removes the specified resources from the card.
+     *
+     * @param resources The list of resources to remove.
+     * @throws IllegalArgumentException if the resources cannot be taken (e.g., card is blocked or resources are missing).
+     */
 
 public void getResources(final List<Resource> resources) {
     if (!canPutResources(resources)) {
@@ -107,6 +118,16 @@ public void putResources(final List<Resource> resources) {
     this.resources.addAll(resources);
 }
 
+    /**
+     * Verifies if the Upper Effect of the card can be activated.
+     * Calculates the available space for new pollution and delegates the check to the effect implementation.
+     *
+     * @param input     The input resources required for the action.
+     * @param output    The output resources produced by the action.
+     * @param pollution The pollution context (not used directly, calculated from internal state).
+     * @return true if the upper effect exists and the action is valid given the card's current state.
+     */
+
     @Override
     public boolean check(final List<Resource> input, final List<Resource> output, final int pollution) {
     if (upperEffect == null) {
@@ -117,6 +138,16 @@ public void putResources(final List<Resource> resources) {
 
     return upperEffect.check(input, output, availablePollution);
     }
+
+    /**
+     * Verifies if the Lower Effect of the card can be activated.
+     * Calculates the available space for new pollution and delegates the check to the effect implementation.
+     *
+     * @param input     The input resources required for the action.
+     * @param output    The output resources produced by the action.
+     * @param pollution The pollution context (not used directly, calculated from internal state).
+     * @return true if the lower effect exists and the action is valid given the card's current state.
+     */
 
     @Override
     public boolean checkLower(final List<Resource> input, final List<Resource> output,
@@ -130,10 +161,23 @@ public void putResources(final List<Resource> resources) {
     return lowerEffect.check(input, output, availablePollution);
     }
 
+    /**
+     * Always returns false because of simplified rules.
+     *
+     * @return false anyway.
+     */
+
     @Override
     public boolean hasAssistance() {
         return false;
     }
+
+    /**
+     * Returns a string representation of the card's current state, including its effects,
+     * held resources, and pollution limit.
+     *
+     * @return The state string.
+     */
 
     @Override
     public String state() {
