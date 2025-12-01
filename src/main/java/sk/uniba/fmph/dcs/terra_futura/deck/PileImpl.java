@@ -12,12 +12,13 @@ import java.util.Optional;
  * The pile maintains up to MAX_VISIBLE cards in the visible area,
  * replenishing from the hidden deck when cards are removed.
  */
-public class PileImpl implements Pile {
+public final class PileImpl implements Pile {
 
     private static final int MAX_VISIBLE = 4;
 
     private final LinkedList<Card> visible;
     private final LinkedList<Card> hidden;
+
     /**
      * Constructs a new PileImpl with the given cards.
      * Initially, up to MAX_VISIBLE cards are placed in the visible area,
@@ -25,7 +26,7 @@ public class PileImpl implements Pile {
      *
      * @param cards the initial cards to populate the pile
      */
-    public PileImpl(List<Card> cards) {
+    public PileImpl(final List<Card> cards) {
         this.hidden = new LinkedList<>(cards);
         this.visible = new LinkedList<>();
         refillVisible();
@@ -38,7 +39,7 @@ public class PileImpl implements Pile {
      * @param visible the list of visible cards
      * @param hidden the list of hidden cards
      */
-    public PileImpl(LinkedList<Card> visible, LinkedList<Card> hidden) {
+    public PileImpl(final LinkedList<Card> visible, final LinkedList<Card> hidden) {
         this.visible = visible;
         this.hidden = hidden;
     }
@@ -54,7 +55,7 @@ public class PileImpl implements Pile {
     }
 
     @Override
-    public Optional<Card> getCard(int index) {
+    public Optional<Card> getCard(final int index) {
         if (index < 0 || index >= visible.size()) {
             return Optional.empty();
         }
@@ -62,11 +63,11 @@ public class PileImpl implements Pile {
     }
 
     @Override
-    public void takeCard(int cardIndex) {
+    public void takeCard(final int cardIndex) {
         if (cardIndex < 0 || cardIndex >= visible.size()) {
             throw new IllegalArgumentException(
-                    "Invalid visible card index: " + cardIndex +
-                            ". Visible cards count: " + visible.size()
+                    "Invalid visible card index: " + cardIndex
+                            + ". Visible cards count: " + visible.size()
             );
         }
 

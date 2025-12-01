@@ -5,9 +5,6 @@ import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import java.util.Optional;
 
 /**
- * Pile of visible cards.
- */
-/**
  * Interface representing a pile of cards in a card game.
  * A pile manages a collection of cards with specific operations for card access and manipulation.
  */
@@ -38,6 +35,7 @@ public interface Pile {
      * If the pile is empty, this method has no effect.
      */
     void removeLastCard();
+
     /**
      * Returns a string representation of the pile's current state.
      * The state typically includes information about visible cards, hidden cards, and pile configuration.

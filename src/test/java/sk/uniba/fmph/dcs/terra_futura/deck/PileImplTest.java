@@ -19,6 +19,7 @@ public class PileImplTest {
         return new CardImpl(resources, 3, null, null);
     }
 
+
     private List<Card> createTestCards(int count) {
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < count; i++) {
