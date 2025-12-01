@@ -71,7 +71,6 @@ public class SelectRewardImpl implements SelectReward {
             selection.remove(resource);
         }
     }
-
     /**
      * Returns a textual representation of the current reward state.
      * Useful for debugging and logging.

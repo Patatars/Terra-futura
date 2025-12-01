@@ -35,6 +35,7 @@ public interface SelectReward {
      *
      * @param reward the resource chosen by the player
      */
+
     void selectReward(Resource reward);
 
     /**
