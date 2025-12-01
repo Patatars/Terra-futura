@@ -40,6 +40,18 @@ private List<Resource> kindsOfResources(final List<Resource> resources) {
     return kinds;
 }
 
+    /**
+     * Checks if the specified resources can be removed from the card.
+     * <p>
+     * Special rules:
+     * 1. If the request is to remove POLLUTION (clean up), it is allowed even if the card is full/blocked.
+     * 2. If the card is full of pollution (>= pollutionSpaceL), no other resources can be taken.
+     * 3. Otherwise, the card must contain sufficient quantity of the requested resources.
+     *
+     * @param resources The list of resources the player wants to take.
+     * @return true if the operation is allowed, false otherwise.
+     */
+
 public boolean canGetResources(final List<Resource> resources) {
     if (resources.isEmpty()) {
         return false;
@@ -58,12 +70,16 @@ public boolean canGetResources(final List<Resource> resources) {
     return true;
 }
 
+    
+
 public boolean canPutResources(final List<Resource> resources) {
     if (countOfResource(this.resources, Resource.POLLUTION) >= this.pollutionSpaceL) {
         return false;
     }
     return true;
 }
+
+
 
 public void getResources(final List<Resource> resources) {
     if (!canPutResources(resources)) {
@@ -76,6 +92,13 @@ public void getResources(final List<Resource> resources) {
         }
     }
 }
+
+    /**
+     * Adds the specified resources to the card.
+     *
+     * @param resources The list of resources to add.
+     * @throws IllegalArgumentException if the card is blocked by pollution.
+     */
 
 public void putResources(final List<Resource> resources) {
     if (!canPutResources(resources)) {
