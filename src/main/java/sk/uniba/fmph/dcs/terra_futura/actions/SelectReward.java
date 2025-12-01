@@ -17,10 +17,6 @@ public class SelectReward {
     private Optional<Integer> activePlayer = Optional.empty();
     private List<Resource> availableRewards = new ArrayList<>();
 
-    /**
-     * Creates a new instance with no active player and an empty reward list.
-     */
-    public SelectReward() {}
 
     /**
      * Initializes the reward selection for a specific player.
