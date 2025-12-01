@@ -1,11 +1,10 @@
 package sk.uniba.fmph.dcs.terra_futura.card;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import sk.uniba.fmph.dcs.terra_futura.effect.Effect;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class CardImpl implements Card {
 
@@ -14,14 +13,13 @@ private final int pollutionSpaceL;
 private final Effect upperEffect;
 private final Effect lowerEffect;
 
-public CardImpl(final List<Resource> resources, final int pollutionSpaceL,
+public CardImpl(final ArrayList<Resource> resources, final int pollutionSpaceL,
                 final Effect upperEffect, final Effect lowerEffect) {
         this.upperEffect = upperEffect;
         this.lowerEffect = lowerEffect;
         this.resources = resources;
         this.pollutionSpaceL = pollutionSpaceL;
     }
-
 private int countOfResource(final List<Resource>  resources, final Resource resourceType) {
     int count = 0;
     for (Resource res : resources) {
@@ -33,7 +31,7 @@ private int countOfResource(final List<Resource>  resources, final Resource reso
 }
 
 private List<Resource> kindsOfResources(final List<Resource> resources) {
-    List<Resource> kinds = new ArrayList<>();
+    ArrayList<Resource> kinds = new ArrayList<>();
     for (Resource res : resources) {
         if (!kinds.contains(res)) {
             kinds.add(res);
@@ -100,6 +98,7 @@ public void getResources(final List<Resource> resources) {
     }
     for (Resource res : resources) {
         this.resources.remove(res);
+
     }
 }
 
@@ -128,8 +127,7 @@ public void putResources(final List<Resource> resources) {
      */
 
     @Override
-    public boolean check(final List<Resource> input, final List<Resource> output,
-                         final int pollution) {
+    public boolean check(final List<Resource> input, final List<Resource> output, final int pollution) {
     if (upperEffect == null) {
         return false;
     }
@@ -150,8 +148,7 @@ public void putResources(final List<Resource> resources) {
      */
 
     @Override
-    public boolean checkLower(final List<Resource> input, final List<Resource> output,
-                              final int pollution) {
+    public boolean checkLower(final List<Resource> input, final List<Resource> output, final int pollution) {
     if (lowerEffect == null) {
         return false;
     }
@@ -162,8 +159,9 @@ public void putResources(final List<Resource> resources) {
     }
 
     /**
-     * Always returns false because of the simplified rules.
-     * @return is always false
+     * Always returns false because of simplified rules.
+     *
+     * @return false anyway.
      */
 
     @Override
