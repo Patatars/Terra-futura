@@ -11,14 +11,15 @@ public class PileImpl implements Pile {
 
     private final List<Card> hiddenCards;
     private final List<Card> visibleCards;
+    private final int standartVisibleCards = 4;
 
-    public PileImpl(List<Card> cards) {
+    public PileImpl(final List<Card> cards) {
 
         this.hiddenCards = cards;
         this.visibleCards = new ArrayList<>();
 
-        if (hiddenCards.size() <= 4) {
-            for (int i = 0; i < 4; i++) {
+        if (hiddenCards.size() <= standartVisibleCards) {
+            for (int i = 0; i < standartVisibleCards; i++) {
                 visibleCards.add(hiddenCards.removeLast());
             }
         } else {
@@ -34,7 +35,7 @@ public class PileImpl implements Pile {
      * @return An Optional containing the card if the index is valid, otherwise Optional.empty().
      */
 
-    public Optional<Card> getCard(int index) {
+    public Optional<Card> getCard(final int index) {
         if (index < 0 || index >= visibleCards.size()) {
             return Optional.empty();
         }
@@ -48,14 +49,14 @@ public class PileImpl implements Pile {
      * @param index The index of the card to remove.
      */
 
-    public void takeCard(int index) {
-        if(index >= 0 && index < visibleCards.size()) {
+    public void takeCard(final int index) {
+        if (index >= 0 && index < visibleCards.size()) {
             if (hiddenCards.isEmpty()) {
                 visibleCards.remove(index);
             }
             ArrayList<Card> willRemain = new ArrayList<>();
             for (int i = 0; i < visibleCards.size(); i++) {
-                if (i == index) {continue;}
+                if (i == index) { continue; }
             willRemain.add(visibleCards.get(i));
             }
             visibleCards.clear();
