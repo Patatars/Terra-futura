@@ -16,13 +16,15 @@ import java.util.Optional;
  */
 public class PileImpl implements Pile {
 
+    /** Maximum number of visible cards at any time. */
+    private final static int MAX_VISIBLE_CARDS = 4;
+
     /** Cards currently visible to the players (maximum of 4). */
     private final List<Card> visibleCards;
 
     /** Remaining hidden cards forming the deck. */
     private final List<Card> hiddenCards;
 
-    private final static int MAX_VISIBLE_CARDS = 4;
     /**
      * Initializes the pile with a given list of cards.
      * The first 4 cards become visible; the rest remain hidden.
