@@ -56,7 +56,9 @@ public class PileImpl implements Pile {
             }
             ArrayList<Card> willRemain = new ArrayList<>();
             for (int i = 0; i < visibleCards.size(); i++) {
-                if (i == index) { continue; }
+                if (i == index) {
+                    continue;
+                }
             willRemain.add(visibleCards.get(i));
             }
             visibleCards.clear();
@@ -98,5 +100,4 @@ public class PileImpl implements Pile {
                 .collect(Collectors.joining(", "));
         return String.format("PileImpl{cards=[%s]}", cardsState);
     }
-
 }
