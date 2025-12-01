@@ -45,5 +45,4 @@ public interface SelectReward {
      * @return a human-readable string describing the reward system state
      */
     String state();
-    
 }

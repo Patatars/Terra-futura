@@ -402,6 +402,7 @@ public class SelectRewardImplTest {
         assertFalse(selectReward.canSelectReward(Resource.RED));
     }
 
+
     @Test
     public void testPartialSelection() {
         List<Resource> rewards = Arrays.asList(
