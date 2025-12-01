@@ -3,7 +3,6 @@ package sk.uniba.fmph.dcs.terra_futura.game;
 import org.apache.commons.lang3.tuple.Pair;
 import sk.uniba.fmph.dcs.terra_futura.actions.ProcessAction;
 import sk.uniba.fmph.dcs.terra_futura.actions.ProcessActionAssistance;
-import sk.uniba.fmph.dcs.terra_futura.actions.SelectReward;
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import sk.uniba.fmph.dcs.terra_futura.card.CardSource;
 import sk.uniba.fmph.dcs.terra_futura.deck.Pile;
