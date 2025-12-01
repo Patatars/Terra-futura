@@ -26,7 +26,7 @@ public interface TerraFuturaInterface {
      * @param destination The coordinates on the grid where the card should be placed.
      * @return true if the card was successfully taken and placed, false otherwise.
      */
-    boolean takeCard(final int playerId, final CardSource source, final GridPosition destination);
+    boolean takeCard(int playerId, CardSource source, GridPosition destination);
 
     /**
      * Performs the action of removing the bottom-most card from a specified deck.
@@ -36,7 +36,7 @@ public interface TerraFuturaInterface {
      * @param deck     The target deck from which to discard.
      * @return true if the discard operation was successful, false otherwise.
      */
-    boolean discardLastCardInDeck(final int playerId, final Deck deck);
+    boolean discardLastCardInDeck(int playerId, Deck deck);
 
     /**
      * Initiates the activation process for a card located at the given coordinates.
@@ -51,12 +51,12 @@ public interface TerraFuturaInterface {
      * @param otherCard     Optional reference to another card involved in the interaction.
      * @throws IllegalStateException if the game is not in the activation phase or the player is invalid.
      */
-    void activateCard(final int playerId, final GridPosition card,
-                      final List<Pair<Resource, GridPosition>> inputs,
-                      final List<Pair<Resource, GridPosition>> outputs,
-                      final List<GridPosition> pollution,
-                      final Optional<Integer> otherPlayerId,
-                      final Optional<Card> otherCard);
+    void activateCard(int playerId, GridPosition card,
+                      List<Pair<Resource, GridPosition>> inputs,
+                      List<Pair<Resource, GridPosition>> outputs,
+                      List<GridPosition> pollution,
+                      Optional<Integer> otherPlayerId,
+                      Optional<Card> otherCard);
 
     /**
      * Processes the selection of a bonus resource following a successful assistance action.
@@ -64,7 +64,7 @@ public interface TerraFuturaInterface {
      * @param playerId The ID of the player selecting the reward.
      * @param resource The specific resource chosen as the reward.
      */
-    void selectReward(final int playerId, final Resource resource);
+    void selectReward(int playerId, Resource resource);
 
     /**
      * Concludes the active player's turn and advances the game state to the next player.
@@ -73,7 +73,7 @@ public interface TerraFuturaInterface {
      * @param playerId The ID of the player finishing their turn.
      * @return true if the turn was successfully ended, false otherwise.
      */
-    boolean turnFinished(final int playerId);
+    boolean turnFinished(int playerId);
 
     /**
      * Sets the activation pattern to be used during the final rounds of the game.
@@ -82,7 +82,7 @@ public interface TerraFuturaInterface {
      * @param card     The index representing the chosen pattern card.
      * @return true if the pattern was successfully selected, false otherwise.
      */
-    boolean selectActivationPattern(final int playerId, final int card);
+    boolean selectActivationPattern(int playerId, int card);
 
     /**
      * Chooses the method by which points will be calculated in the final scoring phase.
@@ -91,5 +91,5 @@ public interface TerraFuturaInterface {
      * @param card     The index representing the chosen scoring card.
      * @return true if the scoring method was successfully applied, false otherwise.
      */
-    boolean selectScoring(final int playerId, final int card);
+    boolean selectScoring(int playerId, int card);
 }
