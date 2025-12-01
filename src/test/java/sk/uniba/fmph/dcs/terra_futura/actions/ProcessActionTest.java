@@ -421,6 +421,7 @@ public class ProcessActionTest {
             for (Resource r : resources) {
                 this.resources.remove(r);
             }
+            return;
         }
 
         @Override
