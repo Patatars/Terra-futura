@@ -93,14 +93,12 @@ public boolean canPutResources(final List<Resource> resources) {
      */
 
 public void getResources(final List<Resource> resources) {
-    if (!canPutResources(resources)) {
+    if (!canGetResources(resources)) {
         throw new IllegalArgumentException("Cannot get resources from this card.");
     }
     ArrayList<Resource> willBeRemoved = new ArrayList<>();
-    for (Resource res : this.resources) {
-        if (resources.contains(res) && countOfResource(willBeRemoved, res) < countOfResource(resources, res)) {
-            willBeRemoved.add(this.resources.remove(this.resources.indexOf(res)));
-        }
+    for (Resource res : resources) {
+        this.resources.remove(res);
     }
 }
 
