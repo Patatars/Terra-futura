@@ -16,6 +16,8 @@ public class GridImpl implements Grid {
     private final Map<GridPosition, Card> gridMap;
     private final Set<GridPosition> processedPositions;
     private List<GridPosition> currentPattern;
+    private final int lowLimit = -2;
+    private final int highLimit = 2;
 
     public GridImpl() {
         this.gridMap = new HashMap<>();
@@ -27,8 +29,8 @@ public class GridImpl implements Grid {
         if (pos == null) {
             return false;
         }
-        return pos.x() >= -2 && pos.x() <= 2 &&
-                pos.y() >= -2 && pos.y() <= 2;
+        return pos.x() >= lowLimit && pos.x() <= highLimit &&
+                pos.y() >= lowLimit && pos.y() <= highLimit;
     }
 
     /**
