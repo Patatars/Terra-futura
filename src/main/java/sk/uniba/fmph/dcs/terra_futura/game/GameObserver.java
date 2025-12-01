@@ -41,11 +41,12 @@ public final class GameObserver {
 
     /**
      * Notify all registered observers of their new game state.
+     * @param newState state that should be notified
      * This method iterates through all registered observers and forwards the
      * appropriate state string to each one based on their player ID. This ensures
      * "everybody sees what he has to" - each observer only receives updates for
+     *
      * their specific player.
-     * @param newState state that should be notified
      */
     public void notifyAll(final Map<Integer, String> newState) {
         for (Map.Entry<Integer, ObserverInterface> entry : observers.entrySet()) {
