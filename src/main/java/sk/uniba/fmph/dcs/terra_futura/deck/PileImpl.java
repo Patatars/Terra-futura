@@ -22,18 +22,19 @@ public class PileImpl implements Pile {
     /** Remaining hidden cards forming the deck. */
     private final List<Card> hiddenCards;
 
+    private final static int MAX_VISIBLE_CARDS = 4;
     /**
      * Initializes the pile with a given list of cards.
      * The first 4 cards become visible; the rest remain hidden.
      *
      * @param cards initial list of cards forming the pile
      */
-    public PileImpl(List<Card> cards) {
+    public PileImpl(final List<Card> cards) {
         this.hiddenCards = new ArrayList<>(cards);
         this.visibleCards = new ArrayList<>();
 
         // Move up to 4 cards from hidden to visible
-        while (visibleCards.size() < 4 && !hiddenCards.isEmpty()) {
+        while (visibleCards.size() < MAX_VISIBLE_CARDS && !hiddenCards.isEmpty()) {
             visibleCards.add(hiddenCards.removeFirst());
         }
     }
@@ -45,7 +46,7 @@ public class PileImpl implements Pile {
      * @return Optional containing the card, or empty if index is invalid
      */
     @Override
-    public Optional<Card> getCard(int index) {
+    public Optional<Card> getCard(final int index) {
         if (index < 0 || index >= visibleCards.size()) {
             return Optional.empty();
         }
@@ -60,7 +61,7 @@ public class PileImpl implements Pile {
      * @throws IllegalArgumentException if the index is invalid
      */
     @Override
-    public void takeCard(int cardIndex) {
+    public void takeCard(final int cardIndex) {
         if (cardIndex < 0 || cardIndex >= visibleCards.size()) {
             throw new IllegalArgumentException("Invalid card index: " + cardIndex);
         }
