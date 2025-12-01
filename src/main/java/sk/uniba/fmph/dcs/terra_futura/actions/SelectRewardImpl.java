@@ -82,7 +82,7 @@ public class SelectRewardImpl implements SelectReward {
     @Override
     public String state() {
         if (player.isEmpty()) {
-            return "Player: Undefined";
+            return "Player: Undefined ";
         }
         return "Player: " + player.get() + ", Selection: " + selection.toString();
     }
