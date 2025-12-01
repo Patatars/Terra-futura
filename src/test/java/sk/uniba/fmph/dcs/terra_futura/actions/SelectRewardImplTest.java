@@ -260,7 +260,7 @@ public class SelectRewardImplTest {
         assertTrue("State should contain large player ID", state.contains("999999"));
     }
 
-    // ==================== ALL RESOURCE TYPES ====================
+    // All resources
 
     @Test
     public void testAllResourceTypes() {
@@ -383,7 +383,7 @@ public class SelectRewardImplTest {
         }
     }
 
-    // ==================== SEQUENCE TESTS ====================
+    // sequence tests
 
     @Test
     public void testSelectInDifferentOrder() {
@@ -422,7 +422,7 @@ public class SelectRewardImplTest {
                 selectReward.canSelectReward(Resource.MONEY));
     }
 
-    // ==================== SUPPORT CLASSES ====================
+    // support classes
 
     /**
      * Fake Card implementation for testing purposes

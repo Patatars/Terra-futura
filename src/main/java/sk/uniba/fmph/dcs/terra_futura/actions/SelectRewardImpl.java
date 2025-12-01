@@ -20,7 +20,6 @@ public class SelectRewardImpl implements SelectReward {
 
     private Optional<Integer> player;
     private List<Resource> selection;
-
     /**
      * Creates a new {@code SelectRewardImpl} instance with no active player
      * and an empty list of selectable resources.
