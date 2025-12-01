@@ -1,13 +1,12 @@
 package sk.uniba.fmph.dcs.terra_futura.deck;
 
-import org.junit.Before;
 import org.junit.Test;
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import sk.uniba.fmph.dcs.terra_futura.card.CardImpl;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
-import sk.uniba.fmph.dcs.terra_futura.effect.Effect;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,100 +14,194 @@ import static org.junit.Assert.*;
 
 public class PileImplTest {
 
-    private PileImpl pile;
-    private CardImpl card1;
-    private CardImpl card2;
-    private CardImpl card3;
-    private CardImpl card4;
-    private CardImpl card5;
+    private Card createTestCard(String name) {
+        List<Resource> resources = new ArrayList<>();
+        return new CardImpl(resources, 3, null, null);
+    }
 
-    @Before
-    public void setUp() {
-        List<Resource> res = List.of(Resource.MONEY, Resource.GREEN);
-        Effect dummyEffect = new Effect() {
-            @Override
-            public boolean check(List<Resource> input, List<Resource> output, int pollution) {
-                return true;
-            }
-
-            @Override
-            public boolean hasAssistance() {
-                return false;
-            }
-
-            @Override
-            public String state() {
-                return "dummy";
-            }
-        };
-
-        card1 = new CardImpl(new ArrayList<>(res), 1, dummyEffect, dummyEffect);
-        card2 = new CardImpl(new ArrayList<>(res), 1, dummyEffect, dummyEffect);
-        card3 = new CardImpl(new ArrayList<>(res), 1, dummyEffect, dummyEffect);
-        card4 = new CardImpl(new ArrayList<>(res), 1, dummyEffect, dummyEffect);
-        card5 = new CardImpl(new ArrayList<>(res), 1, dummyEffect, dummyEffect);
-
+    private List<Card> createTestCards(int count) {
         List<Card> cards = new ArrayList<>();
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
-        cards.add(card5);
-
-        pile = new PileImpl(cards);
+        for (int i = 0; i < count; i++) {
+            cards.add(createTestCard("Card" + i));
+        }
+        return cards;
     }
 
     @Test
-    public void testInitialVisibleCards() {
-        // должно быть максимум 4 видимых карт
-        Optional<Card> c0 = pile.getCard(0);
-        assertTrue(c0.isPresent());
-        assertEquals(card1, c0.get());
+    public void testConstructorInitializesVisibleAndHidden() {
+        List<Card> cards = createTestCards(6);
+        PileImpl pile = new PileImpl(cards);
 
-        Optional<Card> c3 = pile.getCard(3);
-        assertTrue(c3.isPresent());
-        assertEquals(card4, c3.get());
+        int visibleCount = 0;
+        while (pile.getCard(visibleCount).isPresent()) {
+            visibleCount++;
+        }
+        assertEquals(4, visibleCount);
+    }
 
-        // индекс вне диапазона
-        assertFalse(pile.getCard(4).isPresent());
+    @Test
+    public void testConstructorWithEmptyList() {
+        List<Card> cards = new ArrayList<>();
+        PileImpl pile = new PileImpl(cards);
+        assertFalse(pile.getCard(0).isPresent());
+    }
+
+    @Test
+    public void testConstructorWithLessThanFourCards() {
+        List<Card> cards = createTestCards(3);
+        PileImpl pile = new PileImpl(cards);
+
+        assertTrue(pile.getCard(0).isPresent());
+        assertTrue(pile.getCard(1).isPresent());
+        assertTrue(pile.getCard(2).isPresent());
+        assertFalse(pile.getCard(3).isPresent());
+    }
+
+    @Test
+    public void testGetCardWithValidIndex() {
+        List<Card> cards = createTestCards(4);
+        PileImpl pile = new PileImpl(cards);
+
+        Optional<Card> card = pile.getCard(2);
+        assertTrue(card.isPresent());
+    }
+
+    @Test
+    public void testGetCardWithNegativeIndex() {
+        List<Card> cards = createTestCards(2);
+        PileImpl pile = new PileImpl(cards);
+
+        Optional<Card> card = pile.getCard(-1);
+        assertFalse(card.isPresent());
+    }
+
+    @Test
+    public void testGetCardWithIndexOutOfBounds() {
+        List<Card> cards = createTestCards(2);
+        PileImpl pile = new PileImpl(cards);
+
+        Optional<Card> card = pile.getCard(10);
+        assertFalse(card.isPresent());
     }
 
     @Test
     public void testTakeCardValidIndex() {
-        pile.takeCard(0); // берём первую карту
-        // после взятия карта1 должна исчезнуть из видимых
-        assertFalse(pile.getCard(0).get().equals(card1));
-        // видимых карт всё ещё должно быть 4 (пополнено из hidden)
-        assertEquals(4, pile.state().split("\n").length - 3); // строки с картами
+        List<Card> cards = createTestCards(5);
+        PileImpl pile = new PileImpl(cards);
+        Card expectedTakenCard = pile.getCard(2).get();
+
+        pile.takeCard(2);
+        assertNotEquals(expectedTakenCard, pile.getCard(2).orElse(null));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testTakeCardInvalidIndexThrows() {
-        pile.takeCard(10);
+    public void testTakeCardInvalidIndexThrowsException() {
+        List<Card> cards = createTestCards(2);
+        PileImpl pile = new PileImpl(cards);
+
+        pile.takeCard(5);
     }
 
     @Test
-    public void testRemoveLastCard() {
+    public void testTakeCardWhenHiddenNotEmpty() {
+        List<Card> cards = createTestCards(6);
+        PileImpl pile = new PileImpl(cards);
+
+        pile.takeCard(1);
+
+        int visibleCount = 0;
+        while (pile.getCard(visibleCount).isPresent()) {
+            visibleCount++;
+        }
+        assertEquals(4, visibleCount);
+    }
+
+    @Test
+    public void testTakeCardWhenHiddenEmpty() {
+        List<Card> cards = createTestCards(3);
+        PileImpl pile = new PileImpl(cards);
+
+        pile.takeCard(1);
+
+        int visibleCount = 0;
+        while (pile.getCard(visibleCount).isPresent()) {
+            visibleCount++;
+        }
+        assertEquals(2, visibleCount);
+    }
+
+    @Test
+    public void testRemoveLastCardFromEmptyPile() {
+        List<Card> cards = new ArrayList<>();
+        PileImpl pile = new PileImpl(cards);
+
         pile.removeLastCard();
-        // последняя видимая карта (card4) должна быть удалена
-        assertFalse(pile.getCard(3).isPresent());
-        // но на её место должна прийти card5 из hidden
-        assertTrue(pile.getCard(0).isPresent());
+        assertFalse(pile.getCard(0).isPresent());
     }
 
     @Test
-    public void testRemoveLastCardOnEmptyVisible() {
-        // создаём пустую стопку
-        PileImpl emptyPile = new PileImpl(new ArrayList<>());
-        emptyPile.removeLastCard(); // не должно упасть
-        assertEquals("DeckPile:\nVisible:\nHidden count: 0", emptyPile.state());
+    public void testRemoveLastCardRefillsFromHidden() {
+        List<Card> cards = createTestCards(5);
+        PileImpl pile = new PileImpl(cards);
+
+        pile.removeLastCard();
+
+        int visibleCount = 0;
+        while (pile.getCard(visibleCount).isPresent()) {
+            visibleCount++;
+        }
+        assertEquals(4, visibleCount);
     }
 
     @Test
-    public void testStateContainsCards() {
+    public void testState() {
+        List<Card> cards = createTestCards(4);
+        PileImpl pile = new PileImpl(cards);
+
         String state = pile.state();
+        assertNotNull(state);
         assertTrue(state.contains("DeckPile:"));
         assertTrue(state.contains("Visible:"));
-        assertTrue(state.contains("Hidden count"));
+        assertTrue(state.contains("Hidden count:"));
+    }
+
+    @Test
+    public void testStateShowsCorrectHiddenCount() {
+        List<Card> cards = createTestCards(7);
+        PileImpl pile = new PileImpl(cards);
+
+        String state = pile.state();
+        assertTrue(state.contains("Hidden count: 3"));
+    }
+
+    @Test
+    public void testTwoArgsConstructor() {
+        LinkedList<Card> visible = new LinkedList<>(createTestCards(2));
+        LinkedList<Card> hidden = new LinkedList<>(createTestCards(2));
+
+        PileImpl pile = new PileImpl(visible, hidden);
+
+        assertTrue(pile.getCard(0).isPresent());
+        assertTrue(pile.getCard(1).isPresent());
+        assertFalse(pile.getCard(2).isPresent());
+    }
+
+    @Test
+    public void testMultipleOperationsSequence() {
+        List<Card> cards = createTestCards(8);
+        PileImpl pile = new PileImpl(cards);
+
+        pile.takeCard(0);
+        pile.takeCard(2);
+        pile.removeLastCard();
+
+        int visibleCount = 0;
+        while (pile.getCard(visibleCount).isPresent()) {
+            visibleCount++;
+        }
+        assertEquals(4, visibleCount);
+
+        String state = pile.state();
+        assertTrue(state.contains("Hidden count:"));
     }
 }

@@ -65,7 +65,6 @@ public class PileImpl implements Pile {
 
     }
 
-
     /**
      * Removes the last (oldest) visible card.
      * Then refills visible with the next hidden card.
