@@ -86,4 +86,5 @@ public class SelectRewardImpl implements SelectReward {
         }
         return "Player: " + player.get() + ", Selection: " + selection.toString();
     }
+
 }
