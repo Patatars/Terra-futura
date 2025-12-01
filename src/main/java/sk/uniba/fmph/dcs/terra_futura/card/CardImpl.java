@@ -96,9 +96,9 @@ public void getResources(final List<Resource> resources) {
     if (!canGetResources(resources)) {
         throw new IllegalArgumentException("Cannot get resources from this card.");
     }
+    ArrayList<Resource> willBeRemoved = new ArrayList<>();
     for (Resource res : resources) {
         this.resources.remove(res);
-
     }
 }
 
@@ -148,7 +148,8 @@ public void putResources(final List<Resource> resources) {
      */
 
     @Override
-    public boolean checkLower(final List<Resource> input, final List<Resource> output, final int pollution) {
+    public boolean checkLower(final List<Resource> input, final List<Resource> output,
+                              final int pollution) {
     if (lowerEffect == null) {
         return false;
     }
