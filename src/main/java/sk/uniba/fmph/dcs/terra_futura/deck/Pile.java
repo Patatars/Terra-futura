@@ -38,7 +38,6 @@ public interface Pile {
      * If the pile is empty, this method has no effect.
      */
     void removeLastCard();
-
     /**
      * Returns a string representation of the pile's current state.
      * The state typically includes information about visible cards, hidden cards, and pile configuration.

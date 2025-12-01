@@ -1,7 +1,6 @@
 package sk.uniba.fmph.dcs.terra_futura.deck;
 
 import sk.uniba.fmph.dcs.terra_futura.card.Card;
-import sk.uniba.fmph.dcs.terra_futura.card.CardImpl;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +8,9 @@ import java.util.Optional;
 
 /**
  * Implementation of the Pile interface.
- * Manages a pile of cards with a visible set and a hidden deck.
+ * Manages a pile of cards with a visible portion and a hidden deck.
+ * The pile maintains up to MAX_VISIBLE cards in the visible area,
+ * replenishing from the hidden deck when cards are removed.
  */
 public class PileImpl implements Pile {
 
@@ -17,10 +18,12 @@ public class PileImpl implements Pile {
 
     private final LinkedList<Card> visible;
     private final LinkedList<Card> hidden;
-
     /**
-     * Initializes pile.
-     * First up to MAX_VISIBLE cards become visible; rest are hidden.
+     * Constructs a new PileImpl with the given cards.
+     * Initially, up to MAX_VISIBLE cards are placed in the visible area,
+     * and the remaining cards are placed in the hidden deck.
+     *
+     * @param cards the initial cards to populate the pile
      */
     public PileImpl(List<Card> cards) {
         this.hidden = new LinkedList<>(cards);
@@ -28,13 +31,21 @@ public class PileImpl implements Pile {
         refillVisible();
     }
 
+    /**
+     * Constructs a new PileImpl with the specified visible and hidden cards.
+     * This constructor is primarily intended for testing purposes.
+     *
+     * @param visible the list of visible cards
+     * @param hidden the list of hidden cards
+     */
     public PileImpl(LinkedList<Card> visible, LinkedList<Card> hidden) {
         this.visible = visible;
         this.hidden = hidden;
     }
 
     /**
-     * Moves cards from hidden to visible until visible contains MAX_VISIBLE cards.
+     * Replenishes the visible area from the hidden deck until it contains
+     * MAX_VISIBLE cards or the hidden deck is empty.
      */
     private void refillVisible() {
         while (visible.size() < MAX_VISIBLE && !hidden.isEmpty()) {
@@ -51,30 +62,31 @@ public class PileImpl implements Pile {
     }
 
     @Override
-    public void takeCard(int index) {
-        if (index < 0 || index >= visible.size()) {
-            throw new IllegalArgumentException("Invalid visible card index: " + index);
+    public void takeCard(int cardIndex) {
+        if (cardIndex < 0 || cardIndex >= visible.size()) {
+            throw new IllegalArgumentException(
+                    "Invalid visible card index: " + cardIndex +
+                            ". Visible cards count: " + visible.size()
+            );
         }
 
-        Card taken = visible.remove(index);
+        visible.remove(cardIndex);
 
-        // refill from hidden
+        // Replenish from hidden deck if available
         if (!hidden.isEmpty()) {
             visible.addFirst(hidden.removeFirst());
         }
-
     }
 
-    /**
-     * Removes the last (oldest) visible card.
-     * Then refills visible with the next hidden card.
-     */
     @Override
     public void removeLastCard() {
-        if (visible.isEmpty()) return;
+        if (visible.isEmpty()) {
+            return;
+        }
 
         visible.removeLast();
 
+        // Replenish from hidden deck if available
         if (!hidden.isEmpty()) {
             visible.addFirst(hidden.removeFirst());
         }
@@ -84,12 +96,14 @@ public class PileImpl implements Pile {
     public String state() {
         StringBuilder sb = new StringBuilder();
         sb.append("DeckPile:\n");
-        sb.append("Visible:\n");
+        sb.append("Visible cards (").append(visible.size()).append("):\n");
+
         for (int i = 0; i < visible.size(); i++) {
             sb.append("  ").append(i).append(": ")
                     .append(visible.get(i).state()).append("\n");
         }
-        sb.append("Hidden count: ").append(hidden.size());
+
+        sb.append("Hidden cards: ").append(hidden.size());
         return sb.toString();
     }
 }

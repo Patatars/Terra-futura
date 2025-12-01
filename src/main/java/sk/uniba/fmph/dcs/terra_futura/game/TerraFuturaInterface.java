@@ -86,6 +86,4 @@ public interface TerraFuturaInterface {
      * @return {@code true} if the selection and scoring action was valid.
      */
     boolean selectScoring(int playerId, int card);
-
-
 }

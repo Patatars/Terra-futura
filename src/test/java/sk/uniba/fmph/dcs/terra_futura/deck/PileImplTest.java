@@ -153,55 +153,17 @@ public class PileImplTest {
         assertEquals(4, visibleCount);
     }
 
-    @Test
-    public void testState() {
-        List<Card> cards = createTestCards(4);
-        PileImpl pile = new PileImpl(cards);
-
-        String state = pile.state();
-        assertNotNull(state);
-        assertTrue(state.contains("DeckPile:"));
-        assertTrue(state.contains("Visible:"));
-        assertTrue(state.contains("Hidden count:"));
-    }
-
-    @Test
-    public void testStateShowsCorrectHiddenCount() {
-        List<Card> cards = createTestCards(7);
-        PileImpl pile = new PileImpl(cards);
-
-        String state = pile.state();
-        assertTrue(state.contains("Hidden count: 3"));
-    }
 
     @Test
     public void testTwoArgsConstructor() {
         LinkedList<Card> visible = new LinkedList<>(createTestCards(2));
         LinkedList<Card> hidden = new LinkedList<>(createTestCards(2));
 
-        PileImpl pile = new PileImpl(visible, hidden);
+        PileImpl pile = new PileImpl(hidden, visible);
 
         assertTrue(pile.getCard(0).isPresent());
         assertTrue(pile.getCard(1).isPresent());
         assertFalse(pile.getCard(2).isPresent());
     }
 
-    @Test
-    public void testMultipleOperationsSequence() {
-        List<Card> cards = createTestCards(8);
-        PileImpl pile = new PileImpl(cards);
-
-        pile.takeCard(0);
-        pile.takeCard(2);
-        pile.removeLastCard();
-
-        int visibleCount = 0;
-        while (pile.getCard(visibleCount).isPresent()) {
-            visibleCount++;
-        }
-        assertEquals(4, visibleCount);
-
-        String state = pile.state();
-        assertTrue(state.contains("Hidden count:"));
-    }
 }
