@@ -119,7 +119,7 @@ public class SelectRewardImplTest {
                 state.contains("Selection") || state.contains("YELLOW"));
     }
 
-    // ==================== EDGE CASES ====================
+    //  EDGE CASES
 
     @Test
     public void testSetRewardWithEmptyList() {
@@ -146,9 +146,9 @@ public class SelectRewardImplTest {
         List<Resource> rewards = Arrays.asList(Resource.YELLOW);
         selectReward.setReward(1, card, rewards);
 
-        selectReward.selectReward(Resource.GREEN); // не в списке
+        selectReward.selectReward(Resource.GREEN);
 
-        // Состояние не должно измениться
+
         assertTrue("YELLOW should still be selectable",
                 selectReward.canSelectReward(Resource.YELLOW));
     }
@@ -159,8 +159,7 @@ public class SelectRewardImplTest {
         selectReward.setReward(1, card, rewards);
 
         selectReward.selectReward(Resource.YELLOW);
-        selectReward.selectReward(Resource.YELLOW); // второй раз
-
+        selectReward.selectReward(Resource.YELLOW);
         assertFalse("Resource should not be selectable after first selection",
                 selectReward.canSelectReward(Resource.YELLOW));
     }
@@ -169,11 +168,11 @@ public class SelectRewardImplTest {
     public void testSelectRewardBeforeSetReward() {
         selectReward.selectReward(Resource.YELLOW);
 
-        // Не должно быть ошибки, просто ничего не происходит
+
         assertFalse(selectReward.canSelectReward(Resource.YELLOW));
     }
 
-    // ==================== DUPLICATE RESOURCES ====================
+    //DUPLICATE RESOURCES
 
     @Test
     public void testSetRewardWithDuplicateResources() {
@@ -187,7 +186,6 @@ public class SelectRewardImplTest {
 
         selectReward.selectReward(Resource.YELLOW);
 
-        // После первого удаления YELLOW, второй YELLOW должен остаться
         assertTrue("Second YELLOW should still be selectable",
                 selectReward.canSelectReward(Resource.YELLOW));
 
@@ -212,7 +210,7 @@ public class SelectRewardImplTest {
                 selectReward.canSelectReward(Resource.MONEY));
     }
 
-    // ==================== MULTIPLE PLAYERS ====================
+    // MULTIPLE PLAYERS
 
     @Test
     public void testSwitchingPlayers() {
@@ -246,7 +244,7 @@ public class SelectRewardImplTest {
         List<Resource> rewards = Arrays.asList(Resource.YELLOW);
         selectReward.setReward(-1, card, rewards);
 
-        // Система должна принять отрицательный ID
+
         assertTrue("Should accept negative player ID",
                 selectReward.canSelectReward(Resource.YELLOW));
     }
@@ -331,8 +329,6 @@ public class SelectRewardImplTest {
         selectReward.setReward(1, card, rewards1);
 
         selectReward.selectReward(Resource.YELLOW);
-
-        // Устанавливаем новую награду
         List<Resource> rewards2 = Arrays.asList(Resource.RED, Resource.MONEY);
         selectReward.setReward(1, card, rewards2);
 
@@ -353,11 +349,11 @@ public class SelectRewardImplTest {
         List<Resource> rewards = new ArrayList<>(Arrays.asList(Resource.YELLOW));
         selectReward.setReward(1, card, rewards);
 
-        // Модифицируем исходный список
+
         rewards.add(Resource.GREEN);
         rewards.clear();
 
-        // Внутреннее состояние не должно измениться
+
         assertTrue("YELLOW should still be selectable",
                 selectReward.canSelectReward(Resource.YELLOW));
         assertFalse("GREEN should not be selectable",
@@ -392,7 +388,7 @@ public class SelectRewardImplTest {
         );
         selectReward.setReward(1, card, rewards);
 
-        // Выбираем в обратном порядке
+
         selectReward.selectReward(Resource.RED);
         selectReward.selectReward(Resource.GREEN);
         selectReward.selectReward(Resource.YELLOW);
