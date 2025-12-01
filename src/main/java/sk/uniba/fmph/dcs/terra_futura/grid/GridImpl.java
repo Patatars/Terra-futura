@@ -42,7 +42,7 @@ public class GridImpl implements Grid {
 
     @Override
     public Optional<Card> getCard(final GridPosition coordinate) {
-        if(coordinate == null || !gridMap.containsKey(coordinate)){
+        if (coordinate == null || !gridMap.containsKey(coordinate)) {
             return Optional.empty();
         }
         return Optional.of(gridMap.get(coordinate));
@@ -96,7 +96,7 @@ public class GridImpl implements Grid {
     @Override
     public boolean canBeActivated(final GridPosition coordinate) {
 
-        if(!gridMap.containsKey(coordinate)) {
+        if (!gridMap.containsKey(coordinate)) {
             return false;
         }
 
@@ -112,7 +112,7 @@ public class GridImpl implements Grid {
 
     @Override
     public void setActivated(final GridPosition coordinate) {
-        if(!canBeActivated(coordinate)){
+        if (!canBeActivated(coordinate)) {
             throw new IllegalStateException("Position cannot be activated: " + coordinate);
         }
         processedPositions.add(coordinate);
