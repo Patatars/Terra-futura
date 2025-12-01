@@ -17,7 +17,7 @@ import java.util.Optional;
 public class PileImpl implements Pile {
 
     /** Maximum number of visible cards at any time. */
-    private final static int MAX_VISIBLE_CARDS = 4;
+    private static final int MAX_VISIBLE_CARDS = 4;
 
     /** Cards currently visible to the players (maximum of 4). */
     private final List<Card> visibleCards;
