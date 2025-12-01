@@ -25,7 +25,7 @@ import java.util.Set;
 /**
  * Game class manages game state and player turns.
  */
-public final class Game implements TerraFuturaInterface {
+public final class Game implements TeraFuturaInterface {
     private static final int LAST_REGULAR_TURN = 9;
 
     private GameState state;
