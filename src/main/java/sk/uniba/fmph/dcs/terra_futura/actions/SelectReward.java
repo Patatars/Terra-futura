@@ -16,6 +16,7 @@ public class SelectReward {
 
     private Optional<Integer> player;
     private List<Resource> selection;
+    private Card card;
 
     /**
      * Constructs a new SelectReward with no player and empty selection.
@@ -23,6 +24,7 @@ public class SelectReward {
     public SelectReward() {
         this.player = Optional.empty();
         this.selection = new ArrayList<>();
+        this.card = null;
     }
 
     /**
@@ -39,6 +41,7 @@ public class SelectReward {
             return false;
         }
         this.player = Optional.of(player);
+        this.card = card;
         this.selection = new ArrayList<>(reward);
         return true;
     }
@@ -61,6 +64,9 @@ public class SelectReward {
     public void selectReward(final Resource resource) {
         if (canSelectReward(resource)) {
             selection.remove(resource);
+            if (card != null) {
+                card.putResources(List.of(resource));
+            }
         }
     }
 
@@ -71,6 +77,7 @@ public class SelectReward {
     public void clear() {
         this.player = Optional.empty();
         this.selection.clear();
+        this.card = null;
     }
 
     /**

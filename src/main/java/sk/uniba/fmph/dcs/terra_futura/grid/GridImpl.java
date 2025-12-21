@@ -18,6 +18,7 @@ import java.util.Optional;
  * Implementation of Grid.
  */
 public class GridImpl implements Grid {
+    private static final int GRID_SIZE = 3;
     private final Map<GridPosition, Card> cards = new HashMap<>();
     private final Set<GridPosition> activatedThisTurn = new HashSet<>();
     private Collection<AbstractMap.SimpleEntry<Integer, Integer>> activationPattern = new ArrayList<>();
@@ -45,7 +46,25 @@ public class GridImpl implements Grid {
      */
     @Override
     public boolean canPutCard(final GridPosition coordinate) {
-        return !cards.containsKey(coordinate);
+        if (coordinate.x() < 0 || coordinate.x() >= GRID_SIZE || coordinate.y() < 0 || coordinate.y() >= GRID_SIZE) {
+            return false;
+        }
+        if (cards.containsKey(coordinate)) {
+            return false;
+        }
+        if (cards.isEmpty()) {
+            return true;
+        }
+        return hasAdjacentCard(coordinate);
+    }
+
+    private boolean hasAdjacentCard(final GridPosition coordinate) {
+        int x = coordinate.x();
+        int y = coordinate.y();
+        return cards.containsKey(new GridPosition(x - 1, y))
+                || cards.containsKey(new GridPosition(x + 1, y))
+                || cards.containsKey(new GridPosition(x, y - 1))
+                || cards.containsKey(new GridPosition(x, y + 1));
     }
 
     /**
@@ -58,7 +77,7 @@ public class GridImpl implements Grid {
     @Override
     public void putCard(final GridPosition coordinate, final Card card) {
         if (!canPutCard(coordinate)) {
-            throw new IllegalArgumentException("Invalid position");
+            throw new IllegalArgumentException("Cannot put card into grid");
         }
         cards.put(coordinate, card);
     }
@@ -68,7 +87,6 @@ public class GridImpl implements Grid {
      *
      * @param coordinate position to check
      * @return true if activatable
-     * @throws IllegalStateException when activation pattern is not defined
      */
     @Override
     public boolean canBeActivated(final GridPosition coordinate) {
@@ -79,7 +97,7 @@ public class GridImpl implements Grid {
             return false;
         }
         if (activationPattern == null || activationPattern.isEmpty()) {
-            throw new IllegalStateException("Cannot activate grid when there is no activation pattern");
+            return false;
         }
         return activationPattern.stream().anyMatch(p -> p.equals(new AbstractMap.SimpleEntry<>(coordinate.x(), coordinate.y())));
     }

@@ -53,11 +53,11 @@ public class GridImplTest {
         assertFalse(grid.getCard(pos).isPresent());
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testCanBeActivatedWithNoPattern() {
         GridPosition pos = new GridPosition(0, 0);
         grid.putCard(pos, mockCard);
-        grid.canBeActivated(pos);
+        assertFalse(grid.canBeActivated(pos));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class GridImplTest {
     @Test
     public void testCannotActivateCardNotInPattern() {
         GridPosition pos1 = new GridPosition(0, 0);
-        GridPosition pos2 = new GridPosition(2, 0);
+        GridPosition pos2 = new GridPosition(1, 0);
         grid.putCard(pos1, mockCard);
         grid.putCard(pos2, mockCard);
 
@@ -164,6 +164,142 @@ public class GridImplTest {
         grid.putCard(pos, mockCard);
         String state = grid.state();
         assertTrue(state.contains("\"cards\""));
+    }
+
+    @Test
+    public void testCanPutCardWithinBounds() {
+        assertTrue(grid.canPutCard(new GridPosition(0, 0)));
+        assertTrue(grid.canPutCard(new GridPosition(2, 2)));
+        assertTrue(grid.canPutCard(new GridPosition(1, 1)));
+    }
+
+    @Test
+    public void testCannotPutCardOutOfBounds() {
+        assertFalse(grid.canPutCard(new GridPosition(-1, 0)));
+        assertFalse(grid.canPutCard(new GridPosition(0, -1)));
+        assertFalse(grid.canPutCard(new GridPosition(3, 0)));
+        assertFalse(grid.canPutCard(new GridPosition(0, 3)));
+        assertFalse(grid.canPutCard(new GridPosition(5, 5)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPutCardOutOfBoundsThrows() {
+        grid.putCard(new GridPosition(3, 3), mockCard);
+    }
+
+    @Test
+    public void testFirstCardCanBePlacedAnywhere() {
+        assertTrue(grid.canPutCard(new GridPosition(0, 0)));
+        assertTrue(grid.canPutCard(new GridPosition(1, 1)));
+        assertTrue(grid.canPutCard(new GridPosition(2, 2)));
+    }
+
+    @Test
+    public void testSecondCardMustBeAdjacent() {
+        grid.putCard(new GridPosition(1, 1), mockCard);
+
+        assertTrue(grid.canPutCard(new GridPosition(0, 1)));
+        assertTrue(grid.canPutCard(new GridPosition(2, 1)));
+        assertTrue(grid.canPutCard(new GridPosition(1, 0)));
+        assertTrue(grid.canPutCard(new GridPosition(1, 2)));
+
+        assertFalse(grid.canPutCard(new GridPosition(0, 0)));
+        assertFalse(grid.canPutCard(new GridPosition(2, 2)));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCannotPutCardNonAdjacent() {
+        grid.putCard(new GridPosition(0, 0), mockCard);
+        grid.putCard(new GridPosition(2, 2), mockCard);
+    }
+
+    @Test
+    public void testPutCardChainedAdjacent() {
+        grid.putCard(new GridPosition(0, 0), mockCard);
+        grid.putCard(new GridPosition(1, 0), mockCard);
+        grid.putCard(new GridPosition(2, 0), mockCard);
+
+        assertTrue(grid.getCard(new GridPosition(0, 0)).isPresent());
+        assertTrue(grid.getCard(new GridPosition(1, 0)).isPresent());
+        assertTrue(grid.getCard(new GridPosition(2, 0)).isPresent());
+    }
+
+    @Test
+    public void testPutCardReturnsCorrectCard() {
+        GridPosition pos = new GridPosition(1, 1);
+        Card differentCard = new MockCard();
+        grid.putCard(pos, differentCard);
+
+        Optional<Card> retrieved = grid.getCard(pos);
+        assertTrue(retrieved.isPresent());
+        assertSame(differentCard, retrieved.get());
+    }
+
+    @Test
+    public void testCanPutCardAfterAdjacentPlaced() {
+        grid.putCard(new GridPosition(0, 0), mockCard);
+        assertTrue(grid.canPutCard(new GridPosition(1, 0)));
+        assertTrue(grid.canPutCard(new GridPosition(0, 1)));
+        assertFalse(grid.canPutCard(new GridPosition(1, 1))); // Diagonal, not adjacent
+        assertFalse(grid.canPutCard(new GridPosition(2, 0))); // Not adjacent
+    }
+
+    @Test
+    public void testMultipleAdjacentPositionsAfterSecondCard() {
+        grid.putCard(new GridPosition(1, 1), mockCard);
+        grid.putCard(new GridPosition(1, 0), mockCard);
+
+        assertTrue(grid.canPutCard(new GridPosition(0, 0)));
+        assertTrue(grid.canPutCard(new GridPosition(2, 0)));
+        assertTrue(grid.canPutCard(new GridPosition(0, 1)));
+        assertTrue(grid.canPutCard(new GridPosition(2, 1)));
+        assertTrue(grid.canPutCard(new GridPosition(1, 2)));
+    }
+
+    @Test
+    public void testCanActivateMultipleCardsInPattern() {
+        grid.putCard(new GridPosition(1, 1), mockCard);
+        grid.putCard(new GridPosition(1, 0), mockCard);
+        grid.putCard(new GridPosition(0, 1), mockCard);
+
+        Collection<AbstractMap.SimpleEntry<Integer, Integer>> pattern = Arrays.asList(
+            new AbstractMap.SimpleEntry<>(1, 1),
+            new AbstractMap.SimpleEntry<>(1, 0),
+            new AbstractMap.SimpleEntry<>(0, 1)
+        );
+        grid.setActivationPattern(pattern);
+
+        assertTrue(grid.canBeActivated(new GridPosition(1, 1)));
+        assertTrue(grid.canBeActivated(new GridPosition(1, 0)));
+        assertTrue(grid.canBeActivated(new GridPosition(0, 1)));
+
+        grid.setActivated(new GridPosition(1, 1));
+
+        assertFalse(grid.canBeActivated(new GridPosition(1, 1)));
+        assertTrue(grid.canBeActivated(new GridPosition(1, 0)));
+        assertTrue(grid.canBeActivated(new GridPosition(0, 1)));
+    }
+
+    @Test
+    public void testActivateAllCardsInPattern() {
+        grid.putCard(new GridPosition(0, 0), mockCard);
+        grid.putCard(new GridPosition(1, 0), mockCard);
+
+        Collection<AbstractMap.SimpleEntry<Integer, Integer>> pattern = Arrays.asList(
+            new AbstractMap.SimpleEntry<>(0, 0),
+            new AbstractMap.SimpleEntry<>(1, 0)
+        );
+        grid.setActivationPattern(pattern);
+
+        grid.setActivated(new GridPosition(0, 0));
+        grid.setActivated(new GridPosition(1, 0));
+
+        assertFalse(grid.canBeActivated(new GridPosition(0, 0)));
+        assertFalse(grid.canBeActivated(new GridPosition(1, 0)));
+
+        grid.endTurn();
+        assertTrue(grid.canBeActivated(new GridPosition(0, 0)));
+        assertTrue(grid.canBeActivated(new GridPosition(1, 0)));
     }
 
     // Mock Card implementation for testing
