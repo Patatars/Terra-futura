@@ -19,11 +19,23 @@ public class PileImpl implements Pile {
 
     /**
      * The first 4 cards are moved to the visible set.
+     * Uses default RandomShuffler.
      *
      * @param cards the list of cards to initialize the pile with
      */
     public PileImpl(final List<Card> cards) {
+        this(cards, new RandomShuffler());
+    }
+
+    /**
+     * Constructor with dependency injection for Shuffler.
+     *
+     * @param cards the list of cards to initialize the pile with
+     * @param shuffler the shuffler to use for randomizing cards
+     */
+    public PileImpl(final List<Card> cards, final Shuffler shuffler) {
         this.hiddenCards = new ArrayList<>(cards);
+        shuffler.shuffle(this.hiddenCards);
         this.visibleCards = new ArrayList<>();
         replenishVisibleCards();
     }

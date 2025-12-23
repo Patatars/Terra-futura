@@ -46,16 +46,32 @@ public class GridImpl implements Grid {
      */
     @Override
     public boolean canPutCard(final GridPosition coordinate) {
-        if (coordinate.x() < 0 || coordinate.x() >= GRID_SIZE || coordinate.y() < 0 || coordinate.y() >= GRID_SIZE) {
-            return false;
-        }
         if (cards.containsKey(coordinate)) {
             return false;
         }
         if (cards.isEmpty()) {
             return true;
         }
-        return hasAdjacentCard(coordinate);
+        if (!hasAdjacentCard(coordinate)) {
+            return false;
+        }
+        return fitsInBoundingBox(coordinate);
+    }
+
+    private boolean fitsInBoundingBox(final GridPosition newCoordinate) {
+        int minX = newCoordinate.x();
+        int maxX = newCoordinate.x();
+        int minY = newCoordinate.y();
+        int maxY = newCoordinate.y();
+
+        for (GridPosition pos : cards.keySet()) {
+            minX = Math.min(minX, pos.x());
+            maxX = Math.max(maxX, pos.x());
+            minY = Math.min(minY, pos.y());
+            maxY = Math.max(maxY, pos.y());
+        }
+
+        return (maxX - minX < GRID_SIZE) && (maxY - minY < GRID_SIZE);
     }
 
     private boolean hasAdjacentCard(final GridPosition coordinate) {
@@ -80,6 +96,18 @@ public class GridImpl implements Grid {
             throw new IllegalArgumentException("Cannot put card into grid");
         }
         cards.put(coordinate, card);
+        updateActivationPattern(coordinate);
+    }
+
+    private void updateActivationPattern(GridPosition newCardPos) {
+        Set<AbstractMap.SimpleEntry<Integer, Integer>> newPattern = new HashSet<>();
+        for (var entry : cards.entrySet()) {
+            GridPosition pos = entry.getKey();
+            if (pos.x() == newCardPos.x() || pos.y() == newCardPos.y()) {
+                newPattern.add(new AbstractMap.SimpleEntry<>(pos.x(), pos.y()));
+            }
+        }
+        this.activationPattern = newPattern;
     }
 
     /**

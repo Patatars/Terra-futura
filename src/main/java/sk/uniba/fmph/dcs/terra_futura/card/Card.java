@@ -1,9 +1,10 @@
 package sk.uniba.fmph.dcs.terra_futura.card;
 
+import sk.uniba.fmph.dcs.terra_futura.actions.RewardTarget;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 import java.util.List;
 
-public interface Card {
+public interface Card extends RewardTarget {
     /**
      * Checks if the specified resources can be obtained from this card.
      *

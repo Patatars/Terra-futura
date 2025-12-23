@@ -1,6 +1,5 @@
 package sk.uniba.fmph.dcs.terra_futura.actions;
 
-import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 
 import java.util.Optional;
@@ -16,7 +15,7 @@ public class SelectReward {
 
     private Optional<Integer> player;
     private List<Resource> selection;
-    private Card card;
+    private RewardTarget rewardTarget;
 
     /**
      * Constructs a new SelectReward with no player and empty selection.
@@ -24,24 +23,24 @@ public class SelectReward {
     public SelectReward() {
         this.player = Optional.empty();
         this.selection = new ArrayList<>();
-        this.card = null;
+        this.rewardTarget = null;
     }
 
     /**
      * Sets the reward context for a player.
      *
      * @param player The player ID who can select rewards.
-     * @param card   The card associated with the reward (may be unused).
+     * @param target The reward target that will receive the selected resources.
      * @param reward The list of available reward resources.
      * @return true if the reward was set successfully, false if reward is null.
      */
-    public boolean setReward(final int player, final Card card, final List<Resource> reward) {
+    public boolean setReward(final int player, final RewardTarget target, final List<Resource> reward) {
         if (reward == null || reward.isEmpty()) {
             clear();
             return false;
         }
         this.player = Optional.of(player);
-        this.card = card;
+        this.rewardTarget = target;
         this.selection = new ArrayList<>(reward);
         return true;
     }
@@ -64,8 +63,8 @@ public class SelectReward {
     public void selectReward(final Resource resource) {
         if (canSelectReward(resource)) {
             selection.remove(resource);
-            if (card != null) {
-                card.putResources(List.of(resource));
+            if (rewardTarget != null) {
+                rewardTarget.putResources(List.of(resource));
             }
         }
     }
@@ -77,7 +76,7 @@ public class SelectReward {
     public void clear() {
         this.player = Optional.empty();
         this.selection.clear();
-        this.card = null;
+        this.rewardTarget = null;
     }
 
     /**

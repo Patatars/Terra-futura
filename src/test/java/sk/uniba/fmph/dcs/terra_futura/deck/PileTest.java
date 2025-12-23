@@ -5,6 +5,7 @@ import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +67,8 @@ public class PileTest {
             cards.add(new FakeCard("Card" + i));
         }
 
-        Pile pile = new PileImpl(cards);
+        Shuffler noOpShuffler = list -> {};
+        Pile pile = new PileImpl(cards, noOpShuffler);
         String state = pile.state();
 
         assertTrue(state.contains("0: Card0"));
@@ -83,7 +85,8 @@ public class PileTest {
             cards.add(new FakeCard("Card" + i));
         }
 
-        Pile pile = new PileImpl(cards);
+        Shuffler noOpShuffler = list -> {};
+        Pile pile = new PileImpl(cards, noOpShuffler);
         Optional<Card> taken = pile.getCard(1);
         pile.takeCard(1);
         assertEquals("Card1", taken.get().state());
@@ -104,7 +107,8 @@ public class PileTest {
             cards.add(new FakeCard("Card" + i));
         }
 
-        Pile pile = new PileImpl(cards);
+        Shuffler noOpShuffler = list -> {};
+        Pile pile = new PileImpl(cards, noOpShuffler);
 
 
         pile.removeLastCard();
@@ -125,7 +129,8 @@ public class PileTest {
             cards.add(new FakeCard("Card" + i));
         }
 
-        Pile pile = new PileImpl(cards);
+        Shuffler noOpShuffler = list -> {};
+        Pile pile = new PileImpl(cards, noOpShuffler);
 
 
         Optional<Card> taken = pile.getCard(0);
@@ -145,5 +150,43 @@ public class PileTest {
         assertTrue(state.contains("0: Card1"));
         assertTrue(state.contains("1: Card2"));
         assertFalse(state.contains("Card3"));
+    }
+
+    @Test
+    public void testShufflingIsCalled() {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            cards.add(new FakeCard("Card" + i));
+        }
+
+        Shuffler reverseShuffler = Collections::reverse;
+
+        Pile pile = new PileImpl(cards, reverseShuffler);
+        String state = pile.state();
+        assertTrue(state.contains("0: Card9"));
+        assertTrue(state.contains("1: Card8"));
+        assertTrue(state.contains("2: Card7"));
+        assertTrue(state.contains("3: Card6"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testTakeCardInvalidIndexThrowsException() {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            cards.add(new FakeCard("Card" + i));
+        }
+        Pile pile = new PileImpl(cards, list -> {});
+        pile.takeCard(10);
+    }
+
+    @Test
+    public void testGetCardInvalidIndexReturnsEmpty() {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            cards.add(new FakeCard("Card" + i));
+        }
+        Pile pile = new PileImpl(cards, list -> {});
+        assertFalse(pile.getCard(10).isPresent());
+        assertFalse(pile.getCard(-1).isPresent());
     }
 }

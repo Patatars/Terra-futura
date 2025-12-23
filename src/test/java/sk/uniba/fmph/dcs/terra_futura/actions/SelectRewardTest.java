@@ -2,7 +2,6 @@ package sk.uniba.fmph.dcs.terra_futura.actions;
 
 import org.junit.Before;
 import org.junit.Test;
-import sk.uniba.fmph.dcs.terra_futura.card.Card;
 import sk.uniba.fmph.dcs.terra_futura.enums.Resource;
 
 import java.util.ArrayList;
@@ -13,12 +12,12 @@ import static org.junit.Assert.*;
 public class SelectRewardTest {
 
     private SelectReward selectReward;
-    private MockCard mockCard;
+    private MockRewardTarget mockCard;
 
     @Before
     public void setUp() {
         selectReward = new SelectReward();
-        mockCard = new MockCard();
+        mockCard = new MockRewardTarget();
     }
 
     @Test
@@ -131,7 +130,7 @@ public class SelectRewardTest {
     public void testSetRewardOverwritesPrevious() {
         selectReward.setReward(1, mockCard, List.of(Resource.GREEN));
         assertTrue(selectReward.canSelectReward(Resource.GREEN));
-        MockCard newMockCard = new MockCard();
+        MockRewardTarget newMockCard = new MockRewardTarget();
         selectReward.setReward(2, newMockCard, List.of(Resource.RED, Resource.YELLOW));
         assertFalse(selectReward.canSelectReward(Resource.GREEN));
         assertTrue(selectReward.canSelectReward(Resource.RED));
@@ -151,17 +150,8 @@ public class SelectRewardTest {
         assertEquals(Resource.GREEN, mockCard.getReceivedResources().get(2));
     }
 
-    private static class MockCard implements Card {
+    private static class MockRewardTarget implements RewardTarget {
         private final List<Resource> receivedResources = new ArrayList<>();
-
-        @Override
-        public boolean canGetResources(List<Resource> resources) {
-            return false;
-        }
-
-        @Override
-        public void getResources(List<Resource> resources) {
-        }
 
         @Override
         public boolean canPutResources(List<Resource> resources) {
@@ -171,26 +161,6 @@ public class SelectRewardTest {
         @Override
         public void putResources(List<Resource> resources) {
             receivedResources.addAll(resources);
-        }
-
-        @Override
-        public boolean check(List<Resource> input, List<Resource> output, int pollution) {
-            return false;
-        }
-
-        @Override
-        public boolean checkLower(List<Resource> input, List<Resource> output, int pollution) {
-            return false;
-        }
-
-        @Override
-        public boolean hasAssistance() {
-            return false;
-        }
-
-        @Override
-        public String state() {
-            return "FakeCard";
         }
 
         public List<Resource> getReceivedResources() {
