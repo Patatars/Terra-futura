@@ -99,7 +99,7 @@ public class GridImpl implements Grid {
         updateActivationPattern(coordinate);
     }
 
-    private void updateActivationPattern(GridPosition newCardPos) {
+    private void updateActivationPattern(final GridPosition newCardPos) {
         Set<AbstractMap.SimpleEntry<Integer, Integer>> newPattern = new HashSet<>();
         for (var entry : cards.entrySet()) {
             GridPosition pos = entry.getKey();

@@ -6,7 +6,7 @@ import java.util.List;
 public class RandomShuffler implements Shuffler {
 
     @Override
-    public void shuffle(List<?> list) {
+    public void shuffle(final List<?> list) {
         Collections.shuffle(list);
     }
 }
