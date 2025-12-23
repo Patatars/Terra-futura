@@ -4,12 +4,12 @@ import java.util.List;
 
 
 /**
- * Shuffler classes are used by Pile to shuffle the deck
+ * Shuffler classes are used by Pile to shuffle the deck.
  */
 
 public interface Shuffler {
     /**
-     * Shuffle
+     * Shuffle.
      * @param list cards to shuffle.
      */
     void shuffle(List<?> list);
